@@ -38,10 +38,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.devopsbug.openlingua.R
-import com.devopsbug.openlingua.games.lettergame.ui.screens.ExploreLettersScreen
-import com.devopsbug.openlingua.games.lettergame.ui.screens.LetterGameStartScreen
-import com.devopsbug.openlingua.games.lettergame.ui.state.LetterGameViewModel
-import com.devopsbug.openlingua.games.lettergame.ui.screens.RandomLetterScreen
+import com.devopsbug.openlingua.games.lettergame.ui.lettergamescreens.ExploreLettersScreen
+import com.devopsbug.openlingua.games.lettergame.ui.lettergamescreens.LetterGameStartScreen
+import com.devopsbug.openlingua.games.lettergame.ui.lettergamestate.LetterGameViewModel
+import com.devopsbug.openlingua.games.lettergame.ui.lettergamescreens.RandomLetterScreen
 import com.devopsbug.openlingua.ui.globalstate.OpenLinguaGlobalViewModel
 import com.devopsbug.openlingua.ui.theme.OpenLinguaTheme
 

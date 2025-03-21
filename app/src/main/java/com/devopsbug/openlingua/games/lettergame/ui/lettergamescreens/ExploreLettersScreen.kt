@@ -1,4 +1,4 @@
-package com.devopsbug.openlingua.games.lettergame.ui.screens
+package com.devopsbug.openlingua.games.lettergame.ui.lettergamescreens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image

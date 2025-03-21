@@ -45,6 +45,7 @@ object OpenLinguaUtils {
         }
     }
 
+
     @Composable
     fun LanguageLevelRow(
         currentLanguage: Language,

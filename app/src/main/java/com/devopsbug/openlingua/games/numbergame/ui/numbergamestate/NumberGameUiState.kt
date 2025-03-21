@@ -1,7 +1,6 @@
-package  com.devopsbug.openlingua.games.numbergame.ui.state
+package  com.devopsbug.openlingua.games.numbergame.ui.numbergamestate
 
 import com.devopsbug.openlingua.games.numbergame.data.Numbers
-import com.devopsbug.openlingua.games.numbergame.model.Number
 
 data class NumberGameUiState(
     val currentLevel: Int = 1,

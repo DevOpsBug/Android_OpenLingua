@@ -1,4 +1,4 @@
-package  com.devopsbug.openlingua.games.lettergame.ui.screens
+package  com.devopsbug.openlingua.games.numbergame.ui.numbergamescreens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -31,16 +31,14 @@ import com.devopsbug.openlingua.ui.theme.primaryLightMediumContrast
 
 
 @Composable
-fun LetterGameStartScreen(
+fun NumberGameStartScreen(
     currentLanguage: Language,
     updateLanguage: (Language) -> Unit,
     currentLevel: Int,
     updateLevel: (Int) -> Unit,
     onClickExplore: () -> Unit,
 ) {
-    Column (
-        //modifier = Modifier.padding(paddingValues)
-    ){
+    Column (){
         Column (
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -121,10 +119,10 @@ fun LetterGameStartScreen(
                         Spacer(modifier = Modifier.width(16.dp))
                         Text(
                             text = when (it) {
-                                1 -> "[A-M]"
-                                2 -> "[A-Z}"
-                                3 -> "[A-Z; a-m]"
-                                else -> "[A-Z; a-z]"
+                                1 -> "[0-9]"
+                                2 -> "[0-19}"
+                                3 -> "[0-29]"
+                                else -> "[0-39]"
                             },
                             fontSize = 24.sp
                         )
@@ -154,5 +152,4 @@ fun LetterGameStartScreen(
             }
         }
     }
-
 }

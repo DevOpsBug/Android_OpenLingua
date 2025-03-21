@@ -1,4 +1,4 @@
-package  com.devopsbug.openlingua.games.numbergame.ui.state
+package  com.devopsbug.openlingua.games.numbergame.ui.numbergamestate
 
 import androidx.lifecycle.ViewModel
 

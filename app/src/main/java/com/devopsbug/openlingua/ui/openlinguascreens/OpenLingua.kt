@@ -1,4 +1,4 @@
-package com.devopsbug.openlingua.games.numbergame
+package com.devopsbug.openlingua.ui.openlinguascreens
 
 import android.content.ContentValues.TAG
 import android.util.Log
@@ -38,22 +38,26 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.devopsbug.openlingua.R
-import com.devopsbug.openlingua.games.numbergame.ui.numbergamescreens.ExploreNumbersScreen
-import com.devopsbug.openlingua.games.numbergame.ui.numbergamescreens.NumberGameStartScreen
-import com.devopsbug.openlingua.games.numbergame.ui.numbergamescreens.RandomNumberScreen
-import com.devopsbug.openlingua.games.numbergame.ui.numbergamestate.NumberGameViewModel
+import com.devopsbug.openlingua.games.lettergame.LetterGame
+import com.devopsbug.openlingua.games.lettergame.LetterGameScreen
+import com.devopsbug.openlingua.games.lettergame.ui.lettergamescreens.ExploreLettersScreen
+import com.devopsbug.openlingua.games.lettergame.ui.lettergamescreens.LetterGameStartScreen
+import com.devopsbug.openlingua.games.lettergame.ui.lettergamescreens.RandomLetterScreen
+import com.devopsbug.openlingua.games.numbergame.NumberGame
 import com.devopsbug.openlingua.ui.globalstate.OpenLinguaGlobalViewModel
 import com.devopsbug.openlingua.ui.theme.OpenLinguaTheme
 
-enum class NumberGameScreen(@StringRes val title: Int) {
-    start(title = R.string.numbergame_start_screen),
-    exploreNumbers(title = R.string.numbergame_explore_screen),
-    randomNumber(title = R.string.numbergame_random_number_screen)
+enum class OpenLinguaScreen(@StringRes val title: Int) {
+    start(title = R.string.app_name),
+    lettergame(title = R.string.lettergame_game_name),
+    numbergame(title = R.string.numbergame_game_name),
+    //exploreLetters(title = R.string.lettergame_explore_screen),
+    //randomLetter(title = R.string.lettergame_random_letter_screen)
 }
 
 @Preview
 @Composable
-fun NumberGame() {
+fun OpenLingua() {
 
     // Initialize navController
     val navController: NavHostController = rememberNavController()
@@ -62,63 +66,54 @@ fun NumberGame() {
     val backStackEntry by navController.currentBackStackEntryAsState()
 
     // Get the name of the current screen
-    val currentScreen = NumberGameScreen.valueOf(
-        backStackEntry?.destination?.route ?: NumberGameScreen.start.name
+    val currentScreen = OpenLinguaScreen.valueOf(
+        backStackEntry?.destination?.route ?: OpenLinguaScreen.start.name
     )
 
     // Create ViewModel
-    val numberGameViewModel: NumberGameViewModel = viewModel()
     val openLinguaGlobalViewModel: OpenLinguaGlobalViewModel = viewModel()
 
     OpenLinguaTheme {
         Scaffold(
             topBar = {
-                NumberGameTopAppBar(
-                    navigateHome = { navController.navigate(NumberGameScreen.start.name) },
+                OpenLinguaTopAppBar(
+                    navigateHome = { navController.navigate(OpenLinguaScreen.start.name) },
                     currentScreenTitle = currentScreen.title,
                 )
             },
             modifier = Modifier
                 .background(color = MaterialTheme.colorScheme.background)
         ) { innerPadding ->
-            val numberGameUiState by numberGameViewModel.uiState.collectAsState()
             val openLinguaGlobalState by openLinguaGlobalViewModel.uiState.collectAsState()
 
             NavHost(
                 navController = navController,
-                startDestination = NumberGameScreen.start.name,
+                startDestination = OpenLinguaScreen.start.name,
                 modifier = Modifier.padding(innerPadding)
             ) {
-                composable(route = NumberGameScreen.start.name) {
-                    Log.d(TAG, "navHost Calling route = ${NumberGameScreen.start.name}")
-                    NumberGameStartScreen(
-                        onClickExplore = { navController.navigate(NumberGameScreen.exploreNumbers.name) },
+                composable(route = OpenLinguaScreen.start.name) {
+                    Log.d(TAG, "navHost Calling route = ${OpenLinguaScreen.start.name}")
+                    OpenLinguaStartScreen(
+                        onClickLetterGame = { navController.navigate(OpenLinguaScreen.lettergame.name) },
+                        onClickNumberGame = { navController.navigate(OpenLinguaScreen.numbergame.name) },
                         updateLanguage = { openLinguaGlobalViewModel.updateLanguage(it) },
-                        currentLevel = numberGameUiState.currentLevel,
-                        updateLevel = { numberGameViewModel.updateLevel(it) },
                         currentLanguage = openLinguaGlobalState.currentLanguage,
                     )
                 }
-                composable(route = NumberGameScreen.exploreNumbers.name) {
+                composable(route = OpenLinguaScreen.lettergame.name) {
                     Log.d(
                         TAG,
-                        "navHost: Calling route = ${NumberGameScreen.exploreNumbers.name}"
+                        "navHost: Calling route = ${OpenLinguaScreen.lettergame.name}"
                     )
-                    ExploreNumbersScreen(
-                        currentLanguage = openLinguaGlobalState.currentLanguage,
-                        currentLevel = numberGameUiState.currentLevel,
-                        currentNumberSet = numberGameUiState.currentNumberSet,
-                        onClickContinue = { navController.navigate(NumberGameScreen.randomNumber.name) },
-                    )
+                    OpenLinguaTheme {
+                        LetterGame()
+                    }
                 }
-                composable(route = NumberGameScreen.randomNumber.name) {
-                    Log.d(TAG, "navHost: Calling route = ${NumberGameScreen.randomNumber.name}")
-                    RandomNumberScreen(
-                        currentLanguage = openLinguaGlobalState.currentLanguage,
-                        currentNumber = numberGameUiState.currentNumber,
-                        currentLevel = numberGameUiState.currentLevel,
-                        newRandomNumber = { numberGameViewModel.newRandomNumber() },
-                    )
+                composable(route = OpenLinguaScreen.numbergame.name) {
+                    Log.d(TAG, "navHost: Calling route = ${OpenLinguaScreen.numbergame.name}")
+                    OpenLinguaTheme {
+                        NumberGame()
+                    }
                 }
             }
 
@@ -130,7 +125,7 @@ fun NumberGame() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NumberGameTopAppBar(
+fun OpenLinguaTopAppBar(
     navigateHome: () -> Unit,
     @StringRes currentScreenTitle: Int,
 ) {
@@ -158,7 +153,7 @@ fun NumberGameTopAppBar(
                     )
                     Image(
                         painter = painterResource(R.drawable.ic_launcher_foreground),
-                        contentDescription = "Number Game Icon",
+                        contentDescription = "OpenLingua Icon",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .fillMaxWidth(fraction = 1f)

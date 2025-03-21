@@ -1,4 +1,4 @@
-package  com.devopsbug.openlingua.games.numbergame.ui.screens
+package  com.devopsbug.openlingua.games.numbergame.ui.numbergamescreens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
