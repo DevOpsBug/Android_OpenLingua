@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">OpenLingua</string>
+    <string name="back_button">Navigate Back</string>
+    <string name="lettergame_game_name">Letter Game</string>
+    <string name="lettergame_explore_screen">Explore Letters</string>
+    <string name="lettergame_random_letter_screen">Play Letter Game</string>
+    <string name="lettergame_start_screen">Letter Game</string>
+    <string name="numbergame_game_name">Number Game</string>"
+    <string name="numbergame_explore_screen">Explore Numbers</string>
+    <string name="numbergame_random_number_screen">Play Number Game</string>
+    <string name="numbergame_start_screen">Number Game</string>
+</resources>
