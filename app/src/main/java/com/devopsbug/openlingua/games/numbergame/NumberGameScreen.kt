@@ -6,6 +6,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -51,9 +52,8 @@ enum class NumberGameScreen(@StringRes val title: Int) {
     randomNumber(title = R.string.numbergame_random_number_screen)
 }
 
-@Preview
 @Composable
-fun NumberGame() {
+fun NumberGame(innerPadding: PaddingValues = PaddingValues(0.dp)) {
 
     // Initialize navController
     val navController: NavHostController = rememberNavController()
@@ -70,17 +70,17 @@ fun NumberGame() {
     val numberGameViewModel: NumberGameViewModel = viewModel()
     val openLinguaGlobalViewModel: OpenLinguaGlobalViewModel = viewModel()
 
-    OpenLinguaTheme {
-        Scaffold(
-            topBar = {
-                NumberGameTopAppBar(
-                    navigateHome = { navController.navigate(NumberGameScreen.start.name) },
-                    currentScreenTitle = currentScreen.title,
-                )
-            },
-            modifier = Modifier
-                .background(color = MaterialTheme.colorScheme.background)
-        ) { innerPadding ->
+//    OpenLinguaTheme {
+//        Scaffold(
+//            topBar = {
+//                NumberGameTopAppBar(
+//                    navigateHome = { navController.navigate(NumberGameScreen.start.name) },
+//                    currentScreenTitle = currentScreen.title,
+//                )
+//            },
+//            modifier = Modifier
+//                .background(color = MaterialTheme.colorScheme.background)
+//        ) { innerPadding ->
             val numberGameUiState by numberGameViewModel.uiState.collectAsState()
             val openLinguaGlobalState by openLinguaGlobalViewModel.uiState.collectAsState()
 
@@ -120,9 +120,9 @@ fun NumberGame() {
                         newRandomNumber = { numberGameViewModel.newRandomNumber() },
                     )
                 }
-            }
+ //           }
 
-        }
+ //       }
 
     }
 }

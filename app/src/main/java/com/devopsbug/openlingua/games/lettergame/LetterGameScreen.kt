@@ -6,6 +6,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -53,7 +54,7 @@ enum class LetterGameScreen(@StringRes val title: Int) {
 
 @Preview
 @Composable
-fun LetterGame() {
+fun LetterGame(innerPadding: PaddingValues = PaddingValues(0.dp)) {
 
     // Initialize navController
     val navController: NavHostController = rememberNavController()
@@ -70,17 +71,17 @@ fun LetterGame() {
     val letterGameViewModel: LetterGameViewModel = viewModel()
     val openLinguaGlobalViewModel: OpenLinguaGlobalViewModel = viewModel()
 
-    OpenLinguaTheme {
-        Scaffold(
-            topBar = {
-                LetterGameTopAppBar(
-                    navigateHome = { navController.navigate(LetterGameScreen.start.name) },
-                    currentScreenTitle = currentScreen.title,
-                )
-            },
-            modifier = Modifier
-                .background(color = MaterialTheme.colorScheme.background)
-        ) { innerPadding ->
+    //OpenLinguaTheme {
+//        Scaffold(
+//            topBar = {
+//                LetterGameTopAppBar(
+//                    navigateHome = { navController.navigate(LetterGameScreen.start.name) },
+//                    currentScreenTitle = currentScreen.title,
+//                )
+//            },
+//            modifier = Modifier
+//                .background(color = MaterialTheme.colorScheme.background)
+//        ) { innerPadding ->
             val letterGameUiState by letterGameViewModel.uiState.collectAsState()
             val openLinguaGlobalState by openLinguaGlobalViewModel.uiState.collectAsState()
 
@@ -124,9 +125,9 @@ fun LetterGame() {
                 }
             }
 
-        }
+//        }
 
-    }
+    //}
 }
 
 
