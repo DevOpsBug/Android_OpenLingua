@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.devopsbug.openlingua.games.numbergame.NumberGame
 import com.devopsbug.openlingua.ui.openlinguascreens.OpenLingua
 import com.devopsbug.openlingua.ui.theme.OpenLinguaTheme
 
@@ -25,7 +24,7 @@ class MainActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun OpenLinguaPreview() {
     OpenLinguaTheme {
         OpenLingua()
     }

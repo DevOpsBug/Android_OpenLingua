@@ -1,42 +1,36 @@
-package  com.devopsbug.openlingua.games.lettergame.ui.lettergamescreens
+package  com.devopsbug.openlingua.games.numbergame.ui.numbergamescreens
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devopsbug.openlingua.util.OpenLinguaUtils.LanguageLevelRow
-import com.devopsbug.openlingua.util.OpenLinguaUtils.getAudioResourceId
-import com.devopsbug.openlingua.util.OpenLinguaUtils.playAudio
 import com.devopsbug.openlingua.R
-import com.devopsbug.openlingua.games.lettergame.model.Letter
 import com.devopsbug.openlingua.model.Language
+import com.devopsbug.openlingua.util.AudioTile
 
 
 @Composable
-fun RandomLetterScreen(
+fun NumberCalcScreen(
     currentLanguage: Language,
-    currentLetter: Letter,
+    //currentNumber: Int,
     currentLevel: Int,
-    newRandomLetter: () -> Unit
+    currentNumberList: List<Int>,
+    //newRandomNumber: () -> Unit
     ) {
+    val (problem, answer) = generateMathProblem(currentNumberList)
+
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -61,8 +55,8 @@ fun RandomLetterScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "1. Try to say the sound of the letter\n" +
-                        "2. Click the letter to hear the correct sound",
+                text = "1. Try to say the answer\n" +
+                        "2. Click the tile to hear the correct answer",
                 fontSize = 16.sp
             )
         }
@@ -76,42 +70,39 @@ fun RandomLetterScreen(
             Spacer(modifier = Modifier.weight(1f))
         }
         Spacer(modifier = Modifier.height(32.dp))
-        Row (
-            horizontalArrangement = Arrangement.Center,
+        Column (
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth()
         ){
-            RandomLetterTile(
-                letter = currentLetter,
-                language = currentLanguage,
-                newRandomLetter = newRandomLetter,
-                modifier = Modifier
-                    .height(248.dp)
-                    .width(248.dp)
-
+            Text(
+                text = problem,
+                fontSize = 100.sp
             )
+            AudioTile(language = currentLanguage, audioFilePostfix = answer.toString(), onCompletion = {})
         }
     }
 }
 
-//Function to display letter tile with audio playback when clicked
-@Composable
-private fun RandomLetterTile(letter: Letter, language: Language, newRandomLetter: () -> Unit, modifier: Modifier = Modifier) {
-    val context = LocalContext.current
-    Button(
-        onClick = {
-            val resourceId = getAudioResourceId(context, language.audioFilePrefix, letter.letterLiteral.lowercase())
-            playAudio(context, resourceId, onCompletion = { newRandomLetter() })
-        },
-        modifier = modifier,
-        shape = RoundedCornerShape(percent = 20),
-        border = BorderStroke(5.dp, Color.DarkGray),
-        contentPadding = PaddingValues(12.dp),
-    ) {
-        Text(
-            text = letter.letterLiteral,
-            fontSize = 100.sp
-        )
-    }
+fun generateMathProblem(numberList: List<Int>): Pair<String, Int> {
+    var a: Int
+    var b: Int
+    var result: Int
+    var operator: String
+
+    do {
+        a = numberList.random()
+        b = numberList.random()
+        operator = if ((0..1).random() == 0) "+" else "-"
+        result = if (operator == "+") a + b else a - b
+    } while (result !in numberList) // Ensure the result is within the number set
+
+    val problem = "$a $operator $b"
+    return problem to result
 }
+
+
+//Function to display number tile with audio playback when clicked
+
 
 

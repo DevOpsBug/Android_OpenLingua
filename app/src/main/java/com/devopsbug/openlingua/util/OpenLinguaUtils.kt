@@ -26,8 +26,8 @@ import com.devopsbug.openlingua.model.Language
 
 
 object OpenLinguaUtils {
-    fun getRawResourceId(context: Context, audioFilePrefix: String, letter: String): Int {
-        val resourceName = "${audioFilePrefix}_$letter"
+    fun getAudioResourceId(context: Context, audioFileLanguagePrefix: String, audioFilePostfix: String): Int {
+        val resourceName = "${audioFileLanguagePrefix}_$audioFilePostfix"
         return context.resources.getIdentifier(resourceName, "raw", context.packageName)
     }
 

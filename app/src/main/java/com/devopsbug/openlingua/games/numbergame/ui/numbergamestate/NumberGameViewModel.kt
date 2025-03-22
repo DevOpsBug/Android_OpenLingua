@@ -12,7 +12,7 @@ class NumberGameViewModel : ViewModel() {
     val uiState: StateFlow<NumberGameUiState> = _uiState.asStateFlow()
 
     fun updateLevel(level: Int) {
-        val currentNumberSet = Numbers.numbersByLevel[level -1]
+        val currentNumberSet = Numbers.numbersByLevel[level -1].numberList
         _uiState.value = _uiState.value.copy(
             currentLevel = level,
             currentNumberSet = currentNumberSet,

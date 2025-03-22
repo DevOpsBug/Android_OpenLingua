@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devopsbug.openlingua.util.OpenLinguaUtils.LanguageSelectionRow
 import com.devopsbug.openlingua.R
+import com.devopsbug.openlingua.games.numbergame.data.Numbers
 import com.devopsbug.openlingua.model.Language
 import com.devopsbug.openlingua.ui.theme.greenButtonColor
 import com.devopsbug.openlingua.ui.theme.primaryLightMediumContrast
@@ -92,7 +93,8 @@ fun NumberGameStartScreen(
                     .fillMaxWidth()
                     //.border(1.dp, Color.DarkGray),
             ){
-                listOf(1, 2, 3, 4).forEach {
+                val levelList = (1..Numbers.numbersByLevel.size).toList()
+                levelList.forEach {
                     Row(
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically,
@@ -117,15 +119,10 @@ fun NumberGameStartScreen(
                             )
                         }
                         Spacer(modifier = Modifier.width(16.dp))
-                        Text(
-                            text = when (it) {
-                                1 -> "[0-9]"
-                                2 -> "[0-19}"
-                                3 -> "[0-29]"
-                                else -> "[0-39]"
-                            },
-                            fontSize = 24.sp
-                        )
+                        //Text(
+                        //    text = Numbers.numbersByLevel[it-1].numberSetDescription,
+                        //    fontSize = 24.sp
+                        //)
                     }
                 }
                 Row(

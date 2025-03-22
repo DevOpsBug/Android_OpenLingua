@@ -23,7 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devopsbug.openlingua.util.OpenLinguaUtils.LanguageLevelRow
-import com.devopsbug.openlingua.util.OpenLinguaUtils.getRawResourceId
+import com.devopsbug.openlingua.util.OpenLinguaUtils.getAudioResourceId
 import com.devopsbug.openlingua.util.OpenLinguaUtils.playAudio
 import com.devopsbug.openlingua.R
 import com.devopsbug.openlingua.model.Language
@@ -98,7 +98,7 @@ private fun RandomNumberTile(number: Int, language: Language, newRandomNumber: (
     val context = LocalContext.current
     Button(
         onClick = {
-            val resourceId = getRawResourceId(context, language.audioFilePrefix, number.toString())
+            val resourceId = getAudioResourceId(context, language.audioFilePrefix, number.toString())
             playAudio(context, resourceId, onCompletion = { newRandomNumber() })
         },
         modifier = modifier,

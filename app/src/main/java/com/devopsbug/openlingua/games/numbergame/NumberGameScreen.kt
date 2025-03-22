@@ -45,15 +45,18 @@ import com.devopsbug.openlingua.games.numbergame.ui.numbergamescreens.RandomNumb
 import com.devopsbug.openlingua.games.numbergame.ui.numbergamestate.NumberGameViewModel
 import com.devopsbug.openlingua.ui.globalstate.OpenLinguaGlobalViewModel
 import com.devopsbug.openlingua.ui.theme.OpenLinguaTheme
+import com.devopsbug.openlingua.games.numbergame.ui.numbergamescreens.NumberCalcScreen as NumberCalcScreen1
 
 enum class NumberGameScreen(@StringRes val title: Int) {
     start(title = R.string.numbergame_start_screen),
     exploreNumbers(title = R.string.numbergame_explore_screen),
-    randomNumber(title = R.string.numbergame_random_number_screen)
+    randomNumber(title = R.string.numbergame_random_number_screen),
+    numberCalc(title = R.string.numbergame_number_calc_screen)
+
 }
 
 @Composable
-fun NumberGame(innerPadding: PaddingValues = PaddingValues(0.dp)) {
+fun NumberGame() {
 
     // Initialize navController
     val navController: NavHostController = rememberNavController()
@@ -70,60 +73,53 @@ fun NumberGame(innerPadding: PaddingValues = PaddingValues(0.dp)) {
     val numberGameViewModel: NumberGameViewModel = viewModel()
     val openLinguaGlobalViewModel: OpenLinguaGlobalViewModel = viewModel()
 
-//    OpenLinguaTheme {
-//        Scaffold(
-//            topBar = {
-//                NumberGameTopAppBar(
-//                    navigateHome = { navController.navigate(NumberGameScreen.start.name) },
-//                    currentScreenTitle = currentScreen.title,
-//                )
-//            },
-//            modifier = Modifier
-//                .background(color = MaterialTheme.colorScheme.background)
-//        ) { innerPadding ->
-            val numberGameUiState by numberGameViewModel.uiState.collectAsState()
-            val openLinguaGlobalState by openLinguaGlobalViewModel.uiState.collectAsState()
 
-            NavHost(
-                navController = navController,
-                startDestination = NumberGameScreen.start.name,
-                modifier = Modifier.padding(innerPadding)
-            ) {
-                composable(route = NumberGameScreen.start.name) {
-                    Log.d(TAG, "navHost Calling route = ${NumberGameScreen.start.name}")
-                    NumberGameStartScreen(
-                        onClickExplore = { navController.navigate(NumberGameScreen.exploreNumbers.name) },
-                        updateLanguage = { openLinguaGlobalViewModel.updateLanguage(it) },
-                        currentLevel = numberGameUiState.currentLevel,
-                        updateLevel = { numberGameViewModel.updateLevel(it) },
-                        currentLanguage = openLinguaGlobalState.currentLanguage,
-                    )
-                }
-                composable(route = NumberGameScreen.exploreNumbers.name) {
-                    Log.d(
-                        TAG,
-                        "navHost: Calling route = ${NumberGameScreen.exploreNumbers.name}"
-                    )
-                    ExploreNumbersScreen(
-                        currentLanguage = openLinguaGlobalState.currentLanguage,
-                        currentLevel = numberGameUiState.currentLevel,
-                        currentNumberSet = numberGameUiState.currentNumberSet,
-                        onClickContinue = { navController.navigate(NumberGameScreen.randomNumber.name) },
-                    )
-                }
-                composable(route = NumberGameScreen.randomNumber.name) {
-                    Log.d(TAG, "navHost: Calling route = ${NumberGameScreen.randomNumber.name}")
-                    RandomNumberScreen(
-                        currentLanguage = openLinguaGlobalState.currentLanguage,
-                        currentNumber = numberGameUiState.currentNumber,
-                        currentLevel = numberGameUiState.currentLevel,
-                        newRandomNumber = { numberGameViewModel.newRandomNumber() },
-                    )
-                }
- //           }
+    val numberGameUiState by numberGameViewModel.uiState.collectAsState()
+    val openLinguaGlobalState by openLinguaGlobalViewModel.uiState.collectAsState()
 
- //       }
-
+    NavHost(
+        navController = navController,
+        startDestination = NumberGameScreen.start.name,
+    ) {
+        composable(route = NumberGameScreen.start.name) {
+            Log.d(TAG, "navHost Calling route = ${NumberGameScreen.start.name}")
+            NumberGameStartScreen(
+                onClickExplore = { navController.navigate(NumberGameScreen.exploreNumbers.name) },
+                updateLanguage = { openLinguaGlobalViewModel.updateLanguage(it) },
+                currentLevel = numberGameUiState.currentLevel,
+                updateLevel = { numberGameViewModel.updateLevel(it) },
+                currentLanguage = openLinguaGlobalState.currentLanguage,
+            )
+        }
+        composable(route = NumberGameScreen.exploreNumbers.name) {
+            Log.d(
+                TAG,
+                "navHost: Calling route = ${NumberGameScreen.exploreNumbers.name}"
+            )
+            ExploreNumbersScreen(
+                currentLanguage = openLinguaGlobalState.currentLanguage,
+                currentLevel = numberGameUiState.currentLevel,
+                currentNumberSet = numberGameUiState.currentNumberSet,
+                onClickContinue = { navController.navigate(NumberGameScreen.numberCalc.name) },
+            )
+        }
+        composable(route = NumberGameScreen.randomNumber.name) {
+            Log.d(TAG, "navHost: Calling route = ${NumberGameScreen.randomNumber.name}")
+            RandomNumberScreen(
+                currentLanguage = openLinguaGlobalState.currentLanguage,
+                currentNumber = numberGameUiState.currentNumber,
+                currentLevel = numberGameUiState.currentLevel,
+                newRandomNumber = { numberGameViewModel.newRandomNumber() },
+            )
+        }
+        composable(route = NumberGameScreen.numberCalc.name) {
+            Log.d(TAG, "navHost: Calling route = ${NumberGameScreen.numberCalc.name}")
+            NumberCalcScreen1(
+                currentLanguage = openLinguaGlobalState.currentLanguage,
+                currentLevel = numberGameUiState.currentLevel,
+                currentNumberList = numberGameUiState.currentNumberSet
+            )
+        }
     }
 }
 
@@ -166,7 +162,7 @@ fun NumberGameTopAppBar(
                     )
                 }
                     },
-            colors = TopAppBarDefaults.topAppBarColors(
+                colors = TopAppBarDefaults.topAppBarColors(
                 containerColor = MaterialTheme.colorScheme.primary,
                 titleContentColor = MaterialTheme.colorScheme.onPrimary,
                 navigationIconContentColor = MaterialTheme.colorScheme.onPrimary
