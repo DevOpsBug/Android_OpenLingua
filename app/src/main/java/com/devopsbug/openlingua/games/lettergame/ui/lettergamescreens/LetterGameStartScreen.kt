@@ -23,11 +23,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.devopsbug.openlingua.util.OpenLinguaUtils.LanguageSelectionRow
 import com.devopsbug.openlingua.R
 import com.devopsbug.openlingua.model.Language
 import com.devopsbug.openlingua.ui.theme.greenButtonColor
 import com.devopsbug.openlingua.ui.theme.primaryLightMediumContrast
+import com.devopsbug.openlingua.util.LanguageSelectionRow
 
 
 @Composable
@@ -38,9 +38,7 @@ fun LetterGameStartScreen(
     updateLevel: (Int) -> Unit,
     onClickExplore: () -> Unit,
 ) {
-    Column (
-        //modifier = Modifier.padding(paddingValues)
-    ){
+    Column {
         Column (
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,

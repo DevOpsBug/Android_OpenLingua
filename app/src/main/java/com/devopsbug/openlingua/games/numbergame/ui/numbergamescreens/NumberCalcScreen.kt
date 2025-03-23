@@ -15,22 +15,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.devopsbug.openlingua.util.OpenLinguaUtils.LanguageLevelRow
 import com.devopsbug.openlingua.R
 import com.devopsbug.openlingua.model.Language
-import com.devopsbug.openlingua.util.AudioTile
+import com.devopsbug.openlingua.util.ImageAudioTile
+import com.devopsbug.openlingua.util.OpenLinguaUtils.LanguageLevelRow
 
 
 @Composable
 fun NumberCalcScreen(
     currentLanguage: Language,
-    //currentNumber: Int,
+    currentCalcProblem: String,
+    currentCalcAnswer: Int,
     currentLevel: Int,
-    currentNumberList: List<Int>,
-    //newRandomNumber: () -> Unit
+    onClick: () -> Unit
     ) {
-    val (problem, answer) = generateMathProblem(currentNumberList)
-
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -50,15 +48,11 @@ fun NumberCalcScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "How to play:",
-                fontSize = 30.sp,
+                text = "Do you know the answer ?",
+                fontSize = 26.sp,
             )
             Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "1. Try to say the answer\n" +
-                        "2. Click the tile to hear the correct answer",
-                fontSize = 16.sp
-            )
+
         }
         Spacer(modifier = Modifier.height(16.dp))
         Row {
@@ -69,40 +63,27 @@ fun NumberCalcScreen(
             )
             Spacer(modifier = Modifier.weight(1f))
         }
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         Column (
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth()
         ){
             Text(
-                text = problem,
-                fontSize = 100.sp
+                text = currentCalcProblem,
+                fontSize = 48.sp,
             )
-            AudioTile(language = currentLanguage, audioFilePostfix = answer.toString(), onCompletion = {})
+            Spacer(modifier = Modifier.height(16.dp))
+            ImageAudioTile(
+                language = currentLanguage,
+                audioFilePostfix = currentCalcAnswer.toString(),
+                imageRessource = R.drawable.volume_up_24px,
+                onCompletion = {onClick()})
         }
     }
 }
 
-fun generateMathProblem(numberList: List<Int>): Pair<String, Int> {
-    var a: Int
-    var b: Int
-    var result: Int
-    var operator: String
 
-    do {
-        a = numberList.random()
-        b = numberList.random()
-        operator = if ((0..1).random() == 0) "+" else "-"
-        result = if (operator == "+") a + b else a - b
-    } while (result !in numberList) // Ensure the result is within the number set
-
-    val problem = "$a $operator $b"
-    return problem to result
-}
-
-
-//Function to display number tile with audio playback when clicked
 
 
 

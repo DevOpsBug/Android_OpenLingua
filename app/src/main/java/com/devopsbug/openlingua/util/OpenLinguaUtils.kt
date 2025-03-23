@@ -22,6 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devopsbug.openlingua.data.Languages
+import com.devopsbug.openlingua.games.numbergame.NumberGameScreen
 import com.devopsbug.openlingua.model.Language
 
 
@@ -74,41 +75,6 @@ object OpenLinguaUtils {
         }
     }
 
-    //function to display language selection row
-    @Composable
-    fun LanguageSelectionRow(
-        currentLanguage: Language = Languages.german,
-        updateLanguage: (Language) -> Unit,
-        modifier: Modifier = Modifier.fillMaxWidth()
-    ){
-        Column (
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = modifier
-        ){
-            //Text(text = "Choose Language")
-            Row {
-                listOf(Languages.german, Languages.italian, Languages.english).forEach { language ->
 
-                    Button(
-                        onClick = { updateLanguage(language) },
-                        shape = RectangleShape,
-                        //border = BorderStroke(5.dp, MaterialTheme.colorScheme.primaryContainer),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (currentLanguage == language) Color.LightGray else Color.White,
-                            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth(fraction = 0.2f)
-                            .weight(1f),
-                    ) {
-                        Image(
-                            painter = painterResource(language.flagImage),
-                            contentDescription = null,
-                        )
-                    }
-                }
-            }
-        }
-    }
+
 }

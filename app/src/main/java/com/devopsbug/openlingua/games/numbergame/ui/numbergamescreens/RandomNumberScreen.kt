@@ -1,32 +1,24 @@
 package  com.devopsbug.openlingua.games.numbergame.ui.numbergamescreens
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.devopsbug.openlingua.util.OpenLinguaUtils.LanguageLevelRow
-import com.devopsbug.openlingua.util.OpenLinguaUtils.getAudioResourceId
-import com.devopsbug.openlingua.util.OpenLinguaUtils.playAudio
 import com.devopsbug.openlingua.R
 import com.devopsbug.openlingua.model.Language
+import com.devopsbug.openlingua.util.OpenLinguaUtils.LanguageLevelRow
+import com.devopsbug.openlingua.util.TextAudioTile
 
 
 @Composable
@@ -55,14 +47,10 @@ fun RandomNumberScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "How to play:",
+                text = "How do you say\n" +
+                        "this number ?",
                 fontSize = 30.sp,
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "1. Try to say the sound of the Number\n" +
-                        "2. Click the number to hear the correct sound",
-                fontSize = 16.sp
+                lineHeight = 42.sp
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
@@ -74,42 +62,19 @@ fun RandomNumberScreen(
             )
             Spacer(modifier = Modifier.weight(1f))
         }
-        Spacer(modifier = Modifier.height(32.dp))
-        Row (
-            horizontalArrangement = Arrangement.Center,
+        Spacer(modifier = Modifier.height(16.dp))
+        Column (
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth()
         ){
-            RandomNumberTile(
-                number = currentNumber,
+            TextAudioTile(
                 language = currentLanguage,
-                newRandomNumber = newRandomNumber,
-                modifier = Modifier
-                    .height(248.dp)
-                    .width(248.dp)
-
+                audioFilePostfix = currentNumber.toString(),
+                tileText = currentNumber.toString(),
+                onCompletion = newRandomNumber
             )
         }
-    }
-}
-
-//Function to display number tile with audio playback when clicked
-@Composable
-private fun RandomNumberTile(number: Int, language: Language, newRandomNumber: () -> Unit, modifier: Modifier = Modifier) {
-    val context = LocalContext.current
-    Button(
-        onClick = {
-            val resourceId = getAudioResourceId(context, language.audioFilePrefix, number.toString())
-            playAudio(context, resourceId, onCompletion = { newRandomNumber() })
-        },
-        modifier = modifier,
-        shape = RoundedCornerShape(percent = 20),
-        border = BorderStroke(5.dp, Color.DarkGray),
-        contentPadding = PaddingValues(12.dp),
-    ) {
-        Text(
-            text = number.toString(),
-            fontSize = 100.sp
-        )
     }
 }
 

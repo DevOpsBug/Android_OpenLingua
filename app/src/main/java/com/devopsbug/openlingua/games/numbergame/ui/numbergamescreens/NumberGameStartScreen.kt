@@ -23,12 +23,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.devopsbug.openlingua.util.OpenLinguaUtils.LanguageSelectionRow
 import com.devopsbug.openlingua.R
 import com.devopsbug.openlingua.games.numbergame.data.Numbers
 import com.devopsbug.openlingua.model.Language
 import com.devopsbug.openlingua.ui.theme.greenButtonColor
 import com.devopsbug.openlingua.ui.theme.primaryLightMediumContrast
+import com.devopsbug.openlingua.util.LanguageSelectionRow
 
 
 @Composable
@@ -37,6 +37,8 @@ fun NumberGameStartScreen(
     updateLanguage: (Language) -> Unit,
     currentLevel: Int,
     updateLevel: (Int) -> Unit,
+    currentSublevel: String = "A",
+    updateSublevel: (String) -> Unit,
     onClickExplore: () -> Unit,
 ) {
     Column (){
@@ -88,41 +90,58 @@ fun NumberGameStartScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
             Column(
-                horizontalAlignment = Alignment.Start,
+                horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
-                    //.border(1.dp, Color.DarkGray),
             ){
                 val levelList = (1..Numbers.numbersByLevel.size).toList()
-                levelList.forEach {
+                levelList.forEach { level ->
                     Row(
-                        horizontalArrangement = Arrangement.Start,
+                        horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.fillMaxWidth(0.8f).padding(8.dp)
+                        modifier = Modifier.fillMaxWidth(1f).padding(8.dp)
                     ) {
-                        Spacer(modifier = Modifier.width(16.dp))
-                        Button(
-                            onClick = { updateLevel(it) },
-                            contentPadding = PaddingValues(16.dp),
-                            border = BorderStroke(width = 2.dp, color = Color.DarkGray),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = if (currentLevel == it) {
-                                    primaryLightMediumContrast
-                                } else {
-                                    ButtonDefaults.buttonColors().containerColor
-                                }
-                            )
-                        ) {
-                            Text(
-                                text = "Level $it",
-                                fontSize = 24.sp
-                            )
+                        listOf("A", "B").forEach{ sublevel ->
+                            Button(
+                                onClick = {
+                                    updateLevel(level)
+                                    updateSublevel(sublevel)
+                                          },
+                                contentPadding = PaddingValues(top = 16.dp, bottom = 16.dp, start = 32.dp, end = 32.dp),
+                                border = BorderStroke(width = 2.dp, color = Color.DarkGray),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = if (currentLevel == level && currentSublevel == sublevel) {
+                                        primaryLightMediumContrast
+                                    } else {
+                                        ButtonDefaults.buttonColors().containerColor
+                                    }
+                                )
+                            ) {
+                                Text(
+                                    text = "Level $level $sublevel",
+                                    fontSize = 24.sp
+                                )
+                            }
                         }
-                        Spacer(modifier = Modifier.width(16.dp))
-                        //Text(
-                        //    text = Numbers.numbersByLevel[it-1].numberSetDescription,
-                        //    fontSize = 24.sp
-                        //)
+
+                        //Spacer(modifier = Modifier.width(8.dp))
+//                        Button(
+//                            onClick = { updateLevel(it) },
+//                            contentPadding = PaddingValues(top = 16.dp, bottom = 16.dp, start = 32.dp, end = 32.dp),
+//                            border = BorderStroke(width = 2.dp, color = Color.DarkGray),
+//                            colors = ButtonDefaults.buttonColors(
+//                                containerColor = if (currentLevel == it) {
+//                                    primaryLightMediumContrast
+//                                } else {
+//                                    ButtonDefaults.buttonColors().containerColor
+//                                }
+//                            )
+//                        ) {
+//                            Text(
+//                                text = "Level $it B",
+//                                fontSize = 24.sp
+//                            )
+//                        }
                     }
                 }
                 Row(
