@@ -11,8 +11,8 @@ data class ImageAsset(
     val url: String,
     val license: String,
     val downloadDate: String,
-    val author: String,
-    val attribution: String
+    val attributionText: String,
+    val attributionHtml: String
 )
 
 object OpenLinguaImageAssetUtils {
@@ -35,8 +35,8 @@ object OpenLinguaImageAssetUtils {
                     url = it[5],
                     license = it[6],
                     downloadDate = it[7],
-                    author = it[8],
-                    attribution = it[9],
+                    attributionText = it[8],
+                    attributionHtml = it[9],
                 ) }
                 .toList()
         }

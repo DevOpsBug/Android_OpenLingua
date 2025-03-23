@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import com.devopsbug.openlingua.R
 import com.devopsbug.openlingua.games.lettergame.model.Letter
 import com.devopsbug.openlingua.model.Language
-import com.devopsbug.openlingua.util.OpenLinguaUtils.LanguageLevelRow
+import com.devopsbug.openlingua.util.LanguageLevelRow
 import com.devopsbug.openlingua.util.OpenLinguaUtils.getAudioResourceId
 import com.devopsbug.openlingua.util.OpenLinguaUtils.playAudio
 import com.devopsbug.openlingua.util.TextAudioTile

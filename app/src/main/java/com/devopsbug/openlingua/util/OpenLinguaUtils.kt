@@ -47,33 +47,7 @@ object OpenLinguaUtils {
     }
 
 
-    @Composable
-    fun LanguageLevelRow(
-        currentLanguage: Language,
-        currentLevel: Int
-    ){
-        Row (
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                //.padding(start = 24.dp, end = 24.dp)
 
-        ){
-            Image(
-                painter = painterResource(currentLanguage.flagImage),
-                contentDescription = null,
-                modifier = Modifier.border(width = 1.dp, color = Color.DarkGray)
-            )
-            Text(
-                text = "Level $currentLevel",
-                fontSize = 24.sp,
-                color = MaterialTheme.colorScheme.primaryContainer,
-                //modifier = Modifier.border(width = 1.dp, color = Color.DarkGray)
-
-            )
-        }
-    }
 
 
 

@@ -1,4 +1,4 @@
-package  com.devopsbug.openlingua.games.numbergame.ui.numbergamescreens
+package  com.devopsbug.openlingua.games.picturematchinggame.ui.lettergamescreens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -24,7 +24,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devopsbug.openlingua.R
-import com.devopsbug.openlingua.games.numbergame.data.Numbers
 import com.devopsbug.openlingua.model.Language
 import com.devopsbug.openlingua.ui.theme.greenButtonColor
 import com.devopsbug.openlingua.ui.theme.primaryLightMediumContrast
@@ -32,16 +31,14 @@ import com.devopsbug.openlingua.util.LanguageSelectionRow
 
 
 @Composable
-fun NumberGameStartScreen(
+fun LetterGameStartScreen(
     currentLanguage: Language,
     updateLanguage: (Language) -> Unit,
     currentLevel: Int,
     updateLevel: (Int) -> Unit,
-    currentSublevel: String = "A",
-    updateSublevel: (String) -> Unit,
     onClickExplore: () -> Unit,
 ) {
-    Column (){
+    Column {
         Column (
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -75,7 +72,7 @@ fun NumberGameStartScreen(
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = "1. Choose a level\n" +
-                           "2. Click START to begin",
+                           "2. Choose a level",
                     fontSize = 16.sp
                 )
             }
@@ -88,51 +85,63 @@ fun NumberGameStartScreen(
                 )
                 Spacer(modifier = Modifier.weight(1f))
             }
+//            Spacer(modifier = Modifier.height(16.dp))
+//            LanguageSelectionRow(
+//                currentLanguage = currentLanguage,
+//                updateLanguage = updateLanguage,
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    //.padding(start = 24.dp, end = 24.dp)
+//                    .border(3.dp, MaterialTheme.colorScheme.primaryContainer)
+//
+//            )
             Spacer(modifier = Modifier.height(16.dp))
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
+                horizontalAlignment = Alignment.Start,
                 modifier = Modifier
                     .fillMaxWidth()
+                    //.border(1.dp, Color.DarkGray),
             ){
-                val levelList = (1..Numbers.numbersByLevel.size).toList()
-                levelList.forEach { level ->
+                listOf(1, 2, 3, 4).forEach {
                     Row(
-                        horizontalArrangement = Arrangement.SpaceBetween,
+                        horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .fillMaxWidth(1f)
-                            .padding(8.dp)
+                        modifier = Modifier.fillMaxWidth(0.8f).padding(8.dp)
                     ) {
-                        listOf("A", "B").forEach{ sublevel ->
-                            Button(
-                                onClick = {
-                                    updateLevel(level)
-                                    updateSublevel(sublevel)
-                                          },
-                                contentPadding = PaddingValues(top = 16.dp, bottom = 16.dp, start = 32.dp, end = 32.dp),
-                                border = BorderStroke(width = 2.dp, color = Color.DarkGray),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = if (currentLevel == level && currentSublevel == sublevel) {
-                                        primaryLightMediumContrast
-                                    } else {
-                                        ButtonDefaults.buttonColors().containerColor
-                                    }
-                                )
-                            ) {
-                                Text(
-                                    text = "Level $level $sublevel",
-                                    fontSize = 24.sp
-                                )
-                            }
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Button(
+                            onClick = { updateLevel(it) },
+                            contentPadding = PaddingValues(16.dp),
+                            border = BorderStroke(width = 2.dp, color = Color.DarkGray),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (currentLevel == it) {
+                                    primaryLightMediumContrast
+                                } else {
+                                    ButtonDefaults.buttonColors().containerColor
+                                }
+                            )
+                        ) {
+                            Text(
+                                text = "Level $it",
+                                fontSize = 24.sp
+                            )
                         }
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Text(
+                            text = when (it) {
+                                1 -> "[A-M]"
+                                2 -> "[A-Z}"
+                                3 -> "[A-Z; a-m]"
+                                else -> "[A-Z; a-z]"
+                            },
+                            fontSize = 24.sp
+                        )
                     }
                 }
                 Row(
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .fillMaxWidth(0.8f)
-                        .padding(8.dp)
+                    modifier = Modifier.fillMaxWidth(0.8f).padding(8.dp)
                 ) {
                     Spacer(modifier = Modifier.width(16.dp))
                     Button(
@@ -153,4 +162,5 @@ fun NumberGameStartScreen(
             }
         }
     }
+
 }

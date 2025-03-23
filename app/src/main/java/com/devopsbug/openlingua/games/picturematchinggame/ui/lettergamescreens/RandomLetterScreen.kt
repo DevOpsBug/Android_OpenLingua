@@ -1,32 +1,41 @@
-package  com.devopsbug.openlingua.games.numbergame.ui.numbergamescreens
+package  com.devopsbug.openlingua.games.picturematchinggame.ui.lettergamescreens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devopsbug.openlingua.R
+import com.devopsbug.openlingua.games.lettergame.model.Letter
 import com.devopsbug.openlingua.model.Language
 import com.devopsbug.openlingua.util.LanguageLevelRow
+import com.devopsbug.openlingua.util.OpenLinguaUtils.getAudioResourceId
+import com.devopsbug.openlingua.util.OpenLinguaUtils.playAudio
 import com.devopsbug.openlingua.util.TextAudioTile
 
 
 @Composable
-fun RandomNumberScreen(
+fun RandomLetterScreen(
     currentLanguage: Language,
-    currentNumber: Int,
+    currentLetter: Letter,
     currentLevel: Int,
-    newRandomNumber: () -> Unit
+    newRandomLetter: () -> Unit
     ) {
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -48,7 +57,7 @@ fun RandomNumberScreen(
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = "Can you say " +
-                        "this number ?",
+                        "this letter ?",
                 fontSize = 30.sp,
                 lineHeight = 42.sp
             )
@@ -63,18 +72,47 @@ fun RandomNumberScreen(
             Spacer(modifier = Modifier.weight(1f))
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Column (
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
+        Row (
+            horizontalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth()
         ){
             TextAudioTile(
                 language = currentLanguage,
-                audioFilePostfix = currentNumber.toString(),
-                tileText = currentNumber.toString(),
-                onCompletion = newRandomNumber
+                audioFilePostfix = currentLetter.letterLiteral.lowercase(),
+                tileText = currentLetter.letterLiteral,
+                onCompletion = newRandomLetter
             )
+//            RandomLetterTile(
+//                letter = currentLetter,
+//                language = currentLanguage,
+//                newRandomLetter = newRandomLetter,
+//                modifier = Modifier
+//                    .height(248.dp)
+//                    .width(248.dp)
+//
+//            )
         }
+    }
+}
+
+//Function to display letter tile with audio playback when clicked
+@Composable
+private fun RandomLetterTile(letter: Letter, language: Language, newRandomLetter: () -> Unit, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    Button(
+        onClick = {
+            val resourceId = getAudioResourceId(context, language.audioFilePrefix, letter.letterLiteral.lowercase())
+            playAudio(context, resourceId, onCompletion = { newRandomLetter() })
+        },
+        modifier = modifier,
+        shape = RoundedCornerShape(percent = 20),
+        border = BorderStroke(5.dp, Color.DarkGray),
+        contentPadding = PaddingValues(12.dp),
+    ) {
+        Text(
+            text = letter.letterLiteral,
+            fontSize = 100.sp
+        )
     }
 }
 

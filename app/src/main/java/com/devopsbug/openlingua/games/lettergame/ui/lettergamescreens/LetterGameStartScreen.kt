@@ -54,15 +54,25 @@ fun LetterGameStartScreen(
                     .fillMaxWidth()
                     //.padding(24.dp)
             ) {
-                Text(
-                    text = "How to start:",
-                    fontSize = 30.sp,
-                )
+                Row (
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ){
+                    Text(
+                        text = "How to start:",
+                        fontSize = 30.sp,
+                    )
+                    Image(
+                        painter = painterResource(currentLanguage.flagImage),
+                        contentDescription = currentLanguage.name,
+                        Modifier.border(width = 1.dp, color = Color.DarkGray)
+                    )
+                }
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = "1. Choose a language\n" +
-                           "2. Choose a level\n" +
-                           "3. Click START to begin",
+                    text = "1. Choose a level\n" +
+                           "2. Choose a level",
                     fontSize = 16.sp
                 )
             }
@@ -75,16 +85,16 @@ fun LetterGameStartScreen(
                 )
                 Spacer(modifier = Modifier.weight(1f))
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            LanguageSelectionRow(
-                currentLanguage = currentLanguage,
-                updateLanguage = updateLanguage,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    //.padding(start = 24.dp, end = 24.dp)
-                    .border(3.dp, MaterialTheme.colorScheme.primaryContainer)
-
-            )
+//            Spacer(modifier = Modifier.height(16.dp))
+//            LanguageSelectionRow(
+//                currentLanguage = currentLanguage,
+//                updateLanguage = updateLanguage,
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    //.padding(start = 24.dp, end = 24.dp)
+//                    .border(3.dp, MaterialTheme.colorScheme.primaryContainer)
+//
+//            )
             Spacer(modifier = Modifier.height(16.dp))
             Column(
                 horizontalAlignment = Alignment.Start,
