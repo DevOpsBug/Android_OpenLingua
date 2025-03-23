@@ -22,5 +22,5 @@ app/src/main/res/raw
 app/src/main/res/mipmap*
 /.tmp.drivedownload/
 /.tmp.driveupload/
-/app/src/main/assets/pixabay/images/
-/app/src/main/assets/pixabay/imageLicenseScreenshots/
+/app/src/main/assets/pixabay/images/*
+/app/src/main/assets/pixabay/imageLicenseScreenshots/*
