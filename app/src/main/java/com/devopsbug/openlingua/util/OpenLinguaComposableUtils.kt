@@ -111,7 +111,7 @@ fun LargeButtonTile(
             Image(
                 painter = painterResource(id = imageRessource),
                 contentDescription = "Button Icon",
-                modifier = Modifier.size(48.dp)
+                modifier = Modifier.size(100.dp)
             )
         }
 

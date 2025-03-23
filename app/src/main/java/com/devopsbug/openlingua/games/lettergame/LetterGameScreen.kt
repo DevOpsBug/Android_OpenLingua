@@ -43,6 +43,7 @@ import com.devopsbug.openlingua.games.lettergame.ui.lettergamescreens.ExploreLet
 import com.devopsbug.openlingua.games.lettergame.ui.lettergamescreens.LetterGameStartScreen
 import com.devopsbug.openlingua.games.lettergame.ui.lettergamestate.LetterGameViewModel
 import com.devopsbug.openlingua.games.lettergame.ui.lettergamescreens.RandomLetterScreen
+import com.devopsbug.openlingua.ui.globalstate.OpenLinguaGlobalState
 import com.devopsbug.openlingua.ui.globalstate.OpenLinguaGlobalViewModel
 import com.devopsbug.openlingua.ui.theme.OpenLinguaTheme
 
@@ -52,9 +53,12 @@ enum class LetterGameScreen(@StringRes val title: Int) {
     randomLetter(title = R.string.lettergame_random_letter_screen)
 }
 
-@Preview
+//@Preview
 @Composable
-fun LetterGame() {
+fun LetterGame(
+    openLinguaGlobalViewModel: OpenLinguaGlobalViewModel,
+    openLinguaGlobalState: OpenLinguaGlobalState
+) {
 
     // Initialize navController
     val navController: NavHostController = rememberNavController()
@@ -69,10 +73,10 @@ fun LetterGame() {
 
     // Create ViewModel
     val letterGameViewModel: LetterGameViewModel = viewModel()
-    val openLinguaGlobalViewModel: OpenLinguaGlobalViewModel = viewModel()
+    //val openLinguaGlobalViewModel: OpenLinguaGlobalViewModel = viewModel()
 
     val letterGameUiState by letterGameViewModel.uiState.collectAsState()
-    val openLinguaGlobalState by openLinguaGlobalViewModel.uiState.collectAsState()
+    //val openLinguaGlobalState by openLinguaGlobalViewModel.uiState.collectAsState()
 
     NavHost(
         navController = navController,

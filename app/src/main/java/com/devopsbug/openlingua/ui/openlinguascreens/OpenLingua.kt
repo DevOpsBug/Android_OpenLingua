@@ -106,13 +106,19 @@ fun OpenLingua() {
                         "navHost: Calling route = ${OpenLinguaScreen.lettergame.name}"
                     )
                     OpenLinguaTheme {
-                        LetterGame()
+                        LetterGame(
+                            openLinguaGlobalViewModel = openLinguaGlobalViewModel,
+                            openLinguaGlobalState = openLinguaGlobalState
+                        )
                     }
                 }
                 composable(route = OpenLinguaScreen.numbergame.name) {
                     Log.d(TAG, "navHost: Calling route = ${OpenLinguaScreen.numbergame.name}")
                     OpenLinguaTheme {
-                        NumberGame()
+                        NumberGame(
+                            openLinguaGlobalViewModel = openLinguaGlobalViewModel,
+                            openLinguaGlobalState = openLinguaGlobalState
+                        )
                     }
                 }
             }

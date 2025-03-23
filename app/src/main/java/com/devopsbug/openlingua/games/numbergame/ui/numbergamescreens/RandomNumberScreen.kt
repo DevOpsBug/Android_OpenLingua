@@ -47,7 +47,7 @@ fun RandomNumberScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "How do you say\n" +
+                text = "Can you say " +
                         "this number ?",
                 fontSize = 30.sp,
                 lineHeight = 42.sp

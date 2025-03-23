@@ -18,6 +18,7 @@ import com.devopsbug.openlingua.games.numbergame.ui.numbergamescreens.NumberCalc
 import com.devopsbug.openlingua.games.numbergame.ui.numbergamescreens.NumberGameStartScreen
 import com.devopsbug.openlingua.games.numbergame.ui.numbergamescreens.RandomNumberScreen
 import com.devopsbug.openlingua.games.numbergame.ui.numbergamestate.NumberGameViewModel
+import com.devopsbug.openlingua.ui.globalstate.OpenLinguaGlobalState
 import com.devopsbug.openlingua.ui.globalstate.OpenLinguaGlobalViewModel
 
 enum class NumberGameScreen(@StringRes val title: Int) {
@@ -29,7 +30,10 @@ enum class NumberGameScreen(@StringRes val title: Int) {
 }
 
 @Composable
-fun NumberGame() {
+fun NumberGame(
+    openLinguaGlobalViewModel: OpenLinguaGlobalViewModel,
+    openLinguaGlobalState: OpenLinguaGlobalState
+) {
 
     // Initialize navController
     val navController: NavHostController = rememberNavController()
@@ -44,11 +48,9 @@ fun NumberGame() {
 
     // Create ViewModel
     val numberGameViewModel: NumberGameViewModel = viewModel()
-    val openLinguaGlobalViewModel: OpenLinguaGlobalViewModel = viewModel()
 
-
+    // Create UI State
     val numberGameUiState by numberGameViewModel.uiState.collectAsState()
-    val openLinguaGlobalState by openLinguaGlobalViewModel.uiState.collectAsState()
 
     NavHost(
         navController = navController,
