@@ -1,55 +1,33 @@
 package com.devopsbug.openlingua.games.numbergame.data
 
-import com.devopsbug.openlingua.R
-import com.devopsbug.openlingua.games.numbergame.model.Number
+import com.devopsbug.openlingua.games.numbergame.model.NumberGameLevel
 
 
 object Numbers {
-    val numbersByLevel: List<List<Int>> = listOf(
-        (0..9).toList(),
-        (0..19).toList(),
-        (0..29).toList(),
-        (0..39).toList(),
+    val numbersByLevel: List<NumberGameLevel> = listOf(
+        NumberGameLevel(
+            level = 1,
+            numberList = (0..10).toList(),
+            numberSetDescription = "[0-10]",
+            maxNumberForCalculation = 10
+        ),
+        NumberGameLevel(
+            level = 2,
+            numberList = (0..20).toList(),
+            numberSetDescription = "[0-20]",
+            maxNumberForCalculation = 20
+        ),
+        NumberGameLevel(
+            level = 3,
+            numberList = (0..30).toList() + listOf(40, 50, 60, 70, 80, 90, 100),
+            numberSetDescription = "[0-30]+[40,50..90,100]",
+            maxNumberForCalculation = 30
+        ),
+        NumberGameLevel(
+            level = 4,
+            numberList = (0..100).toList() + listOf(200, 300, 400, 500, 600, 700, 800, 900, 1000),
+            numberSetDescription = "[0-100, 200, 300 ... 1000]",
+            maxNumberForCalculation = 100
+        )
     )
-
-//    val allNumbers: List<Number> = listOf(
-//        Number(
-//            numberLiteral = "0",
-//            value = 0,
-//            audioFiles = mapOf(
-//                "de" to R.raw.de_a,
-//                "en" to R.raw.en_a,
-//                "it" to R.raw.it_a
-//            )
-//        ),
-//        Number(
-//            numberLiteral = "1",
-//            value = 1,
-//            audioFiles = mapOf(
-//                "de" to R.raw.de_a,
-//                "en" to R.raw.en_a,
-//                "it" to R.raw.it_a
-//            )
-//        ),
-//        Number(
-//            numberLiteral = "2",
-//            value = 2,
-//            audioFiles = mapOf(
-//                "de" to R.raw.de_a,
-//                "en" to R.raw.en_a,
-//                "it" to R.raw.it_a
-//            )
-//        ),
-//        Number(
-//            numberLiteral = "3",
-//            value = 3,
-//            audioFiles = mapOf(
-//                "de" to R.raw.de_a,
-//                "en" to R.raw.en_a,
-//                "it" to R.raw.it_a
-//            )
-//        ),
-//    )
-
-
 }

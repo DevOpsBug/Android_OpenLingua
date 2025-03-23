@@ -22,12 +22,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devopsbug.openlingua.data.Languages
+import com.devopsbug.openlingua.games.numbergame.NumberGameScreen
 import com.devopsbug.openlingua.model.Language
 
 
 object OpenLinguaUtils {
-    fun getRawResourceId(context: Context, audioFilePrefix: String, letter: String): Int {
-        val resourceName = "${audioFilePrefix}_$letter"
+    fun getAudioResourceId(context: Context, audioFileLanguagePrefix: String, audioFilePostfix: String): Int {
+        val resourceName = "${audioFileLanguagePrefix}_$audioFilePostfix"
         return context.resources.getIdentifier(resourceName, "raw", context.packageName)
     }
 
@@ -45,69 +46,9 @@ object OpenLinguaUtils {
         }
     }
 
-    @Composable
-    fun LanguageLevelRow(
-        currentLanguage: Language,
-        currentLevel: Int
-    ){
-        Row (
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                //.padding(start = 24.dp, end = 24.dp)
 
-        ){
-            Image(
-                painter = painterResource(currentLanguage.flagImage),
-                contentDescription = null,
-                modifier = Modifier.border(width = 1.dp, color = Color.DarkGray)
-            )
-            Text(
-                text = "Level $currentLevel",
-                fontSize = 24.sp,
-                color = MaterialTheme.colorScheme.primaryContainer,
-                //modifier = Modifier.border(width = 1.dp, color = Color.DarkGray)
 
-            )
-        }
-    }
 
-    //function to display language selection row
-    @Composable
-    fun LanguageSelectionRow(
-        currentLanguage: Language = Languages.german,
-        updateLanguage: (Language) -> Unit,
-        modifier: Modifier = Modifier.fillMaxWidth()
-    ){
-        Column (
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = modifier
-        ){
-            //Text(text = "Choose Language")
-            Row {
-                listOf(Languages.german, Languages.italian, Languages.english).forEach { language ->
 
-                    Button(
-                        onClick = { updateLanguage(language) },
-                        shape = RectangleShape,
-                        //border = BorderStroke(5.dp, MaterialTheme.colorScheme.primaryContainer),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (currentLanguage == language) Color.LightGray else Color.White,
-                            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth(fraction = 0.2f)
-                            .weight(1f),
-                    ) {
-                        Image(
-                            painter = painterResource(language.flagImage),
-                            contentDescription = null,
-                        )
-                    }
-                }
-            }
-        }
-    }
+
 }

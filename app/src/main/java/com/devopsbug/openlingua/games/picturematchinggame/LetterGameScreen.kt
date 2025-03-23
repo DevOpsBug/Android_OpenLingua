@@ -1,4 +1,4 @@
-package com.devopsbug.openlingua.games.lettergame
+package com.devopsbug.openlingua.games.picturematchinggame
 
 import android.content.ContentValues.TAG
 import android.util.Log

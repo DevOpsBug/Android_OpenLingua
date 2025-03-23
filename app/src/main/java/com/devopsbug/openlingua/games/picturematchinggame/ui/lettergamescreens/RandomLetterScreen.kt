@@ -1,4 +1,4 @@
-package  com.devopsbug.openlingua.games.lettergame.ui.screens
+package  com.devopsbug.openlingua.games.picturematchinggame.ui.lettergamescreens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -22,12 +21,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.devopsbug.openlingua.util.OpenLinguaUtils.LanguageLevelRow
-import com.devopsbug.openlingua.util.OpenLinguaUtils.getRawResourceId
-import com.devopsbug.openlingua.util.OpenLinguaUtils.playAudio
 import com.devopsbug.openlingua.R
 import com.devopsbug.openlingua.games.lettergame.model.Letter
 import com.devopsbug.openlingua.model.Language
+import com.devopsbug.openlingua.util.LanguageLevelRow
+import com.devopsbug.openlingua.util.OpenLinguaUtils.getAudioResourceId
+import com.devopsbug.openlingua.util.OpenLinguaUtils.playAudio
+import com.devopsbug.openlingua.util.TextAudioTile
 
 
 @Composable
@@ -56,14 +56,10 @@ fun RandomLetterScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "How to play:",
+                text = "Can you say " +
+                        "this letter ?",
                 fontSize = 30.sp,
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "1. Try to say the sound of the letter\n" +
-                        "2. Click the letter to hear the correct sound",
-                fontSize = 16.sp
+                lineHeight = 42.sp
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
@@ -75,20 +71,26 @@ fun RandomLetterScreen(
             )
             Spacer(modifier = Modifier.weight(1f))
         }
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         Row (
             horizontalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth()
         ){
-            RandomLetterTile(
-                letter = currentLetter,
+            TextAudioTile(
                 language = currentLanguage,
-                newRandomLetter = newRandomLetter,
-                modifier = Modifier
-                    .height(248.dp)
-                    .width(248.dp)
-
+                audioFilePostfix = currentLetter.letterLiteral.lowercase(),
+                tileText = currentLetter.letterLiteral,
+                onCompletion = newRandomLetter
             )
+//            RandomLetterTile(
+//                letter = currentLetter,
+//                language = currentLanguage,
+//                newRandomLetter = newRandomLetter,
+//                modifier = Modifier
+//                    .height(248.dp)
+//                    .width(248.dp)
+//
+//            )
         }
     }
 }
@@ -99,7 +101,7 @@ private fun RandomLetterTile(letter: Letter, language: Language, newRandomLetter
     val context = LocalContext.current
     Button(
         onClick = {
-            val resourceId = getRawResourceId(context, language.audioFilePrefix, letter.letterLiteral.lowercase())
+            val resourceId = getAudioResourceId(context, language.audioFilePrefix, letter.letterLiteral.lowercase())
             playAudio(context, resourceId, onCompletion = { newRandomLetter() })
         },
         modifier = modifier,

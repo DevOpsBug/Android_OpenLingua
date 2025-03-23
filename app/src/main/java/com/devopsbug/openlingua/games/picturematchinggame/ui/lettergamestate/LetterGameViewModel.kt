@@ -1,4 +1,4 @@
-package  com.devopsbug.openlingua.games.lettergame.ui.state
+package  com.devopsbug.openlingua.games.picturematchinggame.ui.lettergamestate
 
 import androidx.lifecycle.ViewModel
 

@@ -13,4 +13,8 @@ class OpenLinguaGlobalViewModel : ViewModel() {
     fun updateLanguage(newLanguage: Language) {
         _uiState.value = _uiState.value.copy(currentLanguage = newLanguage)
     }
+
+    fun updateGame(newGame: Game) {
+        _uiState.value = _uiState.value.copy(currentGame = newGame)
+    }
 }

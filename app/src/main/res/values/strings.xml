@@ -9,4 +9,5 @@
     <string name="numbergame_explore_screen">Explore Numbers</string>
     <string name="numbergame_random_number_screen">Play Number Game</string>
     <string name="numbergame_start_screen">Number Game</string>
+    <string name="numbergame_number_calc_screen">Calc Numbers</string>
 </resources>
