@@ -1,5 +1,6 @@
 package com.devopsbug.openlingua.ui.openlinguascreens
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -20,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,6 +31,7 @@ import com.devopsbug.openlingua.ui.theme.greenButtonColor
 import com.devopsbug.openlingua.ui.theme.primaryLightMediumContrast
 import com.devopsbug.openlingua.util.LanguageSelectionRow
 import com.devopsbug.openlingua.util.LargeButtonTile
+import com.devopsbug.openlingua.util.OpenLinguaImageAssetUtils
 
 @Composable
 fun OpenLinguaStartScreen(
@@ -47,6 +50,17 @@ fun OpenLinguaStartScreen(
                 .padding(start = 24.dp, end = 24.dp)
             //.border(width = 1.dp, color = Color.DarkGray)
         ) {
+            val vegetableAssets = OpenLinguaImageAssetUtils.loadCategoryAssetsFromCsvFile(
+                context = LocalContext.current,
+                category = "vegetables"
+            )
+            Log.d("ASSET", vegetableAssets[5].toString())
+            val carrotAsset = vegetableAssets.find { it.asset_name == "carrot" }
+            if (carrotAsset != null) {
+                Log.d("ASSET", "carrotAsset: ${carrotAsset.attribution_text}")
+                Text(text="${carrotAsset.attribution_text}")
+            }
+
             Spacer(modifier = Modifier.height(16.dp))
             Column(
                 horizontalAlignment = Alignment.Start,
