@@ -39,11 +39,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.devopsbug.openlingua.R
 import com.devopsbug.openlingua.games.lettergame.LetterGame
-import com.devopsbug.openlingua.games.lettergame.LetterGameScreen
-import com.devopsbug.openlingua.games.lettergame.ui.lettergamescreens.ExploreLettersScreen
-import com.devopsbug.openlingua.games.lettergame.ui.lettergamescreens.LetterGameStartScreen
-import com.devopsbug.openlingua.games.lettergame.ui.lettergamescreens.RandomLetterScreen
 import com.devopsbug.openlingua.games.numbergame.NumberGame
+import com.devopsbug.openlingua.games.picturematchinggame.PictureMatchingGame
 import com.devopsbug.openlingua.ui.globalstate.OpenLinguaGlobalViewModel
 import com.devopsbug.openlingua.ui.theme.OpenLinguaTheme
 
@@ -51,6 +48,8 @@ enum class OpenLinguaScreen(@StringRes val title: Int) {
     start(title = R.string.app_name),
     lettergame(title = R.string.lettergame_game_name),
     numbergame(title = R.string.numbergame_game_name),
+    vegetables(title = R.string.vegetables_game_name)
+
     //exploreLetters(title = R.string.lettergame_explore_screen),
     //randomLetter(title = R.string.lettergame_random_letter_screen)
 }
@@ -91,11 +90,18 @@ fun OpenLingua() {
                 startDestination = OpenLinguaScreen.start.name,
                 modifier = Modifier.padding(innerPadding)
             ) {
+                val onClickGame = mapOf(
+                    OpenLinguaScreen.lettergame.name to { navController.navigate(OpenLinguaScreen.lettergame.name) },
+                    OpenLinguaScreen.numbergame.name to { navController.navigate(OpenLinguaScreen.numbergame.name) },
+                    OpenLinguaScreen.vegetables.name to { navController.navigate(OpenLinguaScreen.vegetables.name) }
+
+                )
                 composable(route = OpenLinguaScreen.start.name) {
                     Log.d(TAG, "navHost Calling route = ${OpenLinguaScreen.start.name}")
                     OpenLinguaStartScreen(
-                        onClickLetterGame = { navController.navigate(OpenLinguaScreen.lettergame.name) },
-                        onClickNumberGame = { navController.navigate(OpenLinguaScreen.numbergame.name) },
+                        //onClickLetterGame = { navController.navigate(OpenLinguaScreen.lettergame.name) },
+                        //onClickNumberGame = { navController.navigate(OpenLinguaScreen.numbergame.name) },
+                        onClickGame = onClickGame,
                         updateLanguage = { openLinguaGlobalViewModel.updateLanguage(it) },
                         currentLanguage = openLinguaGlobalState.currentLanguage,
                     )
@@ -118,6 +124,19 @@ fun OpenLingua() {
                         NumberGame(
                             openLinguaGlobalViewModel = openLinguaGlobalViewModel,
                             openLinguaGlobalState = openLinguaGlobalState
+                        )
+                    }
+                }
+                composable(route = OpenLinguaScreen.vegetables.name) {
+                    Log.d(TAG, "navHost: Calling route = $route")
+                    val vegetablesGame = PictureMatchingGame(
+                        gameName = "PictureMatchingGame",
+                        assetCategory = "vegetables"
+                    )
+                    OpenLinguaTheme {
+                        vegetablesGame.EntryScreen()
+                        vegetablesGame.RandomScreen(
+                            currentLanguage = openLinguaGlobalState.currentLanguage
                         )
                     }
                 }

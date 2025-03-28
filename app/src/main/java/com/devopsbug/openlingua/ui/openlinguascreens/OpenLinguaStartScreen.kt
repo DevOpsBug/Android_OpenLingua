@@ -1,48 +1,44 @@
 package com.devopsbug.openlingua.ui.openlinguascreens
 
 import android.util.Log
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devopsbug.openlingua.R
+import com.devopsbug.openlingua.core.ui.GridButtonTile
 import com.devopsbug.openlingua.model.Language
-import com.devopsbug.openlingua.ui.theme.greenButtonColor
-import com.devopsbug.openlingua.ui.theme.primaryLightMediumContrast
-import com.devopsbug.openlingua.util.LanguageSelectionRow
-import com.devopsbug.openlingua.util.LargeButtonTile
+import com.devopsbug.openlingua.core.ui.LanguageSelectionRow
+import com.devopsbug.openlingua.games.picturematchinggame.PictureMatchingGame
 import com.devopsbug.openlingua.util.OpenLinguaImageAssetUtils
 
 @Composable
 fun OpenLinguaStartScreen(
-    onClickLetterGame: () -> Unit,
-    onClickNumberGame: () -> Unit,
+    //onClickLetterGame: () -> Unit,
+    //onClickNumberGame: () -> Unit,
+    onClickGame: Map<String, () -> Unit>,
     updateLanguage: (Language) -> Unit,
     currentLanguage: Language
-)
-{
+) {
     Column {
-        Column (
+        Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
             modifier = Modifier
@@ -58,7 +54,7 @@ fun OpenLinguaStartScreen(
             val carrotAsset = vegetableAssets.find { it.asset_name == "carrot" }
             if (carrotAsset != null) {
                 Log.d("ASSET", "carrotAsset: ${carrotAsset.attribution_text}")
-                Text(text="${carrotAsset.attribution_text}")
+                Text(text = "${carrotAsset.attribution_text}")
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -99,32 +95,20 @@ fun OpenLinguaStartScreen(
 
             )
             Spacer(modifier = Modifier.height(16.dp))
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                //.border(1.dp, Color.DarkGray),
-            ){
-                LargeButtonTile(
-                    text = "ABC",
-                    onClick = onClickLetterGame
-                )
-                LargeButtonTile(
-                    text = "123",
-                    onClick = onClickNumberGame
-                )
+            ) {
+                items(onClickGame.keys.toList()) { item ->
+                    GridButtonTile(
+                        text = item,
+                        onClick = onClickGame.getValue(key = item)
+                    )
+                }
+
             }
+
         }
     }
 }
-
-//        Text(text = "OpenLingua Start Screen")
-//        Button(onClick = onClickLetterGame) {
-//            Text(text = "Letter Game")
-//        }
-//        Button(onClick = onClickNumberGame) {
-//            Text(text = "Number Game")
-//        }
-//    }
-//}

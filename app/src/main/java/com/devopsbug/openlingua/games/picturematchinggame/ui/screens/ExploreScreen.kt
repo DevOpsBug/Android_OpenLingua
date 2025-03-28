@@ -1,17 +1,25 @@
-package  com.devopsbug.openlingua.games.lettergame.ui.lettergamescreens
+package com.devopsbug.openlingua.games.picturematchinggame.ui.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,21 +29,23 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.devopsbug.openlingua.R
-import com.devopsbug.openlingua.games.lettergame.model.Letter
-import com.devopsbug.openlingua.model.Language
-import com.devopsbug.openlingua.core.ui.LanguageLevelRow
 import com.devopsbug.openlingua.util.OpenLinguaAudioUtils.getAudioResourceId
 import com.devopsbug.openlingua.util.OpenLinguaAudioUtils.playAudio
-import com.devopsbug.openlingua.core.ui.TextAudioTile
+import com.devopsbug.openlingua.R
+import com.devopsbug.openlingua.data.Languages
+import com.devopsbug.openlingua.games.lettergame.model.Letter
+import com.devopsbug.openlingua.model.Language
+import com.devopsbug.openlingua.ui.theme.greenButtonColor
+import com.devopsbug.openlingua.core.ui.LanguageLevelRow
 
 
 @Composable
-fun RandomLetterScreen(
-    currentLanguage: Language,
-    currentLetter: Letter,
+fun ExploreLettersScreen(
+    currentLanguage: Language = Languages.german,
+    updateLanguage: (Language) -> Unit,
+    currentLetterSet: List<Letter> ,
     currentLevel: Int,
-    newRandomLetter: () -> Unit
+    continueToRandomLetterScreen: () -> Unit
     ) {
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -50,16 +60,21 @@ fun RandomLetterScreen(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
+
             LanguageLevelRow(
                 currentLanguage = currentLanguage,
                 currentLevel = currentLevel
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "Can you say " +
-                        "this letter ?",
+                text = "Explore the Letters:",
                 fontSize = 30.sp,
-                lineHeight = 42.sp
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = "1. Click a letters to hear the pronounciation\n" +
+                        "2. Click PLAY to start the game",
+                fontSize = 16.sp
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
@@ -72,48 +87,64 @@ fun RandomLetterScreen(
             Spacer(modifier = Modifier.weight(1f))
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Row (
-            horizontalArrangement = Arrangement.Center,
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(5),
+            contentPadding = PaddingValues(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            userScrollEnabled = true,
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.8f)
+                .background(color = MaterialTheme.colorScheme.background)
+                .border(width = 1.dp, color = Color.DarkGray),
+            content = {
+                items(currentLetterSet) { letter ->
+                    ExploreLetterTile(
+                        letter = letter,
+                        language = currentLanguage,
+                    )
+                }
+            },
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(
+            onClick = continueToRandomLetterScreen,
+            colors = ButtonDefaults.buttonColors(
+                containerColor =  greenButtonColor
+            ),
+            border = BorderStroke(width = 2.dp, color = Color.DarkGray),
+            contentPadding = PaddingValues(16.dp),
             modifier = Modifier.fillMaxWidth()
         ){
-            TextAudioTile(
-                language = currentLanguage,
-                audioFilePostfix = currentLetter.letterLiteral.lowercase(),
-                tileText = currentLetter.letterLiteral,
-                onCompletion = newRandomLetter
+            Text(
+                text = "PLAY",
+                fontSize = 24.sp
             )
-//            RandomLetterTile(
-//                letter = currentLetter,
-//                language = currentLanguage,
-//                newRandomLetter = newRandomLetter,
-//                modifier = Modifier
-//                    .height(248.dp)
-//                    .width(248.dp)
-//
-//            )
         }
     }
 }
 
 //Function to display letter tile with audio playback when clicked
 @Composable
-private fun RandomLetterTile(letter: Letter, language: Language, newRandomLetter: () -> Unit, modifier: Modifier = Modifier) {
+private fun ExploreLetterTile(letter: Letter, language: Language, modifier: Modifier = Modifier) {
     val context = LocalContext.current
+    //   val mediaPlayer = MediaPlayer.create(context, letter.letterAudioGerman)
     Button(
         onClick = {
             val resourceId = getAudioResourceId(context, language.audioFilePrefix, letter.letterLiteral.lowercase())
-            playAudio(context, resourceId, onCompletion = { newRandomLetter() })
+            playAudio(context, resourceId)
         },
         modifier = modifier,
         shape = RoundedCornerShape(percent = 20),
-        border = BorderStroke(5.dp, Color.DarkGray),
+        border = BorderStroke(1.dp, Color.DarkGray),
         contentPadding = PaddingValues(12.dp),
     ) {
         Text(
-            text = letter.letterLiteral,
-            fontSize = 100.sp
+            text = letter.letterLiteral
         )
     }
 }
+
 
 

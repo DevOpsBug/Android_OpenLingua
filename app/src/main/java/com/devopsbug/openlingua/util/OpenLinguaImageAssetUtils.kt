@@ -1,50 +1,44 @@
 package com.devopsbug.openlingua.util
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.util.Log
-import androidx.compose.foundation.layout.size
-import androidx.compose.ui.geometry.isEmpty
-import androidx.compose.ui.semantics.getOrNull
+import androidx.compose.foundation.Image
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import java.io.BufferedReader
-import java.io.File
 import java.io.InputStreamReader
-import kotlin.text.associate
-import kotlin.text.drop
-import kotlin.text.first
-import kotlin.text.lowercase
-import kotlin.text.mapNotNull
-import kotlin.text.orEmpty
-import kotlin.text.replace
-import kotlin.text.split
-import kotlin.text.withIndex
 
 
 data class ImageAsset(
-    val asset_name: String,
-    val asset_category: String,
-    val translations: Map<String, String>,
-    val audio_files: Map<String, String>,
-    val image_filename: String,
-    val file_type: String,
-    val source: String,
-    val url: String,
-    val license: String,
-    val download_date: String,
-    val attribution_text: String,
-    val attribution_html: String
+    val asset_name: String = "",
+    val asset_category: String = "",
+    val translations: Map<String, String> = emptyMap(),
+    val audio_files: Map<String, String> = emptyMap(),
+    val image_filename: String = "",
+    val file_type: String = "",
+    val source: String = "",
+    val url: String = "",
+    val license: String = "",
+    val download_date: String = "",
+    val attribution_text: String = "",
+    val attribution_html: String = ""
 )
 
 object OpenLinguaImageAssetUtils {
     //private const val CSV_FILE_PATH = "pixabay/pixabay_assets.csv"
-
+    @Composable
     fun loadCategoryAssetsFromCsvFile(context: Context, category: String): List<ImageAsset> {
 
         val assetFileName = "$category/${category}_assets.csv"
+        Log.d("ASSET", "loadCategoryAssetsFromCsvFile: $assetFileName")
         val inputStream = try {
             context.assets.open(assetFileName)
         } catch (e: Exception) {
             // Handle the case where the file is not found
-            println("Error opening asset file: $assetFileName")
             e.printStackTrace()
             return emptyList()
         }
@@ -54,19 +48,17 @@ object OpenLinguaImageAssetUtils {
         reader.close()
 
         if (lines.isEmpty()) {
-            Log.d("ASSET", "No lines found in asset file: $assetFileName")
+            //Log.d("ASSET", "No lines found in asset file: $assetFileName")
             return emptyList()
-        } else {
-            lines.forEach {
-                Log.d("ASSET", it)
-            }
         }
+
 
         val header = lines.first().split(";")
         val columnIndices = header.withIndex().associate { it.value to it.index }
 
         return lines.drop(1).mapNotNull { line ->
             val row = line.split(";")
+            Log.d("ASSET", "Row: $row")
             if (row.size < header.size) return@mapNotNull null // Skip invalid rows
 
             val translations = mapOf(
@@ -81,6 +73,8 @@ object OpenLinguaImageAssetUtils {
                 "de" to "de_${englishWord}.mp3",
                 "it" to "it_${englishWord}.mp3"
             )
+
+            Log.d("ASSET", "Asset loaded: ${row.getOrNull(columnIndices["asset_name"] ?: -1).orEmpty()}")
 
             ImageAsset(
                 asset_name = row.getOrNull(columnIndices["asset_name"] ?: -1).orEmpty(),
@@ -99,11 +93,28 @@ object OpenLinguaImageAssetUtils {
         }
     }
 
-//    fun getImageByName(context: Context, name: String): ImageAsset? {
-//        return loadAssetsFromCsvFile(context).find { it.assetName.equals(name, ignoreCase = false) }
-//    }
-//
-//    fun getImagesByCategory(context: Context, category: String): List<ImageAsset> {
-//        return loadAssetsFromCsvFile(context).filter { it.assetCategory.equals(category, ignoreCase = false) }
-//    }
+    @Composable
+    fun imageBitmapFromAsset(assetFileName: String, assetCategory: String) : ImageBitmap? {
+        val assetPath = "${assetCategory}/images/$assetFileName"
+        //Log.d("ASSET", "assetPath: $assetPath")
+        val context = LocalContext.current
+        val imageBitmap = rememberImageBitmapFromAsset(context, assetPath)
+        return imageBitmap
+    }
+
+    @Composable
+    fun rememberImageBitmapFromAsset(context: Context, assetPath: String): ImageBitmap? {
+        return remember(assetPath) {
+            try {
+                context.assets.open(assetPath).use { inputStream ->
+                    val bitmap = BitmapFactory.decodeStream(inputStream)
+                    bitmap?.asImageBitmap()
+                }
+            } catch (e: Exception) {
+                Log.e("ASSET", "Error loading asset: $assetPath", e)
+                e.printStackTrace()
+                null
+            }
+        }
+    }
 }

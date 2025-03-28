@@ -29,14 +29,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.devopsbug.openlingua.util.OpenLinguaUtils.getAudioResourceId
-import com.devopsbug.openlingua.util.OpenLinguaUtils.playAudio
+import com.devopsbug.openlingua.util.OpenLinguaAudioUtils.getAudioResourceId
+import com.devopsbug.openlingua.util.OpenLinguaAudioUtils.playAudio
 import com.devopsbug.openlingua.R
 import com.devopsbug.openlingua.data.Languages
 import com.devopsbug.openlingua.games.lettergame.model.Letter
 import com.devopsbug.openlingua.model.Language
 import com.devopsbug.openlingua.ui.theme.greenButtonColor
-import com.devopsbug.openlingua.util.LanguageLevelRow
+import com.devopsbug.openlingua.core.ui.LanguageLevelRow
 
 
 @Composable

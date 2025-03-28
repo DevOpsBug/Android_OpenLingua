@@ -1,4 +1,4 @@
-package  com.devopsbug.openlingua.games.lettergame.ui.lettergamescreens
+package  com.devopsbug.openlingua.games.picturematchinggame.ui.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -10,6 +10,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -22,20 +25,23 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devopsbug.openlingua.R
+import com.devopsbug.openlingua.core.ui.GridButtonTile
+import com.devopsbug.openlingua.core.ui.ImageAudioTile
 import com.devopsbug.openlingua.games.lettergame.model.Letter
 import com.devopsbug.openlingua.model.Language
 import com.devopsbug.openlingua.core.ui.LanguageLevelRow
 import com.devopsbug.openlingua.util.OpenLinguaAudioUtils.getAudioResourceId
 import com.devopsbug.openlingua.util.OpenLinguaAudioUtils.playAudio
 import com.devopsbug.openlingua.core.ui.TextAudioTile
+import com.devopsbug.openlingua.util.ImageAsset
 
 
 @Composable
-fun RandomLetterScreen(
+fun RandomPictureScreen(
     currentLanguage: Language,
-    currentLetter: Letter,
-    currentLevel: Int,
-    newRandomLetter: () -> Unit
+    currentLevel: Int = 1,
+    wrongPictures: List<ImageAsset>,
+    correctPicture: ImageAsset,
     ) {
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -56,11 +62,11 @@ fun RandomLetterScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "Can you say " +
-                        "this letter ?",
-                fontSize = 30.sp,
-                lineHeight = 42.sp
+                text = "Do you know the answer ?",
+                fontSize = 26.sp,
             )
+            Spacer(modifier = Modifier.height(16.dp))
+
         }
         Spacer(modifier = Modifier.height(16.dp))
         Row {
@@ -72,26 +78,33 @@ fun RandomLetterScreen(
             Spacer(modifier = Modifier.weight(1f))
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Row (
-            horizontalArrangement = Arrangement.Center,
+        Column (
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth()
         ){
-            TextAudioTile(
+            Spacer(modifier = Modifier.height(16.dp))
+            ImageAudioTile(
                 language = currentLanguage,
-                audioFilePostfix = currentLetter.letterLiteral.lowercase(),
-                tileText = currentLetter.letterLiteral,
-                onCompletion = newRandomLetter
+                audioFilePostfix = correctPicture.asset_name,
+                imageRessource = R.drawable.volume_up_24px,
+                onCompletion = {},
             )
-//            RandomLetterTile(
-//                letter = currentLetter,
-//                language = currentLanguage,
-//                newRandomLetter = newRandomLetter,
-//                modifier = Modifier
-//                    .height(248.dp)
-//                    .width(248.dp)
-//
-//            )
         }
+        Spacer(modifier = Modifier.height(16.dp))
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            items( (wrongPictures+correctPicture).shuffled() ) { picture ->
+                GridButtonTile(
+                    imageAsset = picture,
+                    onClick = {}
+                )
+            }
+        }
+
     }
 }
 

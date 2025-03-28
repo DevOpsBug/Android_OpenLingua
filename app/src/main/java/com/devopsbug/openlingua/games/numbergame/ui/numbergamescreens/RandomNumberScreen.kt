@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devopsbug.openlingua.R
 import com.devopsbug.openlingua.model.Language
-import com.devopsbug.openlingua.util.LanguageLevelRow
-import com.devopsbug.openlingua.util.TextAudioTile
+import com.devopsbug.openlingua.core.ui.LanguageLevelRow
+import com.devopsbug.openlingua.core.ui.TextAudioTile
 
 
 @Composable

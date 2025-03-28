@@ -1,10 +1,10 @@
 package com.devopsbug.openlingua.games.picturematchinggame.data
 
-import com.devopsbug.openlingua.games.picturematchinggame.model.GameCategory
+import com.devopsbug.openlingua.games.picturematchinggame.model.PictureCategory
 
 object Datasource {
-    val gameCategories = listOf(
-        GameCategory(
+    val pictureCategories = listOf(
+        PictureCategory(
             name = "vegetables",
             assetLocation = "vegetables"
         ),
