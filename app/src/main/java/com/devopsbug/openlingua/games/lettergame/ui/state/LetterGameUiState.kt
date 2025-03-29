@@ -1,4 +1,4 @@
-package  com.devopsbug.openlingua.games.lettergame.ui.lettergamestate
+package  com.devopsbug.openlingua.games.lettergame.ui.state
 
 import com.devopsbug.openlingua.games.lettergame.data.Datasource
 import com.devopsbug.openlingua.games.lettergame.model.Letter

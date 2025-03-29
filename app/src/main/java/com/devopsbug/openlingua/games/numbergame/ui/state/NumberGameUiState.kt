@@ -1,4 +1,4 @@
-package  com.devopsbug.openlingua.games.numbergame.ui.numbergamestate
+package  com.devopsbug.openlingua.games.numbergame.ui.state
 
 import com.devopsbug.openlingua.games.numbergame.data.Numbers
 

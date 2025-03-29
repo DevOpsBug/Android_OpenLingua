@@ -1,4 +1,4 @@
-package  com.devopsbug.openlingua.games.lettergame.ui.lettergamescreens
+package  com.devopsbug.openlingua.games.lettergame.ui.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -24,10 +24,10 @@ import androidx.compose.ui.unit.sp
 import com.devopsbug.openlingua.R
 import com.devopsbug.openlingua.games.lettergame.model.Letter
 import com.devopsbug.openlingua.model.Language
-import com.devopsbug.openlingua.util.LanguageLevelRow
-import com.devopsbug.openlingua.util.OpenLinguaUtils.getAudioResourceId
-import com.devopsbug.openlingua.util.OpenLinguaUtils.playAudio
-import com.devopsbug.openlingua.util.TextAudioTile
+import com.devopsbug.openlingua.core.util.LanguageLevelRow
+import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.getAudioResourceId
+import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.playAudio
+import com.devopsbug.openlingua.core.util.TextAudioTile
 
 
 @Composable
@@ -101,7 +101,7 @@ private fun RandomLetterTile(letter: Letter, language: Language, newRandomLetter
     val context = LocalContext.current
     Button(
         onClick = {
-            val resourceId = getAudioResourceId(context, language.audioFilePrefix, letter.letterLiteral.lowercase())
+            val resourceId = getAudioResourceId(context, language.languageCode, letter.letterLiteral.lowercase())
             playAudio(context, resourceId, onCompletion = { newRandomLetter() })
         },
         modifier = modifier,

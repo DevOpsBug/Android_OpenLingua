@@ -6,17 +6,17 @@ import com.devopsbug.openlingua.model.Language
 object Languages {
     val german = Language(
         name = "german",
-        audioFilePrefix = "de",
+        languageCode = "de",
         flagImage = R.drawable.german,
     )
     val english = Language(
         name = "english",
-        audioFilePrefix = "en",
+        languageCode = "en",
         flagImage = R.drawable.english,
     )
     val italian = Language(
         name = "italian",
-        audioFilePrefix = "it",
+        languageCode = "it",
         flagImage = R.drawable.italian,
     )
 }

@@ -13,11 +13,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.devopsbug.openlingua.R
-import com.devopsbug.openlingua.games.numbergame.ui.numbergamescreens.ExploreNumbersScreen
-import com.devopsbug.openlingua.games.numbergame.ui.numbergamescreens.NumberCalcScreen
-import com.devopsbug.openlingua.games.numbergame.ui.numbergamescreens.NumberGameStartScreen
-import com.devopsbug.openlingua.games.numbergame.ui.numbergamescreens.RandomNumberScreen
-import com.devopsbug.openlingua.games.numbergame.ui.numbergamestate.NumberGameViewModel
+import com.devopsbug.openlingua.games.numbergame.ui.screens.ExploreNumbersScreen
+import com.devopsbug.openlingua.games.numbergame.ui.screens.NumberCalcScreen
+import com.devopsbug.openlingua.games.numbergame.ui.screens.NumberGameStartScreen
+import com.devopsbug.openlingua.games.numbergame.ui.screens.RandomNumberScreen
+import com.devopsbug.openlingua.games.numbergame.ui.state.NumberGameViewModel
+import com.devopsbug.openlingua.model.Language
 import com.devopsbug.openlingua.ui.globalstate.OpenLinguaGlobalState
 import com.devopsbug.openlingua.ui.globalstate.OpenLinguaGlobalViewModel
 
@@ -31,8 +32,7 @@ enum class NumberGameScreen(@StringRes val title: Int) {
 
 @Composable
 fun NumberGame(
-    openLinguaGlobalViewModel: OpenLinguaGlobalViewModel,
-    openLinguaGlobalState: OpenLinguaGlobalState
+    currentLanguage: Language,
 ) {
 
     // Initialize navController
@@ -60,10 +60,9 @@ fun NumberGame(
             Log.d(TAG, "navHost Calling route = ${NumberGameScreen.start.name}")
             NumberGameStartScreen(
                 onClickExplore = { navController.navigate(NumberGameScreen.exploreNumbers.name) },
-                updateLanguage = { openLinguaGlobalViewModel.updateLanguage(it) },
                 currentLevel = numberGameUiState.currentLevel,
                 updateLevel = { numberGameViewModel.updateLevel(it) },
-                currentLanguage = openLinguaGlobalState.currentLanguage,
+                currentLanguage = currentLanguage,
                 currentSublevel = numberGameUiState.currentSublevel,
                 updateSublevel = { numberGameViewModel.updateSublevel(it) },
             )
@@ -74,7 +73,7 @@ fun NumberGame(
                 "navHost: Calling route = ${NumberGameScreen.exploreNumbers.name}"
             )
             ExploreNumbersScreen(
-                currentLanguage = openLinguaGlobalState.currentLanguage,
+                currentLanguage = currentLanguage,
                 currentLevel = numberGameUiState.currentLevel,
                 currentNumberSet = numberGameUiState.currentNumberSet,
                 onClickContinue = {
@@ -90,7 +89,7 @@ fun NumberGame(
         composable(route = NumberGameScreen.randomNumber.name) {
             Log.d(TAG, "navHost: Calling route = ${NumberGameScreen.randomNumber.name}")
             RandomNumberScreen(
-                currentLanguage = openLinguaGlobalState.currentLanguage,
+                currentLanguage = currentLanguage,
                 currentNumber = numberGameUiState.currentNumber,
                 currentLevel = numberGameUiState.currentLevel,
                 newRandomNumber = { numberGameViewModel.newRandomNumber() },
@@ -99,7 +98,7 @@ fun NumberGame(
         composable(route = NumberGameScreen.numberCalc.name) {
             Log.d(TAG, "navHost: Calling route = ${NumberGameScreen.numberCalc.name}")
             NumberCalcScreen(
-                currentLanguage = openLinguaGlobalState.currentLanguage,
+                currentLanguage = currentLanguage,
                 currentLevel = numberGameUiState.currentLevel,
                 currentCalcProblem = numberGameUiState.currentCalcProblem,
                 currentCalcAnswer = numberGameUiState.currentCalcAnswer,

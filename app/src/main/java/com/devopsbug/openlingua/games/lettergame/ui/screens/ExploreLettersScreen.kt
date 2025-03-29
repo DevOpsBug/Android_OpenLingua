@@ -1,4 +1,4 @@
-package com.devopsbug.openlingua.games.lettergame.ui.lettergamescreens
+package com.devopsbug.openlingua.games.lettergame.ui.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -29,20 +29,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.devopsbug.openlingua.util.OpenLinguaUtils.getAudioResourceId
-import com.devopsbug.openlingua.util.OpenLinguaUtils.playAudio
+import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.getAudioResourceId
+import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.playAudio
 import com.devopsbug.openlingua.R
 import com.devopsbug.openlingua.data.Languages
 import com.devopsbug.openlingua.games.lettergame.model.Letter
 import com.devopsbug.openlingua.model.Language
 import com.devopsbug.openlingua.ui.theme.greenButtonColor
-import com.devopsbug.openlingua.util.LanguageLevelRow
+import com.devopsbug.openlingua.core.util.LanguageLevelRow
 
 
 @Composable
 fun ExploreLettersScreen(
     currentLanguage: Language = Languages.german,
-    updateLanguage: (Language) -> Unit,
     currentLetterSet: List<Letter> ,
     currentLevel: Int,
     continueToRandomLetterScreen: () -> Unit
@@ -132,7 +131,7 @@ private fun ExploreLetterTile(letter: Letter, language: Language, modifier: Modi
     //   val mediaPlayer = MediaPlayer.create(context, letter.letterAudioGerman)
     Button(
         onClick = {
-            val resourceId = getAudioResourceId(context, language.audioFilePrefix, letter.letterLiteral.lowercase())
+            val resourceId = getAudioResourceId(context, language.languageCode, letter.letterLiteral.lowercase())
             playAudio(context, resourceId)
         },
         modifier = modifier,

@@ -1,4 +1,4 @@
-package com.devopsbug.openlingua.util
+package com.devopsbug.openlingua.core.util
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
@@ -29,8 +29,8 @@ import androidx.compose.ui.unit.sp
 import com.devopsbug.openlingua.R
 import com.devopsbug.openlingua.data.Languages
 import com.devopsbug.openlingua.model.Language
-import com.devopsbug.openlingua.util.OpenLinguaUtils.getAudioResourceId
-import com.devopsbug.openlingua.util.OpenLinguaUtils.playAudio
+import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.getAudioResourceId
+import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.playAudio
 
 //Util Composable Function to display an image tile which reveals audio when clicked
 @Composable
@@ -48,7 +48,7 @@ fun ImageAudioTile(
             imageRessource = imageRessource,
             onClick = {
                 val resourceId =
-                    getAudioResourceId(context, language.audioFilePrefix, audioFilePostfix)
+                    getAudioResourceId(context, language.languageCode, audioFilePostfix)
                 playAudio(context, resourceId, onCompletion)
             }
         )
@@ -76,7 +76,7 @@ fun TextAudioTile(
             text = tileText,
             onClick = {
                 val resourceId =
-                    getAudioResourceId(context, language.audioFilePrefix, audioFilePostfix)
+                    getAudioResourceId(context, language.languageCode, audioFilePostfix)
                 playAudio(context, resourceId, onCompletion)
             }
         )

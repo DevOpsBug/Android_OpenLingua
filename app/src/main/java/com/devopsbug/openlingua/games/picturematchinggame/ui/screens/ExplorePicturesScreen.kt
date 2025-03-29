@@ -1,4 +1,4 @@
-package com.devopsbug.openlingua.games.numbergame.ui.numbergamescreens
+package com.devopsbug.openlingua.games.picturematchinggame.ui.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -29,22 +28,25 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.devopsbug.openlingua.util.OpenLinguaUtils.getAudioResourceId
-import com.devopsbug.openlingua.util.OpenLinguaUtils.playAudio
 import com.devopsbug.openlingua.R
+import com.devopsbug.openlingua.core.ui.GridImageButtonTile
 import com.devopsbug.openlingua.data.Languages
+import com.devopsbug.openlingua.games.picturematchinggame.model.GameCategory
 import com.devopsbug.openlingua.model.Language
 import com.devopsbug.openlingua.ui.theme.greenButtonColor
-import com.devopsbug.openlingua.util.LanguageLevelRow
+import com.devopsbug.openlingua.core.util.LanguageLevelRow
+import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils
+import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.getAudioResourceId
+import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.playAudio
 
 
 @Composable
-fun ExploreNumbersScreen(
+fun ExplorePicturesScreen(
     currentLanguage: Language = Languages.german,
-    currentNumberSet: List<Int>,
-    currentLevel: Int,
-    onClickContinue: () -> Unit
+    currentGameCategory: GameCategory,
+    continueToNextScreen: () -> Unit
     ) {
+    val context = LocalContext.current
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -61,16 +63,16 @@ fun ExploreNumbersScreen(
 
             LanguageLevelRow(
                 currentLanguage = currentLanguage,
-                currentLevel = currentLevel
+                currentLevel = 1
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "Explore the Numbers:",
+                text = "Explore the Images:",
                 fontSize = 30.sp,
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "1. Click a numbers to hear the pronounciation\n" +
+                text = "1. Click a picture to hear the word\n" +
                         "2. Click PLAY to start the game",
                 fontSize = 16.sp
             )
@@ -86,7 +88,7 @@ fun ExploreNumbersScreen(
         }
         Spacer(modifier = Modifier.height(16.dp))
         LazyVerticalGrid(
-            columns = GridCells.Fixed(5),
+            columns = GridCells.Fixed(4),
             contentPadding = PaddingValues(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -97,17 +99,20 @@ fun ExploreNumbersScreen(
                 .background(color = MaterialTheme.colorScheme.background)
                 .border(width = 1.dp, color = Color.DarkGray),
             content = {
-                items(currentNumberSet) { number ->
-                    ExploreNumbersTile(
-                        number = number,
-                        language = currentLanguage,
+                items(currentGameCategory.categoryGameAssets) { gameAsset ->
+                    GridImageButtonTile(
+                        imageResource = gameAsset.imageResource,
+                        onClick = {
+                            val resourceId = gameAsset.audioResources.getValue(currentLanguage.languageCode)
+                            playAudio(context, resourceId)
+                        }
                     )
                 }
             },
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick = onClickContinue,
+            onClick = continueToNextScreen,
             colors = ButtonDefaults.buttonColors(
                 containerColor =  greenButtonColor
             ),
@@ -123,25 +128,7 @@ fun ExploreNumbersScreen(
     }
 }
 
-//Function to display number tile with audio playback when clicked
-@Composable
-private fun ExploreNumbersTile(number: Int, language: Language, modifier: Modifier = Modifier) {
-    val context = LocalContext.current
-    Button(
-        onClick = {
-            val resourceId = getAudioResourceId(context, language.audioFilePrefix, number.toString())
-            playAudio(context, resourceId)
-        },
-        modifier = modifier,
-        shape = RoundedCornerShape(percent = 20),
-        border = BorderStroke(1.dp, Color.DarkGray),
-        contentPadding = PaddingValues(12.dp),
-    ) {
-        Text(
-            text = number.toString()
-        )
-    }
-}
+
 
 
 

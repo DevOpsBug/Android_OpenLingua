@@ -1,4 +1,4 @@
-package  com.devopsbug.openlingua.games.numbergame.ui.numbergamescreens
+package  com.devopsbug.openlingua.games.picturematchinggame.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -16,18 +16,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devopsbug.openlingua.R
+import com.devopsbug.openlingua.data.Languages
+import com.devopsbug.openlingua.games.picturematchinggame.model.GameCategory
 import com.devopsbug.openlingua.model.Language
-import com.devopsbug.openlingua.util.ImageAudioTile
-import com.devopsbug.openlingua.util.LanguageLevelRow
+import com.devopsbug.openlingua.core.util.LanguageLevelRow
 
 
 @Composable
-fun NumberCalcScreen(
-    currentLanguage: Language,
-    currentCalcProblem: String,
-    currentCalcAnswer: Int,
-    currentLevel: Int,
-    onClick: () -> Unit
+fun RandomPictureScreen(
+    currentLanguage: Language = Languages.german,
+    currentGameCategory: GameCategory,
+    newRandomPicture: () -> Unit
     ) {
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -44,15 +43,15 @@ fun NumberCalcScreen(
         ) {
             LanguageLevelRow(
                 currentLanguage = currentLanguage,
-                currentLevel = currentLevel
+                currentLevel = 1
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "Do you know the answer ?",
-                fontSize = 26.sp,
+                text = "Can you say " +
+                        "this letter ?",
+                fontSize = 30.sp,
+                lineHeight = 42.sp
             )
-            Spacer(modifier = Modifier.height(16.dp))
-
         }
         Spacer(modifier = Modifier.height(16.dp))
         Row {
@@ -64,26 +63,15 @@ fun NumberCalcScreen(
             Spacer(modifier = Modifier.weight(1f))
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Column (
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
+        Row (
+            horizontalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth()
         ){
-            Text(
-                text = currentCalcProblem,
-                fontSize = 48.sp,
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            ImageAudioTile(
-                language = currentLanguage,
-                audioFilePostfix = currentCalcAnswer.toString(),
-                imageRessource = R.drawable.volume_up_24px,
-                onCompletion = {onClick()})
+            Text(text = "Random Picture Screen")
+
         }
     }
 }
-
-
 
 
 

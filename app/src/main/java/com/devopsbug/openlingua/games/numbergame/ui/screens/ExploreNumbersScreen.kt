@@ -1,4 +1,4 @@
-package com.devopsbug.openlingua.games.picturematchinggame.ui.lettergamescreens
+package com.devopsbug.openlingua.games.numbergame.ui.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -29,23 +29,21 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.devopsbug.openlingua.util.OpenLinguaUtils.getAudioResourceId
-import com.devopsbug.openlingua.util.OpenLinguaUtils.playAudio
+import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.getAudioResourceId
+import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.playAudio
 import com.devopsbug.openlingua.R
 import com.devopsbug.openlingua.data.Languages
-import com.devopsbug.openlingua.games.lettergame.model.Letter
 import com.devopsbug.openlingua.model.Language
 import com.devopsbug.openlingua.ui.theme.greenButtonColor
-import com.devopsbug.openlingua.util.LanguageLevelRow
+import com.devopsbug.openlingua.core.util.LanguageLevelRow
 
 
 @Composable
-fun ExploreLettersScreen(
+fun ExploreNumbersScreen(
     currentLanguage: Language = Languages.german,
-    updateLanguage: (Language) -> Unit,
-    currentLetterSet: List<Letter> ,
+    currentNumberSet: List<Int>,
     currentLevel: Int,
-    continueToRandomLetterScreen: () -> Unit
+    onClickContinue: () -> Unit
     ) {
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -67,12 +65,12 @@ fun ExploreLettersScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "Explore the Letters:",
+                text = "Explore the Numbers:",
                 fontSize = 30.sp,
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "1. Click a letters to hear the pronounciation\n" +
+                text = "1. Click a numbers to hear the pronounciation\n" +
                         "2. Click PLAY to start the game",
                 fontSize = 16.sp
             )
@@ -99,9 +97,9 @@ fun ExploreLettersScreen(
                 .background(color = MaterialTheme.colorScheme.background)
                 .border(width = 1.dp, color = Color.DarkGray),
             content = {
-                items(currentLetterSet) { letter ->
-                    ExploreLetterTile(
-                        letter = letter,
+                items(currentNumberSet) { number ->
+                    ExploreNumbersTile(
+                        number = number,
                         language = currentLanguage,
                     )
                 }
@@ -109,7 +107,7 @@ fun ExploreLettersScreen(
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick = continueToRandomLetterScreen,
+            onClick = onClickContinue,
             colors = ButtonDefaults.buttonColors(
                 containerColor =  greenButtonColor
             ),
@@ -125,14 +123,13 @@ fun ExploreLettersScreen(
     }
 }
 
-//Function to display letter tile with audio playback when clicked
+//Function to display number tile with audio playback when clicked
 @Composable
-private fun ExploreLetterTile(letter: Letter, language: Language, modifier: Modifier = Modifier) {
+private fun ExploreNumbersTile(number: Int, language: Language, modifier: Modifier = Modifier) {
     val context = LocalContext.current
-    //   val mediaPlayer = MediaPlayer.create(context, letter.letterAudioGerman)
     Button(
         onClick = {
-            val resourceId = getAudioResourceId(context, language.audioFilePrefix, letter.letterLiteral.lowercase())
+            val resourceId = getAudioResourceId(context, language.languageCode, number.toString())
             playAudio(context, resourceId)
         },
         modifier = modifier,
@@ -141,7 +138,7 @@ private fun ExploreLetterTile(letter: Letter, language: Language, modifier: Modi
         contentPadding = PaddingValues(12.dp),
     ) {
         Text(
-            text = letter.letterLiteral
+            text = number.toString()
         )
     }
 }

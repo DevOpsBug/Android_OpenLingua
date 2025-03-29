@@ -1,4 +1,4 @@
-package  com.devopsbug.openlingua.games.numbergame.ui.numbergamescreens
+package  com.devopsbug.openlingua.games.numbergame.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -17,16 +17,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devopsbug.openlingua.R
 import com.devopsbug.openlingua.model.Language
-import com.devopsbug.openlingua.util.LanguageLevelRow
-import com.devopsbug.openlingua.util.TextAudioTile
+import com.devopsbug.openlingua.core.util.ImageAudioTile
+import com.devopsbug.openlingua.core.util.LanguageLevelRow
 
 
 @Composable
-fun RandomNumberScreen(
+fun NumberCalcScreen(
     currentLanguage: Language,
-    currentNumber: Int,
+    currentCalcProblem: String,
+    currentCalcAnswer: Int,
     currentLevel: Int,
-    newRandomNumber: () -> Unit
+    onClick: () -> Unit
     ) {
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -47,11 +48,11 @@ fun RandomNumberScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "Can you say " +
-                        "this number ?",
-                fontSize = 30.sp,
-                lineHeight = 42.sp
+                text = "Do you know the answer ?",
+                fontSize = 26.sp,
             )
+            Spacer(modifier = Modifier.height(16.dp))
+
         }
         Spacer(modifier = Modifier.height(16.dp))
         Row {
@@ -68,14 +69,21 @@ fun RandomNumberScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth()
         ){
-            TextAudioTile(
-                language = currentLanguage,
-                audioFilePostfix = currentNumber.toString(),
-                tileText = currentNumber.toString(),
-                onCompletion = newRandomNumber
+            Text(
+                text = currentCalcProblem,
+                fontSize = 48.sp,
             )
+            Spacer(modifier = Modifier.height(16.dp))
+            ImageAudioTile(
+                language = currentLanguage,
+                audioFilePostfix = currentCalcAnswer.toString(),
+                imageRessource = R.drawable.volume_up_24px,
+                onCompletion = {onClick()})
         }
     }
 }
+
+
+
 
 
