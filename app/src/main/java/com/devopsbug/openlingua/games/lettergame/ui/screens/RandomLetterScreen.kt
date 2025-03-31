@@ -22,12 +22,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devopsbug.openlingua.R
-import com.devopsbug.openlingua.games.lettergame.model.Letter
-import com.devopsbug.openlingua.model.Language
-import com.devopsbug.openlingua.core.util.LanguageLevelRow
+import com.devopsbug.openlingua.core.ui.LanguageLevelRow
+import com.devopsbug.openlingua.core.ui.TextAudioTile
 import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.getAudioResourceId
 import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.playAudio
-import com.devopsbug.openlingua.core.util.TextAudioTile
+import com.devopsbug.openlingua.games.lettergame.model.Letter
+import com.devopsbug.openlingua.model.Language
 
 
 @Composable
@@ -82,38 +82,6 @@ fun RandomLetterScreen(
                 tileText = currentLetter.letterLiteral,
                 onCompletion = newRandomLetter
             )
-//            RandomLetterTile(
-//                letter = currentLetter,
-//                language = currentLanguage,
-//                newRandomLetter = newRandomLetter,
-//                modifier = Modifier
-//                    .height(248.dp)
-//                    .width(248.dp)
-//
-//            )
         }
     }
 }
-
-//Function to display letter tile with audio playback when clicked
-@Composable
-private fun RandomLetterTile(letter: Letter, language: Language, newRandomLetter: () -> Unit, modifier: Modifier = Modifier) {
-    val context = LocalContext.current
-    Button(
-        onClick = {
-            val resourceId = getAudioResourceId(context, language.languageCode, letter.letterLiteral.lowercase())
-            playAudio(context, resourceId, onCompletion = { newRandomLetter() })
-        },
-        modifier = modifier,
-        shape = RoundedCornerShape(percent = 20),
-        border = BorderStroke(5.dp, Color.DarkGray),
-        contentPadding = PaddingValues(12.dp),
-    ) {
-        Text(
-            text = letter.letterLiteral,
-            fontSize = 100.sp
-        )
-    }
-}
-
-

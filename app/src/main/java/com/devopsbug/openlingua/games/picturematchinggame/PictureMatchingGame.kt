@@ -13,16 +13,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.devopsbug.openlingua.R
-import com.devopsbug.openlingua.games.lettergame.ui.screens.ExploreLettersScreen
-import com.devopsbug.openlingua.games.lettergame.ui.screens.LetterGameStartScreen
-import com.devopsbug.openlingua.games.lettergame.ui.state.LetterGameViewModel
-import com.devopsbug.openlingua.games.lettergame.ui.screens.RandomLetterScreen
 import com.devopsbug.openlingua.games.picturematchinggame.ui.screens.ExplorePicturesScreen
 import com.devopsbug.openlingua.games.picturematchinggame.ui.screens.RandomPictureScreen
 import com.devopsbug.openlingua.games.picturematchinggame.ui.state.PictureMatchingGameViewModel
 import com.devopsbug.openlingua.model.Language
-import com.devopsbug.openlingua.ui.globalstate.OpenLinguaGlobalState
-import com.devopsbug.openlingua.ui.globalstate.OpenLinguaGlobalViewModel
 
 enum class PictureMatchingGameScreen(@StringRes val title: Int) {
     start(title =R.string.picturematchinggame_explore_screen),
@@ -62,7 +56,7 @@ fun PictureMatchingGame(
             Log.d(TAG, "navHost Calling route = ${PictureMatchingGameScreen.start.name}")
             ExplorePicturesScreen(
                 currentLanguage = currentLanguage,
-                currentGameCategory = pictureMatchingGameUiState.currentGameCategory,
+                currentPictureGameCategory = pictureMatchingGameUiState.currentPictureGameCategory,
                 continueToNextScreen = { navController.navigate(PictureMatchingGameScreen.random.name) }
             )
         }
@@ -73,7 +67,7 @@ fun PictureMatchingGame(
             )
             ExplorePicturesScreen(
                 currentLanguage = currentLanguage,
-                currentGameCategory = pictureMatchingGameUiState.currentGameCategory,
+                currentPictureGameCategory = pictureMatchingGameUiState.currentPictureGameCategory,
                 continueToNextScreen = { navController.navigate(PictureMatchingGameScreen.random.name) }
             )
         }
@@ -81,8 +75,11 @@ fun PictureMatchingGame(
             Log.d(TAG, "navHost: Calling route = ${PictureMatchingGameScreen.random.name}")
             RandomPictureScreen(
                 currentLanguage = currentLanguage,
-                currentGameCategory = pictureMatchingGameUiState.currentGameCategory,
-                newRandomPicture = {  },
+                //currentPictureGameCategory = pictureMatchingGameUiState.currentPictureGameCategory,
+                //currentWrongGameAssets = pictureMatchingGameUiState.currentWrongGameAssets,
+                currentCorrectGameAsset = pictureMatchingGameUiState.currentCorrectGameAsset,
+                randomizedGameAssetDisplayList = pictureMatchingGameUiState.randomizedGameAssetDisplayList,
+                newRandomPicture = { pictureMatchingGameViewModel.newRandomPicture() },
             )
         }
     }

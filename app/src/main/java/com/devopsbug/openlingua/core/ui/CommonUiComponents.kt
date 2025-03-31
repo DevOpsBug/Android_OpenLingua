@@ -28,89 +28,25 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devopsbug.openlingua.R
+import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.getAudioResourceId
 import com.devopsbug.openlingua.data.Languages
 import com.devopsbug.openlingua.model.Language
 import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.playAudio
-
-//Util Composable Function to display an image tile which reveals audio when clicked
-@Composable
-fun ImageAudioTile(
-    @RawRes audioResource: Int,
-    @DrawableRes imageResource: Int = R.drawable.volume_up_24px,
-    onCompletion: () -> Unit = {}
-) {
-    val context = LocalContext.current
-    Column (
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        LargeImageButtonTile(
-            imageResource = imageResource,
-            onClick = {
-                playAudio(context, audioResource, onCompletion)
-            }
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = "click to hear the answer",
-            fontSize = 20.sp,
-        )
-    }
-}
-
-//Util Composable Function to display an text tile which reveals audio when clicked
-//@Composable
-//fun TextAudioTile(
-//    language: Language,
-//    audioFilePostfix: String,
-//    tileText: String,
-//    onCompletion: () -> Unit
-//) {
-//    val context = LocalContext.current
-//    Column (
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
-//        LargeButtonTile(
-//            text = tileText,
-//            onClick = {
-//                playAudio(context, resourceId, onCompletion)
-//            }
-//        )
-//        Spacer(modifier = Modifier.height(16.dp))
-//        Text(
-//            text = "click to hear the answer",
-//            fontSize = 20.sp,
-//        )
-//    }
-//}
-
-//Template for large button tile
-@Composable
-fun LargeImageButtonTile(
-    imageResource: Int,
-    onClick: () -> Unit
-) {
-    val buttonSize = 248.dp
-    ImageButtonTile(
-        imageResource = imageResource,
-        onClick = onClick,
-        modifier = Modifier.size(buttonSize)
-    )
-
-
-}
-
 
 //Template for square button tile inside grid, size scales according to grid
 @Composable
 fun GridImageButtonTile(
     imageResource: Int,
+    borderColor: Color = Color.DarkGray,
     onClick: () -> Unit
 ) {
     ImageButtonTile(
         imageResource = imageResource,
+        borderColor = borderColor,
         onClick = onClick,
     )
 }
@@ -121,12 +57,13 @@ fun GridImageButtonTile(
 fun ImageButtonTile(
     imageResource: Int,
     modifier: Modifier = Modifier,
+    borderColor: Color = Color.DarkGray,
     onClick: () -> Unit
 ) {
     Button(
         onClick = { onClick() },
         shape = RoundedCornerShape(percent = 20),
-        border = BorderStroke(5.dp, Color.DarkGray),
+        border = BorderStroke(5.dp, borderColor),
         contentPadding = PaddingValues(0.dp),
         modifier = modifier.aspectRatio(1f),
     ) {
@@ -139,17 +76,124 @@ fun ImageButtonTile(
     }
 }
 
+enum class TileSize(val dpSize: Dp) {
+    SMALL(dpSize = 64.dp),
+    MEDIUM(dpSize = 128.dp),
+    LARGE(dpSize = 254.dp)
+}
+
+//Util Composable Function to display an image tile which reveals audio when clicked
+@Composable
+fun ImageAudioTile(
+    tileSize: TileSize = TileSize.LARGE,
+    language: Language,
+    audioFilePostfix: String,
+    @DrawableRes imageRessource: Int = R.drawable.volume_up_24px,
+    onCompletion: () -> Unit,
+    caption: String = "click to hear the answer",
+    borderColor: Color = Color.DarkGray
+) {
+    val tileDpSize = tileSize.dpSize
+    val context = LocalContext.current
+    Column (
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        ButtonTile(
+            imageRessource = imageRessource,
+            onClick = {
+                val resourceId =
+                    getAudioResourceId(context, language.languageCode, audioFilePostfix)
+                playAudio(context, resourceId, onCompletion)
+            },
+            tileDpSize = tileDpSize,
+            borderColor = borderColor
+        )
+        if (caption != "") {
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = caption,
+                fontSize = 20.sp,
+            )
+        }
+
+    }
+}
+
+//Util Composable Function to display an text tile which reveals audio when clicked
+@Composable
+fun TextAudioTile(
+    language: Language,
+    audioFilePostfix: String,
+    tileText: String,
+    onCompletion: () -> Unit,
+    tileDpSize: Dp = 254.dp,
+    borderColor: Color = Color.DarkGray
+) {
+    val context = LocalContext.current
+    Column (
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        ButtonTile(
+            text = tileText,
+            onClick = {
+                val resourceId =
+                    getAudioResourceId(context, language.languageCode, audioFilePostfix)
+                playAudio(context, resourceId, onCompletion)
+            },
+            borderColor = borderColor,
+            tileDpSize = tileDpSize
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = "click to hear the answer",
+            fontSize = 20.sp,
+        )
+    }
+}
+
+//Template for large button tile
+@Composable
+fun ButtonTile(
+    text: String? = null,
+    imageRessource: Int? = null,
+    onClick: () -> Unit,
+    tileDpSize: Dp = 254.dp,
+    borderColor: Color = Color.DarkGray
+) {
+    Button(
+        onClick = { onClick() },
+        shape = RoundedCornerShape(percent = 20),
+        border = BorderStroke(5.dp, borderColor),
+        contentPadding = PaddingValues(12.dp),
+        modifier = Modifier.size(tileDpSize),
+    ) {
+        if (text != null) {
+            Text(
+                text = text,
+                fontSize = 100.sp
+            )
+        } else if (imageRessource != null) {
+            Image(
+                painter = painterResource(id = imageRessource),
+                contentDescription = "Button Icon",
+                modifier = Modifier.size(100.dp)
+            )
+        }
+
+    }
+}
+
 //function to display language selection row
 @Composable
 fun LanguageSelectionRow(
     currentLanguage: Language = Languages.german,
     updateLanguage: (Language) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier.fillMaxWidth()
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
     ) {
         //Text(text = "Choose Language")
         Row {
@@ -169,7 +213,7 @@ fun LanguageSelectionRow(
                 ) {
                     Image(
                         painter = painterResource(language.flagImage),
-                        contentDescription = language.name,
+                        contentDescription = null,
                     )
                 }
             }
@@ -195,14 +239,18 @@ fun LanguageLevelRow(
             contentDescription = currentLanguage.name,
             modifier = Modifier.border(width = 1.dp, color = Color.DarkGray)
         )
-        Text(
-            text = "Level $currentLevel",
-            fontSize = 24.sp,
-            color = MaterialTheme.colorScheme.primaryContainer,
-            //modifier = Modifier.border(width = 1.dp, color = Color.DarkGray)
+        if (currentLevel >= 0) {
+            Text(
+                text = "Level $currentLevel",
+                fontSize = 24.sp,
+                color = MaterialTheme.colorScheme.primaryContainer,
+                //modifier = Modifier.border(width = 1.dp, color = Color.DarkGray)
 
-        )
+            )
+        }
     }
 }
+
+
 
 

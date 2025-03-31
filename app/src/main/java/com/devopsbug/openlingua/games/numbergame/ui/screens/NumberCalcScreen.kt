@@ -16,9 +16,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devopsbug.openlingua.R
+import com.devopsbug.openlingua.core.ui.ImageAudioTile
+import com.devopsbug.openlingua.core.ui.LanguageLevelRow
 import com.devopsbug.openlingua.model.Language
-import com.devopsbug.openlingua.core.util.ImageAudioTile
-import com.devopsbug.openlingua.core.util.LanguageLevelRow
 
 
 @Composable

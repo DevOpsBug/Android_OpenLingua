@@ -30,20 +30,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devopsbug.openlingua.R
 import com.devopsbug.openlingua.core.ui.GridImageButtonTile
+import com.devopsbug.openlingua.core.ui.LanguageLevelRow
+import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.playAudio
 import com.devopsbug.openlingua.data.Languages
-import com.devopsbug.openlingua.games.picturematchinggame.model.GameCategory
+import com.devopsbug.openlingua.games.picturematchinggame.model.PictureGameCategory
 import com.devopsbug.openlingua.model.Language
 import com.devopsbug.openlingua.ui.theme.greenButtonColor
-import com.devopsbug.openlingua.core.util.LanguageLevelRow
-import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils
-import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.getAudioResourceId
-import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.playAudio
 
 
 @Composable
 fun ExplorePicturesScreen(
     currentLanguage: Language = Languages.german,
-    currentGameCategory: GameCategory,
+    currentPictureGameCategory: PictureGameCategory,
     continueToNextScreen: () -> Unit
     ) {
     val context = LocalContext.current
@@ -63,7 +61,7 @@ fun ExplorePicturesScreen(
 
             LanguageLevelRow(
                 currentLanguage = currentLanguage,
-                currentLevel = 1
+                currentLevel = -1
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
@@ -99,7 +97,7 @@ fun ExplorePicturesScreen(
                 .background(color = MaterialTheme.colorScheme.background)
                 .border(width = 1.dp, color = Color.DarkGray),
             content = {
-                items(currentGameCategory.categoryGameAssets) { gameAsset ->
+                items(currentPictureGameCategory.categoryGameAssets) { gameAsset ->
                     GridImageButtonTile(
                         imageResource = gameAsset.imageResource,
                         onClick = {
