@@ -28,7 +28,7 @@ import com.devopsbug.openlingua.R
 import com.devopsbug.openlingua.core.ui.GridImageButtonTile
 import com.devopsbug.openlingua.core.ui.LanguageSelectionRow
 import com.devopsbug.openlingua.model.Language
-import com.devopsbug.openlingua.data.Games
+import com.devopsbug.openlingua.data.OpenLinguaGames
 
 @Composable
 fun OpenLinguaStartScreen(
@@ -64,7 +64,7 @@ fun OpenLinguaStartScreen(
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = "1. Choose a language\n" +
-                            "2. Choose a Game Category",
+                            "2. Choose a OpenLinguaGame Category",
                     fontSize = 16.sp
                 )
             }
@@ -100,7 +100,7 @@ fun OpenLinguaStartScreen(
                     .background(color = MaterialTheme.colorScheme.background)
                     .border(width = 1.dp, color = Color.DarkGray),
                 content = {
-                    items(Games.gameList) { game ->
+                    items(OpenLinguaGames.openLinguaGameLists) { game ->
                         GridImageButtonTile(
                             imageResource = game.gameButtonImage,
                             onClick = game.navigateToStart
@@ -135,10 +135,10 @@ fun OpenLinguaStartScreen(
 
 //        Text(text = "OpenLingua Start Screen")
 //        Button(onClick = onClickLetterGame) {
-//            Text(text = "Letter Game")
+//            Text(text = "Letter OpenLinguaGame")
 //        }
 //        Button(onClick = onClickNumberGame) {
-//            Text(text = "Number Game")
+//            Text(text = "Number OpenLinguaGame")
 //        }
 //    }
 //}

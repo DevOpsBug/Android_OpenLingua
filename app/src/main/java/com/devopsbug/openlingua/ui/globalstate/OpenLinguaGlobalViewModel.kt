@@ -1,7 +1,7 @@
 package com.devopsbug.openlingua.ui.globalstate
 
 import androidx.lifecycle.ViewModel
-import com.devopsbug.openlingua.model.Game
+import com.devopsbug.openlingua.model.OpenLinguaGame
 import com.devopsbug.openlingua.model.Language
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +15,7 @@ class OpenLinguaGlobalViewModel : ViewModel() {
         _uiState.value = _uiState.value.copy(currentLanguage = newLanguage)
     }
 
-    fun updateGame(newGame: Game) {
-        _uiState.value = _uiState.value.copy(currentGame = newGame)
+    fun updateGame(newOpenLinguaGame: OpenLinguaGame) {
+        _uiState.value = _uiState.value.copy(currentOpenLinguaGame = newOpenLinguaGame)
     }
 }

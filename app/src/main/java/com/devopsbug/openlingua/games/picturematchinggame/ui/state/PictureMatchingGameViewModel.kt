@@ -19,6 +19,7 @@ class PictureMatchingGameViewModel : ViewModel() {
         _uiState.value = _uiState.value.copy(
             currentPictureGameCategory = newCategory
         )
+        newRandomPicture()
     }
 
     fun newRandomPicture() {

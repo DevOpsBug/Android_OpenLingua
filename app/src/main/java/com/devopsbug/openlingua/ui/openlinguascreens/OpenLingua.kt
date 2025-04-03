@@ -34,7 +34,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.devopsbug.openlingua.R
-import com.devopsbug.openlingua.data.Games
+import com.devopsbug.openlingua.data.OpenLinguaGames
 import com.devopsbug.openlingua.ui.globalstate.OpenLinguaGlobalViewModel
 import com.devopsbug.openlingua.ui.theme.OpenLinguaTheme
 
@@ -55,15 +55,15 @@ fun OpenLingua() {
     val openLinguaGlobalState by openLinguaGlobalViewModel.uiState.collectAsState()
     val navController: NavHostController = rememberNavController()
 
-    Games.gameList.forEach { game ->
+    OpenLinguaGames.openLinguaGameLists.forEach { game ->
         game.navigateToStart = {
             //openLinguaGlobalViewModel.updateGame(game)
             navController.navigate(game.gameName) }
     }
 
-    Games.openLinguaGame.navigateToStart = {
-        //openLinguaGlobalViewModel.updateGame(Games.openLinguaGame)
-        navController.navigate(Games.openLinguaGame.gameName) }
+    OpenLinguaGames.openLinguaGame.navigateToStart = {
+        //openLinguaGlobalViewModel.updateGame(OpenLinguaGames.openLinguaGame)
+        navController.navigate(OpenLinguaGames.openLinguaGame.gameName) }
     // Get current back stack entry
     //val backStackEntry by navController.currentBackStackEntryAsState()
 
@@ -81,11 +81,11 @@ fun OpenLingua() {
             topBar = {
                 OpenLinguaTopAppBar(
                     navigateHome = {
-                        //openLinguaGlobalViewModel.updateGame(newGame = Games.openLinguaGame)
-                        Games.openLinguaGame.navigateToStart()
+                        //openLinguaGlobalViewModel.updateGame(newGame = OpenLinguaGames.openLinguaGame)
+                        OpenLinguaGames.openLinguaGame.navigateToStart()
                     },
                     //navigateHome = { navController.navigate("OpenLinguaStart") },
-                    currentGameName = openLinguaGlobalState.currentGame.gameName,
+                    currentGameName = openLinguaGlobalState.currentOpenLinguaGame.gameName,
                 )
             },
             modifier = Modifier
@@ -95,19 +95,19 @@ fun OpenLingua() {
 
             NavHost(
                 navController = navController,
-                startDestination = Games.openLinguaGame.gameName,
+                startDestination = OpenLinguaGames.openLinguaGame.gameName,
                 modifier = Modifier.padding(innerPadding)
             ) {
-                composable(route = Games.openLinguaGame.gameName) {
-                    openLinguaGlobalViewModel.updateGame(newGame = Games.openLinguaGame)
+                composable(route = OpenLinguaGames.openLinguaGame.gameName) {
+                    openLinguaGlobalViewModel.updateGame(newOpenLinguaGame = OpenLinguaGames.openLinguaGame)
                     OpenLinguaStartScreen(
                         updateLanguage = { openLinguaGlobalViewModel.updateLanguage(it) },
                         currentLanguage = openLinguaGlobalState.currentLanguage,
                     )
                 }
-                Games.gameList.forEach { game ->
+                OpenLinguaGames.openLinguaGameLists.forEach { game ->
                     composable(route = game.gameName) {
-                        openLinguaGlobalViewModel.updateGame(newGame = game)
+                        openLinguaGlobalViewModel.updateGame(newOpenLinguaGame = game)
                         game.gameEntry(openLinguaGlobalState.currentLanguage)
                     }
                 }

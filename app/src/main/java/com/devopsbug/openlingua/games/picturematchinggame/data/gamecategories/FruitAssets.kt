@@ -1,4 +1,4 @@
-package com.devopsbug.openlingua.games.picturematchinggame.data
+package com.devopsbug.openlingua.games.picturematchinggame.data.gamecategories
 
 import com.devopsbug.openlingua.R
 import com.devopsbug.openlingua.games.picturematchinggame.model.PictureMatchingGameAsset
