@@ -9,7 +9,7 @@ import com.devopsbug.openlingua.model.OpenLinguaGame
 
 object OpenLinguaGames {
     val openLinguaGame = OpenLinguaGame(
-        gameName = "Open Lingua",
+        gameName = "OpenLingua",
         gameButtonImage = R.drawable.ic_launcher_foreground,
         gameEntry = { }
     )
@@ -27,13 +27,13 @@ object OpenLinguaGames {
         OpenLinguaGame(
             gameName = "Vegetables OpenLinguaGame",
             gameButtonImage = R.drawable.category_vegetables,
-            gameEntry = { PictureMatchingGame(currentLanguage = it, currentPictureGameCategory = PictureMatchingGameCategories.categoriesList[0]) }
+            //gameEntry = { PictureMatchingGame(currentLanguage = it, currentPictureGameCategory = PictureMatchingGameCategories.categoriesList[0]) }
+            gameEntry = { PictureMatchingGame(currentLanguage = it, currentPictureGameCategory = PictureMatchingGameCategories.categoriesList[0]).GameNavigation() }
         ),
         OpenLinguaGame(
             gameName = "Fruits OpenLinguaGame",
             gameButtonImage = R.drawable.category_fruits,
-            gameEntry = { PictureMatchingGame(currentLanguage = it, currentPictureGameCategory = PictureMatchingGameCategories.categoriesList[1]) }
-
-        )
+            gameEntry = { PictureMatchingGame(currentLanguage = it, currentPictureGameCategory = PictureMatchingGameCategories.categoriesList[1]).GameNavigation() }
+        ),
     )
 }

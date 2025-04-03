@@ -82,16 +82,6 @@ fun LetterGameStartScreen(
                 )
                 Spacer(modifier = Modifier.weight(1f))
             }
-//            Spacer(modifier = Modifier.height(16.dp))
-//            LanguageSelectionRow(
-//                currentLanguage = currentLanguage,
-//                updateLanguage = updateLanguage,
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    //.padding(start = 24.dp, end = 24.dp)
-//                    .border(3.dp, MaterialTheme.colorScheme.primaryContainer)
-//
-//            )
             Spacer(modifier = Modifier.height(16.dp))
             Column(
                 horizontalAlignment = Alignment.Start,

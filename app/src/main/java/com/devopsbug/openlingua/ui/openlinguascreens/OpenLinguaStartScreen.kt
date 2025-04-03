@@ -32,9 +32,6 @@ import com.devopsbug.openlingua.data.OpenLinguaGames
 
 @Composable
 fun OpenLinguaStartScreen(
-//    onClickLetterGame: () -> Unit,
-//    onClickNumberGame: () -> Unit,
-//    onClickPictureMatchingGame: () -> Unit,
     updateLanguage: (Language) -> Unit,
     currentLanguage: Language
 )
@@ -108,37 +105,8 @@ fun OpenLinguaStartScreen(
                     }
                 },
             )
-//            Column(
-//                horizontalAlignment = Alignment.CenterHorizontally,
-//                verticalArrangement = Arrangement.spacedBy(8.dp),
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                //.border(1.dp, Color.DarkGray),
-//            ){
-//                LargeImageButtonTile(
-//                    imageResource = R.drawable.category_vegetables,
-//                    onClick = onClickPictureMatchingGame
-//
-//                )
-//                LargeButtonTile(
-//                    text = "ABC",
-//                    onClick = onClickLetterGame
-//                )
-//                LargeButtonTile(
-//                    text = "123",
-//                    onClick = onClickNumberGame
-//                )
-//            }
         }
     }
 }
 
-//        Text(text = "OpenLingua Start Screen")
-//        Button(onClick = onClickLetterGame) {
-//            Text(text = "Letter OpenLinguaGame")
-//        }
-//        Button(onClick = onClickNumberGame) {
-//            Text(text = "Number OpenLinguaGame")
-//        }
-//    }
-//}
+
