@@ -26,7 +26,8 @@ import com.devopsbug.openlingua.model.Language
 
 class PictureMatchingGame(
     override val currentLanguage: Language,
-    override val gameScreens: List<String> = listOf("start", "explore", "random"),
+    override val gameScreens: List<String> = listOf("explore", "random"),
+    //override val gameScreens: List<String> = listOf("start", "explore", "random"),
     val currentPictureGameCategory: PictureGameCategory
 ) : OpenLinguaGameEntry {
 

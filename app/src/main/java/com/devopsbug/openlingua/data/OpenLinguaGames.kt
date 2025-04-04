@@ -15,25 +15,30 @@ object OpenLinguaGames {
     )
     val openLinguaGameLists: List<OpenLinguaGame> = listOf(
         OpenLinguaGame(
-            gameName = "Letter OpenLinguaGame",
+            gameName = "Lettergame",
             gameButtonImage = R.drawable.letter_game,
             gameEntry = { LetterGame(currentLanguage = it) }
         ),
         OpenLinguaGame(
-            gameName = "Number OpenLinguaGame",
+            gameName = "Numbergame",
             gameButtonImage = R.drawable.number_game,
             gameEntry = { NumberGame(currentLanguage = it) }
         ),
         OpenLinguaGame(
-            gameName = "Vegetables OpenLinguaGame",
+            gameName = "Vegetables",
             gameButtonImage = R.drawable.category_vegetables,
             //gameEntry = { PictureMatchingGame(currentLanguage = it, currentPictureGameCategory = PictureMatchingGameCategories.categoriesList[0]) }
             gameEntry = { PictureMatchingGame(currentLanguage = it, currentPictureGameCategory = PictureMatchingGameCategories.categoriesList[0]).GameNavigation() }
         ),
         OpenLinguaGame(
-            gameName = "Fruits OpenLinguaGame",
+            gameName = "Fruits",
             gameButtonImage = R.drawable.category_fruits,
             gameEntry = { PictureMatchingGame(currentLanguage = it, currentPictureGameCategory = PictureMatchingGameCategories.categoriesList[1]).GameNavigation() }
+        ),
+        OpenLinguaGame(
+            gameName = "Vegetables 2",
+            gameButtonImage = R.drawable.category_vegetables,
+            gameEntry = { PictureMatchingGame(currentLanguage = it, currentPictureGameCategory = PictureMatchingGameCategories.categoriesList[2]).GameNavigation() }
         ),
     )
 }

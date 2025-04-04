@@ -3,7 +3,7 @@ package com.devopsbug.openlingua.games.picturematchinggame.data.gamecategories
 import com.devopsbug.openlingua.R
 import com.devopsbug.openlingua.games.picturematchinggame.model.PictureMatchingGameAsset
 
-object VegetableAssets {
+object VegetableAssets2 {
     val assetList = listOf(
         PictureMatchingGameAsset(
             assetName = "artichoke",
@@ -113,7 +113,7 @@ object VegetableAssets {
                 "en" to R.raw.en_carrot,
                 "de" to R.raw.de_carrot,
                 "it" to R.raw.it_carrot,
-                ),
+            ),
             imageResource = R.drawable.vegetables_carrot,
             imageFileType = "JPG",
             imageWidth = 640,
@@ -239,7 +239,7 @@ object VegetableAssets {
             imageWidth = 640,
             imageHeight = 402,
             imageSource = "Pixabay",
-            imageDownloadUrl = "https://pixabay.com/vectors/garlic-plant-vegetable-food-veggie-40291/\n",
+            imageDownloadUrl = "https://pixabay.com/vectors/garlic-plant-vegetable-food-veggie-40291/",
             imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2024",
             imageDownloadDate = "March 23, 2025",
             imageAttributionText = "Image by Clker-Free-Vector-Images from Pixabay",
@@ -270,7 +270,7 @@ object VegetableAssets {
             imageAttributionHtml = "Image by <a href=\"https://pixabay.com/users/barelydevi-14723734/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=7545986\">Devi J</a> from <a href=\"https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=7545986\">Pixabay</a>"
         ),
         PictureMatchingGameAsset(
-        assetName = "leeks",
+            assetName = "leeks",
             assetCategory = "vegetables",
             translations = mapOf(
                 "en" to "leeks",
@@ -288,7 +288,7 @@ object VegetableAssets {
             imageHeight = 640,
             imageSource = "Pixabay",
             imageDownloadUrl = "https://pixabay.com/vectors/green-farm-ingredient-cooking-5197159/",
-            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2024",
+            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2025",
             imageDownloadDate = "March 23, 2025",
             imageAttributionText = "Image by Kurt Brodsky from Pixabay",
             imageAttributionHtml = "Image by <a href=\"https://pixabay.com/users/kurt_brodsky-16371490/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=5197159\">Kurt Brodsky</a> from <a href=\"https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=5197159\">Pixabay</a>"
@@ -312,7 +312,7 @@ object VegetableAssets {
             imageHeight = 640,
             imageSource = "Pixabay",
             imageDownloadUrl = "https://pixabay.com/vectors/mushroom-vegetable-raw-food-fresh-576462/",
-            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2024",
+            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2026",
             imageDownloadDate = "March 23, 2025",
             imageAttributionText = "Image by OpenClipart-Vectors from Pixabay",
             imageAttributionHtml = "Image by <a href=\"https://pixabay.com/users/openclipart-vectors-30363/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=576462\">OpenClipart-Vectors</a> from <a href=\"https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=576462\">Pixabay</a>"
@@ -336,7 +336,7 @@ object VegetableAssets {
             imageHeight = 558,
             imageSource = "Pixabay",
             imageDownloadUrl = "https://pixabay.com/vectors/ai-generated-onion-vegetable-slice-8184599/",
-            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2024",
+            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2027",
             imageDownloadDate = "March 23, 2025",
             imageAttributionText = "Image by Dee from Pixabay",
             imageAttributionHtml = "Image by <a href=\"https://pixabay.com/users/deeznutz1-3086161/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=8184599\">Dee</a> from <a href=\"https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=8184599\">Pixabay</a>"
@@ -360,7 +360,7 @@ object VegetableAssets {
             imageHeight = 640,
             imageSource = "Pixabay",
             imageDownloadUrl = "https://pixabay.com/vectors/pepper-capsicum-vegetable-food-158473/",
-            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2024",
+            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2028",
             imageDownloadDate = "March 23, 2025",
             imageAttributionText = "Image by OpenClipart-Vectors from Pixabay",
             imageAttributionHtml = "Image by <a href=\"https://pixabay.com/users/openclipart-vectors-30363/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=158473\">OpenClipart-Vectors</a> from <a href=\"https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=158473\">Pixabay</a>"
@@ -384,7 +384,7 @@ object VegetableAssets {
             imageHeight = 541,
             imageSource = "Pixabay",
             imageDownloadUrl = "https://pixabay.com/vectors/potato-cooking-food-meal-vegetable-159443/",
-            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2024",
+            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2029",
             imageDownloadDate = "March 23, 2025",
             imageAttributionText = "Image by OpenClipart-Vectors from Pixabay",
             imageAttributionHtml = "Image by <a href=\"https://pixabay.com/users/openclipart-vectors-30363/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=159443\">OpenClipart-Vectors</a> from <a href=\"https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=159443\">Pixabay</a>"
@@ -408,7 +408,7 @@ object VegetableAssets {
             imageHeight = 534,
             imageSource = "Pixabay",
             imageDownloadUrl = "https://pixabay.com/vectors/pumpkin-fruit-vegetable-plant-food-2894938/",
-            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2024",
+            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2030",
             imageDownloadDate = "March 23, 2025",
             imageAttributionText = "Image by 13smok from Pixabay",
             imageAttributionHtml = "Image by <a href=\"https://pixabay.com/users/13smok-5135280/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2894938\">13smok</a> from <a href=\"https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2894938\">Pixabay</a>"
@@ -431,8 +431,8 @@ object VegetableAssets {
             imageWidth = 640,
             imageHeight = 421,
             imageSource = "Pixabay",
-            imageDownloadUrl = "https://pixabay.com/vectors/radish-vegetable-food-raw-fresh-6168152/\n",
-            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2024",
+            imageDownloadUrl = "https://pixabay.com/vectors/radish-vegetable-food-raw-fresh-6168152/",
+            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2031",
             imageDownloadDate = "March 23, 2025",
             imageAttributionText = "Image by Pao from Pixabay",
             imageAttributionHtml = "Image by <a href=\"https://pixabay.com/users/littlebeanbabbles-20721354/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=6168152\">Pao</a> from <a href=\"https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=6168152\">Pixabay</a>"
@@ -441,7 +441,7 @@ object VegetableAssets {
             assetName = "red_beet",
             assetCategory = "vegetables",
             translations = mapOf(
-                "en" to "red beet",
+                "en" to "red_beet",
                 "de" to "Rote Beete",
                 "it" to "la barbabietola rossa",
             ),
@@ -456,7 +456,7 @@ object VegetableAssets {
             imageHeight = 640,
             imageSource = "Pixabay",
             imageDownloadUrl = "https://pixabay.com/vectors/beat-beet-food-fruit-veg-greens-1298726/",
-            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2024",
+            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2032",
             imageDownloadDate = "March 23, 2025",
             imageAttributionText = "Image by OpenClipart-Vectors from Pixabay",
             imageAttributionHtml = "Image by <a href=\"https://pixabay.com/users/openclipart-vectors-30363/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1298726\">OpenClipart-Vectors</a> from <a href=\"https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1298726\">Pixabay</a>"
@@ -480,7 +480,7 @@ object VegetableAssets {
             imageHeight = 631,
             imageSource = "Pixabay",
             imageDownloadUrl = "https://pixabay.com/vectors/green-leafy-vegetables-leaves-576756/",
-            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2024",
+            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2032",
             imageDownloadDate = "March 23, 2025",
             imageAttributionText = "Image by OpenClipart-Vectors from Pixabay",
             imageAttributionHtml = "Image by <a href=\"https://pixabay.com/users/openclipart-vectors-30363/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=576756\">OpenClipart-Vectors</a> from <a href=\"https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=576756\">Pixabay</a>"
@@ -504,7 +504,7 @@ object VegetableAssets {
             imageHeight = 640,
             imageSource = "Pixabay",
             imageDownloadUrl = "https://pixabay.com/vectors/sweet-potato-vegetable-organic-8574112/",
-            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2024",
+            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2033",
             imageDownloadDate = "March 23, 2025",
             imageAttributionText = "Image by Tim from Pixabay",
             imageAttributionHtml = "Image by <a href=\"https://pixabay.com/users/u_fg0tkeqgiy-26019190/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=8574112\">Tim</a> from <a href=\"https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=8574112\">Pixabay</a>"
@@ -528,7 +528,7 @@ object VegetableAssets {
             imageHeight = 628,
             imageSource = "Pixabay",
             imageDownloadUrl = "https://pixabay.com/vectors/tomato-fruit-vegetable-red-sauce-4984619/",
-            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2024",
+            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2034",
             imageDownloadDate = "March 23, 2025",
             imageAttributionText = "Image by Mostafa Elturkey from Pixabay",
             imageAttributionHtml = "Image by <a href=\"https://pixabay.com/users/mostafaelturkey36-13328910/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=4984619\">Mostafa Elturkey</a> from <a href=\"https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=4984619\">Pixabay</a>"
@@ -552,7 +552,7 @@ object VegetableAssets {
             imageHeight = 320,
             imageSource = "Pixabay",
             imageDownloadUrl = "https://pixabay.com/vectors/vegetable-courgette-food-drawing-6871109/",
-            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2024",
+            imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2035",
             imageDownloadDate = "March 23, 2025",
             imageAttributionText = "Image by Królestwo_Nauki from Pixabay",
             imageAttributionHtml = "Image by <a href=\"https://pixabay.com/users/królestwo_nauki-17664295/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=6871109\">Królestwo_Nauki</a> from <a href=\"https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=6871109\">Pixabay</a>"
