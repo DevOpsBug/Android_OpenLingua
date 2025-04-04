@@ -38,7 +38,6 @@ import com.devopsbug.openlingua.core.ui.TileSize
 import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.getAudioResourceId
 import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.playAudio
 import com.devopsbug.openlingua.data.Languages
-import com.devopsbug.openlingua.games.picturematchinggame.model.PictureGameCategory
 import com.devopsbug.openlingua.games.picturematchinggame.model.PictureMatchingGameAsset
 import com.devopsbug.openlingua.model.Language
 import com.devopsbug.openlingua.ui.theme.greenButtonColor
@@ -48,7 +47,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun RandomPictureScreen(
     currentLanguage: Language = Languages.german,
-    //currentPictureGameCategory: PictureGameCategory,
+    //currentPictureGameCategory: PictureMatchingGameCategory,
     randomizedGameAssetDisplayList: List<PictureMatchingGameAsset>,
     //currentWrongGameAssets: List<PictureMatchingGameAsset>,
     currentCorrectGameAsset: PictureMatchingGameAsset,

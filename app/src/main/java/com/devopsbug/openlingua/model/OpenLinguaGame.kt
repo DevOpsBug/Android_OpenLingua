@@ -8,5 +8,5 @@ data class OpenLinguaGame(
     @DrawableRes val gameButtonImage: Int,
     val gameEntry: @Composable (currentLanguage: Language) -> Unit
 ){
-    lateinit var navigateToStart: () -> Unit    //will be initialized after navController
+    lateinit var navigateToGameEntry: () -> Unit    //will be initialized after navController
 }

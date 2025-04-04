@@ -38,15 +38,6 @@ import com.devopsbug.openlingua.data.OpenLinguaGames
 import com.devopsbug.openlingua.ui.globalstate.OpenLinguaGlobalViewModel
 import com.devopsbug.openlingua.ui.theme.OpenLinguaTheme
 
-//enum class OpenLinguaScreen(@StringRes val title: Int) {
-//    start(title = R.string.app_name),
-//    lettergame(title = R.string.lettergame_game_name),
-//    numbergame(title = R.string.numbergame_game_name),
-//    pictureMatchingGame(title = R.string.picturematchinggame_game_name)
-//    //exploreLetters(title = R.string.lettergame_explore_screen),
-//    //randomLetter(title = R.string.lettergame_random_letter_screen)
-//}
-
 @Preview
 @Composable
 fun OpenLingua() {
@@ -56,24 +47,12 @@ fun OpenLingua() {
     val navController: NavHostController = rememberNavController()
 
     OpenLinguaGames.openLinguaGameLists.forEach { game ->
-        game.navigateToStart = {
-            //openLinguaGlobalViewModel.updateGame(game)
+        game.navigateToGameEntry = {
             navController.navigate(game.gameName) }
     }
 
-    OpenLinguaGames.openLinguaGame.navigateToStart = {
-        //openLinguaGlobalViewModel.updateGame(OpenLinguaGames.openLinguaGame)
+    OpenLinguaGames.openLinguaGame.navigateToGameEntry = {
         navController.navigate(OpenLinguaGames.openLinguaGame.gameName) }
-    // Get current back stack entry
-    //val backStackEntry by navController.currentBackStackEntryAsState()
-
-    // Get the name of the current screen
-    //val currentScreen = OpenLinguaScreen.valueOf(
-    //    backStackEntry?.destination?.route ?: OpenLinguaScreen.start.name
-    //)
-
-    // Create ViewModel
-
 
     OpenLinguaTheme {
 
@@ -81,10 +60,8 @@ fun OpenLingua() {
             topBar = {
                 OpenLinguaTopAppBar(
                     navigateHome = {
-                        //openLinguaGlobalViewModel.updateGame(newGame = OpenLinguaGames.openLinguaGame)
-                        OpenLinguaGames.openLinguaGame.navigateToStart()
+                        OpenLinguaGames.openLinguaGame.navigateToGameEntry()
                     },
-                    //navigateHome = { navController.navigate("OpenLinguaStart") },
                     currentGameName = openLinguaGlobalState.currentOpenLinguaGame.gameName,
                 )
             },
@@ -111,9 +88,7 @@ fun OpenLingua() {
                         game.gameEntry(openLinguaGlobalState.currentLanguage)
                     }
                 }
-
             }
-
         }
     }
 }

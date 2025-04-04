@@ -1,7 +1,7 @@
 package  com.devopsbug.openlingua.games.picturematchinggame.ui.state
 
 import androidx.lifecycle.ViewModel
-import com.devopsbug.openlingua.games.picturematchinggame.model.PictureGameCategory
+import com.devopsbug.openlingua.games.picturematchinggame.model.PictureMatchingGameCategory
 import com.devopsbug.openlingua.games.picturematchinggame.model.PictureMatchingGameAsset
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +15,7 @@ class PictureMatchingGameViewModel : ViewModel() {
         newRandomPicture()
     }
 
-    fun updateCategory(newCategory: PictureGameCategory) {
+    fun updateCategory(newCategory: PictureMatchingGameCategory) {
         _uiState.value = _uiState.value.copy(
             currentPictureGameCategory = newCategory
         )

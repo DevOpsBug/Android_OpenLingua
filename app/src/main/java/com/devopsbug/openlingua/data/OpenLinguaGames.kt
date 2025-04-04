@@ -13,6 +13,15 @@ object OpenLinguaGames {
         gameButtonImage = R.drawable.ic_launcher_foreground,
         gameEntry = { }
     )
+
+    val pictureMatchingGames = PictureMatchingGameCategories.categoriesList.map { category ->
+        OpenLinguaGame(
+            gameName = category.categoryName, // Use category name
+            gameButtonImage = category.categoryCoverImage, // Use category image
+            gameEntry = { PictureMatchingGame(currentLanguage = it, currentPictureGameCategory = category).GameNavigation() }
+        )
+    }
+
     val openLinguaGameLists: List<OpenLinguaGame> = listOf(
         OpenLinguaGame(
             gameName = "Lettergame",
@@ -24,21 +33,21 @@ object OpenLinguaGames {
             gameButtonImage = R.drawable.number_game,
             gameEntry = { NumberGame(currentLanguage = it) }
         ),
-        OpenLinguaGame(
-            gameName = "Vegetables",
-            gameButtonImage = R.drawable.category_vegetables,
-            //gameEntry = { PictureMatchingGame(currentLanguage = it, currentPictureGameCategory = PictureMatchingGameCategories.categoriesList[0]) }
-            gameEntry = { PictureMatchingGame(currentLanguage = it, currentPictureGameCategory = PictureMatchingGameCategories.categoriesList[0]).GameNavigation() }
-        ),
-        OpenLinguaGame(
-            gameName = "Fruits",
-            gameButtonImage = R.drawable.category_fruits,
-            gameEntry = { PictureMatchingGame(currentLanguage = it, currentPictureGameCategory = PictureMatchingGameCategories.categoriesList[1]).GameNavigation() }
-        ),
-        OpenLinguaGame(
-            gameName = "Vegetables 2",
-            gameButtonImage = R.drawable.category_vegetables,
-            gameEntry = { PictureMatchingGame(currentLanguage = it, currentPictureGameCategory = PictureMatchingGameCategories.categoriesList[2]).GameNavigation() }
-        ),
+        *pictureMatchingGames.toTypedArray() // Add picture matching games
+//        OpenLinguaGame(
+//            gameName = "Vegetables",
+//            gameButtonImage = R.drawable.category_vegetables,
+//            gameEntry = { PictureMatchingGame(currentLanguage = it, currentPictureGameCategory = PictureMatchingGameCategories.categoriesList[0]).GameNavigation() }
+//        ),
+//        OpenLinguaGame(
+//            gameName = "Fruits",
+//            gameButtonImage = R.drawable.category_fruits,
+//            gameEntry = { PictureMatchingGame(currentLanguage = it, currentPictureGameCategory = PictureMatchingGameCategories.categoriesList[1]).GameNavigation() }
+//        ),
+//        OpenLinguaGame(
+//            gameName = "Vegetables 2",
+//            gameButtonImage = R.drawable.category_vegetables,
+//            gameEntry = { PictureMatchingGame(currentLanguage = it, currentPictureGameCategory = PictureMatchingGameCategories.categoriesList[2]).GameNavigation() }
+//        ),
     )
 }

@@ -5,7 +5,7 @@ import com.devopsbug.openlingua.model.Language
 
 interface OpenLinguaGameEntry {
     val currentLanguage: Language
-    val gameScreens: List<String>
+    //val gameScreens: List<String>
 
 
     @Composable

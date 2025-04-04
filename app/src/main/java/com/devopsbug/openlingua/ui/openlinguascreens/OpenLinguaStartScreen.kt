@@ -100,7 +100,7 @@ fun OpenLinguaStartScreen(
                     items(OpenLinguaGames.openLinguaGameLists) { game ->
                         GridImageButtonTile(
                             imageResource = game.gameButtonImage,
-                            onClick = game.navigateToStart
+                            onClick = game.navigateToGameEntry
                         )
                     }
                 },
