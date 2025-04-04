@@ -68,58 +68,64 @@ dependencies {
 
 
 
-tasks.register("generateVegetableAssets") {
+tasks.register("generatePictureGameAssets") {
 
+    val categories = listOf(
+        "vegetables" to "src/main/assets/vegetables/vegetables_assets.csv",
+        "fruits" to "src/main/assets/fruits/fruits_assets.csv"
+    )
 
-    val inputCsv = file("assets/vegetables/vegetables_assets.csv")
-    val outputKt = file("assets/vegetables/VegetableAssets.kt")
 
     doLast {
-        val lines = inputCsv.readLines().filter { it.isNotBlank() }
-        val headers = lines.first().split(";")
-        val rows = lines.drop(1)
+        categories.forEach { (categoryName, inputPath) ->
+            val outputFileName = categoryName.replaceFirstChar { it.uppercase() } + "Assets.kt"
+            val outputKt = file("src/main/assets/$categoryName/$outputFileName")
+            val inputCsv = file(inputPath)
+            val lines = inputCsv.readLines().filter { it.isNotBlank() }
+            val headers = lines.first().split(";")
+            val rows = lines.drop(1)
 
-        if (headers.size != 15) {
-            error("❌ CSV header should contain exactly 15 columns, but found ${headers.size}")
-        }
+            if (headers.size != 15) {
+                error("❌ CSV header should contain exactly 15 columns, but found ${headers.size}")
+            }
 
+            val objectName = categoryName.replaceFirstChar { it.uppercase() } + "Assets"
+            val ktCode = buildString {
+                appendLine("package com.devopsbug.openlingua.games.picturematchinggame.data.gamecategories\n")
+                appendLine("import com.devopsbug.openlingua.R")
+                appendLine("import com.devopsbug.openlingua.games.picturematchinggame.model.PictureMatchingGameAsset\n")
+                appendLine("object $objectName {")
+                appendLine("    val assetList = listOf(")
 
-        val ktCode = buildString {
-            appendLine("package com.devopsbug.openlingua.games.picturematchinggame.data.gamecategories\n")
-            appendLine("import com.devopsbug.openlingua.R")
-            appendLine("import com.devopsbug.openlingua.games.picturematchinggame.model.PictureMatchingGameAsset\n")
-            appendLine("object VegetableAssets {")
-            appendLine("    val assetList = listOf(")
-
-            for ((lineIndex, row) in rows.withIndex()) {
-                val fields = row.split(";").map { it.trim() }
-
-
-                if (fields.size != 15) {
-                    error("❌ Error in CSV row ${lineIndex + 2}: Expected 15 columns, but got ${fields.size}")
-                }
-
-                val assetName = fields[0]
-                val assetCategory = fields[1]
-                val englishWord = fields[2]
-                val germanWord = fields[3]
-                val italianWord = fields[4]
-                val imageFilename = fields[5]
-                val fileType = fields[6]
-                val width = fields[7]
-                val height = fields[8]
-                val source = fields[9]
-                val url = fields[10]
-                val license = fields[11]
-                val downloadDate = fields[12]
-                val attributionText = fields[13]
-                val attributionHtml = fields[14]
+                for ((lineIndex, row) in rows.withIndex()) {
+                    val fields = row.split(";").map { it.trim() }
 
 
-                val nameForImageResource = assetCategory + "_" + assetName
+                    if (fields.size != 15) {
+                        error("❌ Error in CSV row ${lineIndex + 2}: Expected 15 columns, but got ${fields.size}")
+                    }
 
-                appendLine(
-        """
+                    val assetName = fields[0]
+                    val assetCategory = fields[1]
+                    val englishWord = fields[2]
+                    val germanWord = fields[3]
+                    val italianWord = fields[4]
+                    val imageFilename = fields[5]
+                    val fileType = fields[6]
+                    val imageWidth = fields[7].toIntOrNull()?.takeIf { it > 0 } ?: -1
+                    val imageHeight = fields[8].toIntOrNull()?.takeIf { it > 0 } ?: -1
+                    val source = fields[9]
+                    val url = fields[10]
+                    val license = fields[11]
+                    val downloadDate = fields[12]
+                    val attributionText = fields[13]
+                    val attributionHtml = fields[14]
+
+
+                    val nameForImageResource = assetCategory + "_" + assetName
+
+                    appendLine(
+                        """
         PictureMatchingGameAsset(
             assetName = "$assetName",
             assetCategory = "$assetCategory",
@@ -135,8 +141,8 @@ tasks.register("generateVegetableAssets") {
             ),
             imageResource = R.drawable.${nameForImageResource},
             imageFileType = "$fileType",
-            imageWidth = $width,
-            imageHeight = $height,
+            imageWidth = $imageWidth,
+            imageHeight = $imageHeight,
             imageSource = "$source",
             imageDownloadUrl = "$url",
             imageLicense = "$license",
@@ -144,19 +150,20 @@ tasks.register("generateVegetableAssets") {
             imageAttributionText = "${attributionText.replace("\u00A0", " ")}",
             imageAttributionHtml = ${attributionHtml.replace("\"\"", "\\\"")}
         ),
-            """.trimMargin()
-                )
+                """.trimMargin()
+                    )
+                }
+
+                appendLine("    )")
+                appendLine("}")
             }
 
-            appendLine("    )")
-            appendLine("}")
+            outputKt.writeText(ktCode)
+            println("✅ Generated: ${outputKt.absolutePath}")
         }
-
-        outputKt.writeText(ktCode)
-        println("✅ Generated: ${outputKt.absolutePath}")
     }
 }
 
 tasks.named("preBuild").configure {
-    dependsOn("generateVegetableAssets")
+    dependsOn("generatePictureGameAssets")
 }

@@ -3,7 +3,7 @@ package com.devopsbug.openlingua.games.picturematchinggame.data.gamecategories
 import com.devopsbug.openlingua.R
 import com.devopsbug.openlingua.games.picturematchinggame.model.PictureMatchingGameAsset
 
-object VegetableAssets {
+object VegetablesAssets {
     val assetList = listOf(
         PictureMatchingGameAsset(
             assetName = "artichoke",
@@ -113,7 +113,7 @@ object VegetableAssets {
                 "en" to R.raw.en_carrot,
                 "de" to R.raw.de_carrot,
                 "it" to R.raw.it_carrot,
-                ),
+            ),
             imageResource = R.drawable.vegetables_carrot,
             imageFileType = "JPG",
             imageWidth = 640,
@@ -239,7 +239,7 @@ object VegetableAssets {
             imageWidth = 640,
             imageHeight = 402,
             imageSource = "Pixabay",
-            imageDownloadUrl = "https://pixabay.com/vectors/garlic-plant-vegetable-food-veggie-40291/\n",
+            imageDownloadUrl = "https://pixabay.com/vectors/garlic-plant-vegetable-food-veggie-40291/",
             imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2024",
             imageDownloadDate = "March 23, 2025",
             imageAttributionText = "Image by Clker-Free-Vector-Images from Pixabay",
@@ -270,7 +270,7 @@ object VegetableAssets {
             imageAttributionHtml = "Image by <a href=\"https://pixabay.com/users/barelydevi-14723734/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=7545986\">Devi J</a> from <a href=\"https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=7545986\">Pixabay</a>"
         ),
         PictureMatchingGameAsset(
-        assetName = "leeks",
+            assetName = "leeks",
             assetCategory = "vegetables",
             translations = mapOf(
                 "en" to "leeks",
@@ -431,7 +431,7 @@ object VegetableAssets {
             imageWidth = 640,
             imageHeight = 421,
             imageSource = "Pixabay",
-            imageDownloadUrl = "https://pixabay.com/vectors/radish-vegetable-food-raw-fresh-6168152/\n",
+            imageDownloadUrl = "https://pixabay.com/vectors/radish-vegetable-food-raw-fresh-6168152/",
             imageLicense = "Pixabay Content License as defined in Pixabay Terms of Service,  Last updated: November 18, 2024",
             imageDownloadDate = "March 23, 2025",
             imageAttributionText = "Image by Pao from Pixabay",

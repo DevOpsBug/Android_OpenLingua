@@ -3,7 +3,7 @@ package com.devopsbug.openlingua.games.picturematchinggame.data.gamecategories
 import com.devopsbug.openlingua.R
 import com.devopsbug.openlingua.games.picturematchinggame.model.PictureMatchingGameAsset
 
-object FruitAssets {
+object FruitsAssets {
     val assetList = listOf(
         PictureMatchingGameAsset(
             assetName = "apple",
@@ -18,7 +18,7 @@ object FruitAssets {
                 "de" to R.raw.de_apple,
                 "it" to R.raw.it_apple,
             ),
-            imageResource = R.drawable.fruits_apples,
+            imageResource = R.drawable.fruits_apple,
             imageFileType = "SVG",
             imageWidth = -1,
             imageHeight = -1,
