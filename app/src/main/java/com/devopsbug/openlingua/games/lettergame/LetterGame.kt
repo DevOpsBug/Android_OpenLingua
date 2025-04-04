@@ -13,79 +13,75 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.devopsbug.openlingua.R
+import com.devopsbug.openlingua.core.interfaces.OpenLinguaGameEntry
 import com.devopsbug.openlingua.games.lettergame.ui.screens.ExploreLettersScreen
 import com.devopsbug.openlingua.games.lettergame.ui.screens.LetterGameStartScreen
-import com.devopsbug.openlingua.games.lettergame.ui.state.LetterGameViewModel
 import com.devopsbug.openlingua.games.lettergame.ui.screens.RandomLetterScreen
+import com.devopsbug.openlingua.games.lettergame.ui.state.LetterGameViewModel
 import com.devopsbug.openlingua.model.Language
-import com.devopsbug.openlingua.ui.globalstate.OpenLinguaGlobalState
-import com.devopsbug.openlingua.ui.globalstate.OpenLinguaGlobalViewModel
+import com.devopsbug.openlingua.model.OpenLingaGameScreen
 
-enum class LetterGameScreen(@StringRes val title: Int) {
-    start(title = R.string.app_name),
-    exploreLetters(title = R.string.lettergame_explore_screen),
-    randomLetter(title = R.string.lettergame_random_letter_screen)
-}
+class LetterGame(
+    override val currentLanguage: Language
+) : OpenLinguaGameEntry {
 
-//@Preview
-@Composable
-fun LetterGame(
-    currentLanguage: Language
-    //openLinguaGlobalViewModel: OpenLinguaGlobalViewModel,
-    //openLinguaGlobalState: OpenLinguaGlobalState
-) {
+    @Composable
+    override fun GameNavigation() {
+        // Initialize State and Navigation
+        val navController: NavHostController = rememberNavController()
+        val backStackEntry by navController.currentBackStackEntryAsState()
+        val letterGameViewModel: LetterGameViewModel = viewModel()
+        val letterGameUiState by letterGameViewModel.uiState.collectAsState()
 
-    // Initialize navController
-    val navController: NavHostController = rememberNavController()
-
-    // Get current back stack entry
-    val backStackEntry by navController.currentBackStackEntryAsState()
-
-    // Get the name of the current screen
-    val currentScreen = LetterGameScreen.valueOf(
-        backStackEntry?.destination?.route ?: LetterGameScreen.start.name
-    )
-
-    // Create ViewModel
-    val letterGameViewModel: LetterGameViewModel = viewModel()
-
-    val letterGameUiState by letterGameViewModel.uiState.collectAsState()
-
-    NavHost(
-        navController = navController,
-        startDestination = LetterGameScreen.start.name,
-    ) {
-        composable(route = LetterGameScreen.start.name) {
-            Log.d(TAG, "navHost Calling route = ${LetterGameScreen.start.name}")
-            LetterGameStartScreen(
-                onClickExplore = { navController.navigate(LetterGameScreen.exploreLetters.name) },
-                //onClickLanguage = { navController.navigate(LetterGameScreen.randomLetter.name) },
-                //updateLanguage = { openLinguaGlobalViewModel.updateLanguage(it) },
-                currentLevel = letterGameUiState.level,
-                updateLevel = { letterGameViewModel.updateLevel(it) },
-                currentLanguage = currentLanguage,
+        //Define List of Screens for this game
+        var letterGameScreens = mutableListOf<OpenLingaGameScreen>()
+        letterGameScreens = mutableListOf(
+            OpenLingaGameScreen(
+                name = "LetterGame Start Screen",
+                screenContent = {
+                    LetterGameStartScreen(
+                        onClickExplore = { navController.navigate(letterGameScreens[1].name) },
+                        currentLevel = letterGameUiState.level,
+                        updateLevel = { letterGameViewModel.updateLevel(it) },
+                        currentLanguage = currentLanguage,
+                    )
+                }
+            ),
+            OpenLingaGameScreen(
+                name = "Explore Letters Screen",
+                screenContent = {
+                    ExploreLettersScreen(
+                        currentLanguage = currentLanguage,
+                        currentLevel = letterGameUiState.level,
+                        currentLetterSet = letterGameUiState.currentLetterSet,
+                        continueToRandomLetterScreen = { navController.navigate(letterGameScreens[2].name) }
+                    )
+                }
+            ),
+            OpenLingaGameScreen(
+                name = "Random Letter Screen",
+                screenContent = {
+                    RandomLetterScreen(
+                        currentLanguage = currentLanguage,
+                        currentLetter = letterGameUiState.currentLetter,
+                        currentLevel = letterGameUiState.level,
+                        newRandomLetter = { letterGameViewModel.newRandomLetter() },
+                    )
+                }
             )
-        }
-        composable(route = LetterGameScreen.exploreLetters.name) {
-            Log.d(
-                TAG,
-                "navHost: Calling route = ${LetterGameScreen.exploreLetters.name}"
-            )
-            ExploreLettersScreen(
-                currentLanguage = currentLanguage,
-                currentLevel = letterGameUiState.level,
-                currentLetterSet = letterGameUiState.currentLetterSet,
-                continueToRandomLetterScreen = { navController.navigate(LetterGameScreen.randomLetter.name) }
-            )
-        }
-        composable(route = LetterGameScreen.randomLetter.name) {
-            Log.d(TAG, "navHost: Calling route = ${LetterGameScreen.randomLetter.name}")
-            RandomLetterScreen(
-                currentLanguage = currentLanguage,
-                currentLetter = letterGameUiState.currentLetter,
-                currentLevel = letterGameUiState.level,
-                newRandomLetter = { letterGameViewModel.newRandomLetter() },
-            )
+        )
+
+        val currentScreen = backStackEntry?.destination?.route ?: letterGameScreens.first().name
+
+        NavHost(
+            navController = navController,
+            startDestination = letterGameScreens[0].name
+        ) {
+            letterGameScreens.forEach { screen ->
+                composable(screen.name) {
+                    screen.screenContent()
+                }
+            }
         }
     }
 }

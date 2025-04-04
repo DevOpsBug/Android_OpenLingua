@@ -26,28 +26,13 @@ object OpenLinguaGames {
         OpenLinguaGame(
             gameName = "Lettergame",
             gameButtonImage = R.drawable.letter_game,
-            gameEntry = { LetterGame(currentLanguage = it) }
+            gameEntry = { LetterGame(currentLanguage = it).GameNavigation() }
         ),
         OpenLinguaGame(
             gameName = "Numbergame",
             gameButtonImage = R.drawable.number_game,
-            gameEntry = { NumberGame(currentLanguage = it) }
+            gameEntry = { NumberGame(currentLanguage = it).GameNavigation() }
         ),
         *pictureMatchingGames.toTypedArray() // Add picture matching games
-//        OpenLinguaGame(
-//            gameName = "Vegetables",
-//            gameButtonImage = R.drawable.category_vegetables,
-//            gameEntry = { PictureMatchingGame(currentLanguage = it, currentPictureGameCategory = PictureMatchingGameCategories.categoriesList[0]).GameNavigation() }
-//        ),
-//        OpenLinguaGame(
-//            gameName = "Fruits",
-//            gameButtonImage = R.drawable.category_fruits,
-//            gameEntry = { PictureMatchingGame(currentLanguage = it, currentPictureGameCategory = PictureMatchingGameCategories.categoriesList[1]).GameNavigation() }
-//        ),
-//        OpenLinguaGame(
-//            gameName = "Vegetables 2",
-//            gameButtonImage = R.drawable.category_vegetables,
-//            gameEntry = { PictureMatchingGame(currentLanguage = it, currentPictureGameCategory = PictureMatchingGameCategories.categoriesList[2]).GameNavigation() }
-//        ),
     )
 }

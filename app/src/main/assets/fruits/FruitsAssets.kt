@@ -129,7 +129,7 @@ object FruitsAssets {
             assetName = "cantaloupe",
             assetCategory = "fruits",
             translations = mapOf(
-                "en" to "canatloupe",
+                "en" to "cantaloupe",
                 "de" to "Melone",
                 "it" to "il melone",
             ),
