@@ -6,14 +6,17 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -32,10 +35,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devopsbug.openlingua.R
+import com.devopsbug.openlingua.core.interfaces.OpenLinguaGameScreenData
 import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.getAudioResourceId
 import com.devopsbug.openlingua.data.Languages
 import com.devopsbug.openlingua.model.Language
 import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.playAudio
+import com.devopsbug.openlingua.model.OpenLinguaGame
 
 //Template for square button tile inside grid, size scales according to grid
 @Composable
@@ -183,6 +188,122 @@ fun ButtonTile(
     }
 }
 
+@Composable
+fun GameScreenBase(
+    gameScreenData: OpenLinguaGameScreenData,
+    gameScreenContent: @Composable () -> Unit
+) {
+    Column (
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxWidth(1f)
+            .padding(start = 24.dp, end = 24.dp)
+    ){
+        Spacer(modifier = Modifier.height(16.dp))
+        Column(
+            horizontalAlignment = Alignment.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            LanguageGameRow(
+                currentLanguage = gameScreenData.currentLanguage,
+                currentGameButtonImage = gameScreenData.gameCoverImage
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            if (gameScreenData.screenTitle != "") {
+                Text(
+                    text = gameScreenData.screenTitle,
+                    fontSize = 30.sp,
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+            if (gameScreenData.subtitle != "") {
+                Text(
+                    text = gameScreenData.subtitle,
+                    fontSize = 16.sp
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+        }
+        if (gameScreenData.ladybugImage) {
+            Row {
+                Image(
+                    painter = painterResource(R.drawable.devopsbug_bug_158x100),
+                    contentDescription = "Ladybug icon",
+                    modifier = Modifier.fillMaxWidth(fraction = 0.2f)
+                )
+                Spacer(modifier = Modifier.weight(1f))
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+        gameScreenContent()
+    }
+}
+
+
+@Composable
+fun GameScreenHeader(
+    currentLanguage: Language,
+    @DrawableRes gameButtonImage: Int,
+    title: String,
+    subtitle: String = "",
+    ladybugImage: Boolean = true,
+    gameScreenContent: @Composable () -> Unit
+) {
+    //LanguageGameRow
+    //Title
+    //Subtitle
+    //Optional Ladybug
+    //GameScreenContent
+    Column (
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxWidth(1f)
+            .padding(start = 24.dp, end = 24.dp)
+    ){
+        Spacer(modifier = Modifier.height(16.dp))
+        Column(
+            horizontalAlignment = Alignment.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            LanguageGameRow(
+                currentLanguage = currentLanguage,
+                currentGameButtonImage = gameButtonImage
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            if (title != "") {
+                Text(
+                    text = title,
+                    fontSize = 30.sp,
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+            if (subtitle != "") {
+                Text(
+                    text = subtitle,
+                    fontSize = 16.sp
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+        }
+        if (ladybugImage) {
+            Row {
+                Image(
+                    painter = painterResource(R.drawable.devopsbug_bug_158x100),
+                    contentDescription = "Ladybug icon",
+                    modifier = Modifier.fillMaxWidth(fraction = 0.2f)
+                )
+                Spacer(modifier = Modifier.weight(1f))
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+        gameScreenContent()
+    }
+}
+
 //function to display language selection row
 @Composable
 fun LanguageSelectionRow(
@@ -218,6 +339,35 @@ fun LanguageSelectionRow(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun LanguageGameRow(
+    currentLanguage: Language,
+    @DrawableRes currentGameButtonImage : Int
+){
+    Row (
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(0.08f)
+        //.padding(start = 24.dp, end = 24.dp)
+
+    ){
+        Image(
+            painter = painterResource(currentLanguage.flagImage),
+            contentDescription = currentLanguage.name,
+            modifier = Modifier.border(width = 1.dp, color = Color.DarkGray)
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        Image(
+            painter = painterResource(currentGameButtonImage),
+            contentDescription = null,
+            modifier = Modifier.border(width = 1.dp, color = Color.DarkGray)
+        )
+
     }
 }
 

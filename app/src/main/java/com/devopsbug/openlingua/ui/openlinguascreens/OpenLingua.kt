@@ -122,7 +122,7 @@ fun OpenLinguaTopAppBar(
                 }
                 //Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = currentGameName,
+                    text = "OpenLingua", //currentGameName,
                     color = Color.White,
                     modifier = Modifier
                         .fillMaxWidth(0.7f)
