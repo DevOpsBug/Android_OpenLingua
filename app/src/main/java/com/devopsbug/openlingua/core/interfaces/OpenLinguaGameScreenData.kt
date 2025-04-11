@@ -1,13 +1,16 @@
 package com.devopsbug.openlingua.core.interfaces
 
-import androidx.annotation.DrawableRes
+import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import com.devopsbug.openlingua.model.Language
 
 interface OpenLinguaGameScreenData {
-    val screenTitle: String
+    val gameName: String
     val currentLanguage: Language
     val gameCoverImage: Int
-    val subtitle: String
-    val ladybugImage: Boolean
+    val gameNavController: NavController
+    val gameUiState: OpenLinguaGameUiState
+    val gameViewModel: ViewModel
+    val gameScreenList: List<OpenLinguaGameScreenClass>
 }
 

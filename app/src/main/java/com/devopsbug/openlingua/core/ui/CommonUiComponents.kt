@@ -191,7 +191,10 @@ fun ButtonTile(
 @Composable
 fun GameScreenBase(
     gameScreenData: OpenLinguaGameScreenData,
-    gameScreenContent: @Composable () -> Unit
+    gameScreenContent: @Composable () -> Unit,
+    ladybugImage: Boolean = false,
+    screenTitle: String = "",
+    subtitle: String = ""
 ) {
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -211,72 +214,9 @@ fun GameScreenBase(
                 currentGameButtonImage = gameScreenData.gameCoverImage
             )
             Spacer(modifier = Modifier.height(16.dp))
-            if (gameScreenData.screenTitle != "") {
+            if (screenTitle != "") {
                 Text(
-                    text = gameScreenData.screenTitle,
-                    fontSize = 30.sp,
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-            }
-            if (gameScreenData.subtitle != "") {
-                Text(
-                    text = gameScreenData.subtitle,
-                    fontSize = 16.sp
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-            }
-        }
-        if (gameScreenData.ladybugImage) {
-            Row {
-                Image(
-                    painter = painterResource(R.drawable.devopsbug_bug_158x100),
-                    contentDescription = "Ladybug icon",
-                    modifier = Modifier.fillMaxWidth(fraction = 0.2f)
-                )
-                Spacer(modifier = Modifier.weight(1f))
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-        }
-        gameScreenContent()
-    }
-}
-
-
-@Composable
-fun GameScreenHeader(
-    currentLanguage: Language,
-    @DrawableRes gameButtonImage: Int,
-    title: String,
-    subtitle: String = "",
-    ladybugImage: Boolean = true,
-    gameScreenContent: @Composable () -> Unit
-) {
-    //LanguageGameRow
-    //Title
-    //Subtitle
-    //Optional Ladybug
-    //GameScreenContent
-    Column (
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier
-            .fillMaxWidth(1f)
-            .padding(start = 24.dp, end = 24.dp)
-    ){
-        Spacer(modifier = Modifier.height(16.dp))
-        Column(
-            horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            LanguageGameRow(
-                currentLanguage = currentLanguage,
-                currentGameButtonImage = gameButtonImage
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            if (title != "") {
-                Text(
-                    text = title,
+                    text = screenTitle,
                     fontSize = 30.sp,
                 )
                 Spacer(modifier = Modifier.height(16.dp))
@@ -303,6 +243,69 @@ fun GameScreenHeader(
         gameScreenContent()
     }
 }
+
+
+//@Composable
+//fun GameScreenHeader(
+//    currentLanguage: Language,
+//    @DrawableRes gameButtonImage: Int,
+//    title: String,
+//    subtitle: String = "",
+//    ladybugImage: Boolean = true,
+//    gameScreenContent: @Composable () -> Unit
+//) {
+//    //LanguageGameRow
+//    //Title
+//    //Subtitle
+//    //Optional Ladybug
+//    //GameScreenContent
+//    Column (
+//        horizontalAlignment = Alignment.CenterHorizontally,
+//        verticalArrangement = Arrangement.Center,
+//        modifier = Modifier
+//            .fillMaxWidth(1f)
+//            .padding(start = 24.dp, end = 24.dp)
+//    ){
+//        Spacer(modifier = Modifier.height(16.dp))
+//        Column(
+//            horizontalAlignment = Alignment.Start,
+//            modifier = Modifier
+//                .fillMaxWidth()
+//        ) {
+//            LanguageGameRow(
+//                currentLanguage = currentLanguage,
+//                currentGameButtonImage = gameButtonImage
+//            )
+//            Spacer(modifier = Modifier.height(16.dp))
+//            if (title != "") {
+//                Text(
+//                    text = title,
+//                    fontSize = 30.sp,
+//                )
+//                Spacer(modifier = Modifier.height(16.dp))
+//            }
+//            if (subtitle != "") {
+//                Text(
+//                    text = subtitle,
+//                    fontSize = 16.sp
+//                )
+//                Spacer(modifier = Modifier.height(16.dp))
+//            }
+//        }
+//        if (ladybugImage) {
+//            Row {
+//                Image(
+//                    painter = painterResource(R.drawable.devopsbug_bug_158x100),
+//                    contentDescription = "Ladybug icon",
+//                    modifier = Modifier.fillMaxWidth(fraction = 0.2f)
+//                )
+//                Spacer(modifier = Modifier.weight(1f))
+//            }
+//            Spacer(modifier = Modifier.height(16.dp))
+//        }
+//        gameScreenContent()
+//    }
+//}
 
 //function to display language selection row
 @Composable

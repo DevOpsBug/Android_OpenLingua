@@ -12,10 +12,10 @@ import androidx.navigation.compose.rememberNavController
 import com.devopsbug.openlingua.core.interfaces.OpenLinguaGameEntry
 import com.devopsbug.openlingua.games.picturematchinggame.model.PictureMatchingGameCategory
 import com.devopsbug.openlingua.games.picturematchinggame.ui.screens.ExplorePicturesScreen
+import com.devopsbug.openlingua.games.picturematchinggame.ui.screens.PictureMatchingGameScreenData
 import com.devopsbug.openlingua.games.picturematchinggame.ui.screens.RandomPictureScreen
 import com.devopsbug.openlingua.games.picturematchinggame.ui.state.PictureMatchingGameViewModel
 import com.devopsbug.openlingua.model.Language
-import com.devopsbug.openlingua.model.OpenLingaGameScreen
 
 
 class PictureMatchingGame(
@@ -23,55 +23,86 @@ class PictureMatchingGame(
     val currentPictureGameCategory: PictureMatchingGameCategory
 ) : OpenLinguaGameEntry {
 
+
     @Composable
     override fun GameNavigation(
     ) {
         // Initialize State and Navigation
-        val navController: NavHostController = rememberNavController()
-        val backStackEntry by navController.currentBackStackEntryAsState()
+        val pictureMatchingGameNavController: NavHostController = rememberNavController()
+        val backStackEntry by pictureMatchingGameNavController.currentBackStackEntryAsState()
         val pictureMatchingGameViewModel: PictureMatchingGameViewModel = viewModel()
         val pictureMatchingGameUiState by pictureMatchingGameViewModel.uiState.collectAsState()
+
+        // Initialize PictureMatchingGameScreenData
+        val pictureMatchingGameScreenData = PictureMatchingGameScreenData(
+            gameName = "PictureMatchingGame",
+            currentLanguage = currentLanguage,
+            gameCoverImage = currentPictureGameCategory.categoryCoverImage,
+            gameNavController = pictureMatchingGameNavController,
+            gameUiState = pictureMatchingGameUiState,
+            gameViewModel = pictureMatchingGameViewModel,
+            gameScreenList = listOf(
+                ExplorePicturesScreen(),
+                RandomPictureScreen()
+            )
+        )
+
 
         //Update Game Category
         pictureMatchingGameViewModel.updateCategory(currentPictureGameCategory)
 
         //Define List of Screens for this game
-        var pictureMatchingGameScreens = mutableListOf<OpenLingaGameScreen>()
+        //var pictureMatchingGameScreens = mutableListOf<OpenLingaGameScreen>()
 
-        pictureMatchingGameScreens = mutableListOf(
-            OpenLingaGameScreen(
-                name = "explore pictures screen",
-                screenContent = {
-                    ExplorePicturesScreen(
-                        currentLanguage = currentLanguage,
-                        currentPictureGameCategory = pictureMatchingGameUiState.currentPictureGameCategory,
-                        continueToNextScreen = { navController.navigate(pictureMatchingGameScreens[1].name) }
-                    )
-                }
-            ),
-            OpenLingaGameScreen(
-                name = "random picture screen",
-                screenContent = {
-                    RandomPictureScreen(
-                        currentLanguage = currentLanguage,
-                        currentCorrectGameAsset = pictureMatchingGameUiState.currentCorrectGameAsset,
-                        randomizedGameAssetDisplayList = pictureMatchingGameUiState.randomizedGameAssetDisplayList,
-                        newRandomPicture = { pictureMatchingGameViewModel.newRandomPicture() },
-                    )
-                }
-            )
+//        val listOfGameScreens : List<OpenLinguaGameScreenClass> = listOf(
+//            ExplorePicturesScreen(
+//                name = "explore pictures screen",
+//                ladybugImage = false,
+//                screenTitle = "Explore Pictures",
+//                subtitle = ""
+//            ),
+//            RandomPictureScreen(
+//                name = "random picture screen",
+//                ladybugImage = false,
+//                screenTitle = "Random Pictures",
+//                subtitle = ""
+//            )
+//        )
 
-        )
-
-        val currentScreen = backStackEntry?.destination?.route ?: pictureMatchingGameScreens.first().name
+//        val pictureMatchingGameScreens = mutableListOf(
+//            OpenLingaGameScreen(
+//                name = "explore pictures screen",
+//                screenContent = {
+//                    GameScreenBase(
+//                        gameScreenData = pictureMatchingGameScreenData,
+//                        gameScreenContent = { ExplorePicturesScreenContent(pictureMatchingGameScreenData) },
+//                        ladybugImage = false,
+//                        screenTitle = "Explore Pictures",
+//                        subtitle = ""
+//                    )
+//                }
+//            ),
+//            OpenLingaGameScreen(
+//                name = "random picture screen",
+//                screenContent = {
+//                    RandomPictureScreen(
+//                        pictureMatchingGameScreenData = pictureMatchingGameScreenData,
+//                    )
+//                }
+//            )
+//
+//        )
+//
+//        val currentScreen = backStackEntry?.destination?.route ?: pictureMatchingGameScreens.first().name
 
         NavHost(
-            navController = navController,
-            startDestination = pictureMatchingGameScreens[0].name
+            navController = pictureMatchingGameNavController,
+            startDestination = pictureMatchingGameScreenData.gameScreenList[0].screenRoute
         ) {
-            pictureMatchingGameScreens.forEach { screen ->
-                composable(screen.name) {
-                    screen.screenContent()
+            pictureMatchingGameScreenData.gameScreenList.forEach { screen ->
+                composable(route = screen.screenRoute) {
+                    //screen.screenContent()
+                    screen.DisplayScreen(pictureMatchingGameScreenData)
                 }
             }
         }
