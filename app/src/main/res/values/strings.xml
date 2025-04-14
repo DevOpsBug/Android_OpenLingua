@@ -10,4 +10,7 @@
     <string name="numbergame_random_number_screen">Play Number Game</string>
     <string name="numbergame_start_screen">Number Game</string>
     <string name="numbergame_number_calc_screen">Calc Numbers</string>
+    <string name="picturematchinggame_game_name">Picture Matching Game</string>
+    <string name="picturematchinggame_explore_screen">Explore Pictures</string>"
+    <string name="picturematchinggame_random_picture_screen">Play Picture Matching Game</string>"
 </resources>

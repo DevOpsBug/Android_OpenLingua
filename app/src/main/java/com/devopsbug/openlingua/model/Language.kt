@@ -4,6 +4,6 @@ import androidx.annotation.DrawableRes
 
 data class Language(
     val name: String,
-    val audioFilePrefix: String,
+    val languageCode: String,
     @DrawableRes val flagImage: Int,
 )
