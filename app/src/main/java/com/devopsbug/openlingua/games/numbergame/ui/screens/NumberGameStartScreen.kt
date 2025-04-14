@@ -23,14 +23,102 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devopsbug.openlingua.R
+import com.devopsbug.openlingua.core.interfaces.OpenLinguaGameScreenClass
+import com.devopsbug.openlingua.core.interfaces.OpenLinguaGameScreenData
 import com.devopsbug.openlingua.games.numbergame.data.Numbers
+import com.devopsbug.openlingua.games.numbergame.ui.state.NumberGameUiState
+import com.devopsbug.openlingua.games.numbergame.ui.state.NumberGameViewModel
 import com.devopsbug.openlingua.model.Language
 import com.devopsbug.openlingua.ui.theme.greenButtonColor
 import com.devopsbug.openlingua.ui.theme.primaryLightMediumContrast
 
+class NumberGameStartScreen(
+    screenName: String = "NumberGameStart",
+    screenRoute: String = "number_game_start_screen",
+    ladybugImage: Boolean = true,
+    screenTitle: String = "How to start: NEW",
+    subtitle: String = "1. Choose a level\n2. Click START to begin"
+)  : OpenLinguaGameScreenClass(screenName, screenRoute, ladybugImage, screenTitle, subtitle) {
+
+    @Composable
+    override fun ScreenContent(screenData: OpenLinguaGameScreenData) {
+        //initialize Setup
+        val continueToNextScreen: () -> Unit = {
+            screenData.gameNavController.navigate(
+                screenData.gameScreenList[1].screenRoute
+            )
+        }
+        screenData.gameUiState as NumberGameUiState
+        screenData.gameViewModel as NumberGameViewModel
+        //val context = LocalContext.current
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxWidth()
+        ){
+            val levelList = (1..Numbers.numbersByLevel.size).toList()
+            levelList.forEach { level ->
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth(1f)
+                        .padding(8.dp)
+                ) {
+                    listOf("A", "B").forEach{ sublevel ->
+                        Button(
+                            onClick = {
+                                screenData.gameViewModel.updateLevel(level)
+                                screenData.gameViewModel.updateSublevel(sublevel)
+                            },
+                            contentPadding = PaddingValues(top = 16.dp, bottom = 16.dp, start = 32.dp, end = 32.dp),
+                            border = BorderStroke(width = 2.dp, color = Color.DarkGray),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (screenData.gameUiState.currentLevel == level && screenData.gameUiState.currentSublevel == sublevel) {
+                                    primaryLightMediumContrast
+                                } else {
+                                    ButtonDefaults.buttonColors().containerColor
+                                }
+                            )
+                        ) {
+                            Text(
+                                text = "Level $level $sublevel",
+                                fontSize = 24.sp
+                            )
+                        }
+                    }
+                }
+            }
+            Row(
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
+                    .padding(8.dp)
+            ) {
+                Spacer(modifier = Modifier.width(16.dp))
+                Button(
+                    onClick = continueToNextScreen,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor =  greenButtonColor
+                    ),
+                    border = BorderStroke(width = 2.dp, color = Color.DarkGray),
+                    contentPadding = PaddingValues(16.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ){
+                    Text(
+                        text = "START",
+                        fontSize = 24.sp
+                    )
+                }
+            }
+        }
+    }
+}
 
 @Composable
-fun NumberGameStartScreen(
+fun NumberGameStartScreen_OLD(
     currentLanguage: Language,
     currentLevel: Int,
     updateLevel: (Int) -> Unit,
