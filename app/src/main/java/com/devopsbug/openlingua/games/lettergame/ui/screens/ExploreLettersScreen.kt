@@ -1,18 +1,14 @@
 package com.devopsbug.openlingua.games.lettergame.ui.screens
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -22,70 +18,38 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.devopsbug.openlingua.R
-import com.devopsbug.openlingua.core.ui.LanguageLevelRow
+import com.devopsbug.openlingua.core.interfaces.OpenLinguaGameScreenClass
+import com.devopsbug.openlingua.core.interfaces.OpenLinguaGameScreenData
 import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.getAudioResourceId
 import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.playAudio
-import com.devopsbug.openlingua.data.Languages
 import com.devopsbug.openlingua.games.lettergame.model.Letter
+import com.devopsbug.openlingua.games.lettergame.ui.state.LetterGameUiState
 import com.devopsbug.openlingua.model.Language
 import com.devopsbug.openlingua.ui.theme.greenButtonColor
 
+class ExploreLettersScreen(
+    screenName: String = "ExploreLetter",
+    screenRoute: String = "explore_letters_screen",
+    ladybugImage: Boolean = false,
+    screenTitle: String = "Explore the Letters:",
+    subtitle: String = "1. Click a letters to hear the pronounciation\n2. Click PLAY to start the game"
+)  : OpenLinguaGameScreenClass(screenName, screenRoute, ladybugImage, screenTitle, subtitle) {
 
-@Composable
-fun ExploreLettersScreen(
-    currentLanguage: Language = Languages.german,
-    currentLetterSet: List<Letter> ,
-    currentLevel: Int,
-    continueToRandomLetterScreen: () -> Unit
-    ) {
-    Column (
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier
-            .fillMaxWidth(1f)
-            .padding(start = 24.dp, end = 24.dp)
-    ){
-        Spacer(modifier = Modifier.height(16.dp))
-        Column(
-            horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
+    @Composable
+    override fun ScreenContent(screenData: OpenLinguaGameScreenData) {
+        //initialize Setup
+        val continueToRandomLetterScreen: () -> Unit = {
+            screenData.gameNavController.navigate(
+                screenData.gameScreenList[2].screenRoute) }
+        screenData.gameUiState as LetterGameUiState
+        //screenData.gameViewModel as LetterGameViewModel
+        //val context = LocalContext.current
 
-            LanguageLevelRow(
-                currentLanguage = currentLanguage,
-                currentLevel = currentLevel
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "Explore the Letters:",
-                fontSize = 30.sp,
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "1. Click a letters to hear the pronounciation\n" +
-                        "2. Click PLAY to start the game",
-                fontSize = 16.sp
-            )
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        Row {
-            Image(
-                painter = painterResource(R.drawable.devopsbug_bug_158x100),
-                contentDescription = "Ladybug icon",
-                modifier = Modifier.fillMaxWidth(fraction = 0.2f)
-            )
-            Spacer(modifier = Modifier.weight(1f))
-        }
-        Spacer(modifier = Modifier.height(16.dp))
         LazyVerticalGrid(
             columns = GridCells.Fixed(5),
             contentPadding = PaddingValues(8.dp),
@@ -98,10 +62,10 @@ fun ExploreLettersScreen(
                 .background(color = MaterialTheme.colorScheme.background)
                 .border(width = 1.dp, color = Color.DarkGray),
             content = {
-                items(currentLetterSet) { letter ->
+                items(screenData.gameUiState.currentLetterSet) { letter ->
                     ExploreLetterTile(
                         letter = letter,
-                        language = currentLanguage,
+                        language = screenData.currentLanguage,
                     )
                 }
             },

@@ -51,57 +51,12 @@ class PictureMatchingGame(
         //Update Game Category
         pictureMatchingGameViewModel.updateCategory(currentPictureGameCategory)
 
-        //Define List of Screens for this game
-        //var pictureMatchingGameScreens = mutableListOf<OpenLingaGameScreen>()
-
-//        val listOfGameScreens : List<OpenLinguaGameScreenClass> = listOf(
-//            ExplorePicturesScreen(
-//                name = "explore pictures screen",
-//                ladybugImage = false,
-//                screenTitle = "Explore Pictures",
-//                subtitle = ""
-//            ),
-//            RandomPictureScreen(
-//                name = "random picture screen",
-//                ladybugImage = false,
-//                screenTitle = "Random Pictures",
-//                subtitle = ""
-//            )
-//        )
-
-//        val pictureMatchingGameScreens = mutableListOf(
-//            OpenLingaGameScreen(
-//                name = "explore pictures screen",
-//                screenContent = {
-//                    GameScreenBase(
-//                        gameScreenData = pictureMatchingGameScreenData,
-//                        gameScreenContent = { ExplorePicturesScreenContent(pictureMatchingGameScreenData) },
-//                        ladybugImage = false,
-//                        screenTitle = "Explore Pictures",
-//                        subtitle = ""
-//                    )
-//                }
-//            ),
-//            OpenLingaGameScreen(
-//                name = "random picture screen",
-//                screenContent = {
-//                    RandomPictureScreen(
-//                        pictureMatchingGameScreenData = pictureMatchingGameScreenData,
-//                    )
-//                }
-//            )
-//
-//        )
-//
-//        val currentScreen = backStackEntry?.destination?.route ?: pictureMatchingGameScreens.first().name
-
         NavHost(
             navController = pictureMatchingGameNavController,
             startDestination = pictureMatchingGameScreenData.gameScreenList[0].screenRoute
         ) {
             pictureMatchingGameScreenData.gameScreenList.forEach { screen ->
                 composable(route = screen.screenRoute) {
-                    //screen.screenContent()
                     screen.DisplayScreen(pictureMatchingGameScreenData)
                 }
             }

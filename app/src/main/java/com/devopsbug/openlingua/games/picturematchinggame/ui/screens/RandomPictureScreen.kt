@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -93,294 +92,109 @@ fun RandomPictureScreenContent(
         currentLanguage.languageCode,
         currentCorrectGameAsset.assetName
     )
+
     LaunchedEffect(isNewRound) { // Use Unit as the stable key
         playAudio(context, resourceId)
     }
-
-
-//    Column(
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//        verticalArrangement = Arrangement.Center,
-//        modifier = Modifier
-//            .fillMaxWidth(1f)
-//            .padding(start = 24.dp, end = 24.dp)
-//    ) {
-//        Spacer(modifier = Modifier.height(16.dp))
-        Column(
-            horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-//            LanguageLevelRow(
-//                currentLanguage = currentLanguage,
-//                currentLevel = -1
-//            )
-//        }
-//        Spacer(modifier = Modifier.height(16.dp))
-//            Row {
-//                Image(
-//                    painter = painterResource(R.drawable.devopsbug_bug_158x100),
-//                    contentDescription = "Ladybug icon",
-//                    modifier = Modifier.fillMaxWidth(fraction = 0.2f)
-//                )
-//                Spacer(modifier = Modifier.weight(1f))
-//            }
-//            Spacer(modifier = Modifier.height(16.dp))
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                ImageAudioTile(
-                    tileSize = TileSize.MEDIUM,
-                    language = currentLanguage,
-                    audioFilePostfix = currentCorrectGameAsset.assetName,
-                    imageRessource = R.drawable.volume_up_24px,
-                    onCompletion = {},
-                    caption = "",
-                )
-
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Box (
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-            ){
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    contentPadding = PaddingValues(8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    userScrollEnabled = true,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(color = MaterialTheme.colorScheme.background)
-                        .border(width = 1.dp, color = Color.DarkGray),
-                    content = {
-                        items(randomizedGameAssetDisplayList) { gameAsset ->
-                            if (gameAsset == currentCorrectGameAsset) {
-                                GridImageButtonTile(
-                                    imageResource = gameAsset.imageResource,
-                                    borderColor = correctBorderColor,
-                                    onClick = {
-                                        wrongBorderColor = Color.Red
-                                        correctBorderColor = Color.Green
-                                        //newRandomPicture()
-                                        showResultOverlay = true
-                                        answerIsCorrect = true
-
-                                    }
-                                )
-                            } else {
-                                GridImageButtonTile(
-                                    imageResource = gameAsset.imageResource,
-                                    borderColor = wrongBorderColor,
-                                    onClick = {
-                                        wrongBorderColor = Color.Red
-                                        correctBorderColor = Color.Green
-                                        //newRandomPicture()
-                                        showResultOverlay = true
-                                        answerIsCorrect = false
-
-
-                                    }
-                                )
-                            }
-                        }
-                    },
-                )
-                if (showResultOverlay) {
-                    val tintColor = if (answerIsCorrect) greenButtonColor else Color.Red
-                    val iconResource = if (answerIsCorrect) R.drawable.correct else R.drawable.wrong
-                    val  contentDescription = if (answerIsCorrect) "Correct" else "Wrong"
-                    val borderColor = if (answerIsCorrect) greenButtonColor else Color.Red
-                    Image(
-                        painter = painterResource(id = iconResource),
-                        contentDescription = contentDescription,
-                        colorFilter = ColorFilter.tint(tintColor), // Change color
-                        modifier = Modifier
-                            .size(TileSize.MEDIUM.dpSize)
-                            .border(width = 10.dp, color = borderColor)
-                            .background(Color.White),
-                    )
-                }
-                LaunchedEffect(showResultOverlay) {
-                    if (showResultOverlay) {
-                        delay(2000) // Wait 2 seconds
-                        showResultOverlay = false
-                        newRandomPicture()
-                        correctBorderColor = Color.DarkGray
-                        wrongBorderColor = Color.DarkGray
-                        isNewRound = !isNewRound
-                    }
-                }
-
-            }
-        //}
-    }
-}
-
-@Composable
-fun RandomPictureScreenContent_OLD(
-    pictureMatchingGameScreenData: OpenLinguaGameScreenData,
-) {
-    pictureMatchingGameScreenData.gameUiState as PictureMatchingGameUiState
-    pictureMatchingGameScreenData.gameViewModel as PictureMatchingGameViewModel
-
-    val currentLanguage = pictureMatchingGameScreenData.currentLanguage
-
-    val initialShuffledList = pictureMatchingGameScreenData.gameUiState.currentPictureGameCategory.categoryGameAssets.shuffled().subList(0,4)
-    var currentCorrectGameAsset by remember { mutableStateOf<PictureMatchingGameAsset>(initialShuffledList.random()) }
-    var randomizedGameAssetDisplayList by remember { mutableStateOf<List<PictureMatchingGameAsset>>(initialShuffledList) }
-
-
-    fun newRandomPicture() {
-        // Access category from ViewModel
-        val shuffledList = pictureMatchingGameScreenData.gameUiState.currentPictureGameCategory.categoryGameAssets.shuffled().subList(0,4)
-        currentCorrectGameAsset = shuffledList.random()
-        randomizedGameAssetDisplayList = shuffledList.shuffled()
-    }
-
-    var correctBorderColor: Color by remember { mutableStateOf(Color.DarkGray) }
-    var wrongBorderColor: Color by remember { mutableStateOf(Color.DarkGray) }
-    var showResultOverlay: Boolean by remember { mutableStateOf(false) }
-    var answerIsCorrect: Boolean by remember { mutableStateOf(false) }
-    var isNewRound: Boolean by remember { mutableStateOf(false) }
-
-    // Play audio once on initial display
-    val context = LocalContext.current
-    val resourceId = getAudioResourceId(
-        context,
-        currentLanguage.languageCode,
-        currentCorrectGameAsset.assetName
-    )
-    LaunchedEffect(isNewRound) { // Use Unit as the stable key
-        playAudio(context, resourceId)
-    }
-
 
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.Start,
         modifier = Modifier
-            .fillMaxWidth(1f)
-            .padding(start = 24.dp, end = 24.dp)
+            .fillMaxWidth()
     ) {
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            ImageAudioTile(
+                tileSize = TileSize.MEDIUM,
+                language = currentLanguage,
+                audioFilePostfix = currentCorrectGameAsset.assetName,
+                imageRessource = R.drawable.volume_up_24px,
+                onCompletion = {},
+                caption = "",
+            )
+
+        }
         Spacer(modifier = Modifier.height(16.dp))
-        Column(
-            horizontalAlignment = Alignment.Start,
+        Box (
+            contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxWidth()
-        ) {
-//            LanguageLevelRow(
-//                currentLanguage = currentLanguage,
-//                currentLevel = -1
-//            )
-//        }
-//        Spacer(modifier = Modifier.height(16.dp))
-            Row {
-                Image(
-                    painter = painterResource(R.drawable.devopsbug_bug_158x100),
-                    contentDescription = "Ladybug icon",
-                    modifier = Modifier.fillMaxWidth(fraction = 0.2f)
-                )
-                Spacer(modifier = Modifier.weight(1f))
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                ImageAudioTile(
-                    tileSize = TileSize.MEDIUM,
-                    language = currentLanguage,
-                    audioFilePostfix = currentCorrectGameAsset.assetName,
-                    imageRessource = R.drawable.volume_up_24px,
-                    onCompletion = {},
-                    caption = "",
-                )
-
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Box (
-                contentAlignment = Alignment.Center,
+                .fillMaxHeight()
+        ){
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                contentPadding = PaddingValues(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                userScrollEnabled = true,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight()
-            ){
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    contentPadding = PaddingValues(8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    userScrollEnabled = true,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(color = MaterialTheme.colorScheme.background)
-                        .border(width = 1.dp, color = Color.DarkGray),
-                    content = {
-                        items(randomizedGameAssetDisplayList) { gameAsset ->
-                            if (gameAsset == currentCorrectGameAsset) {
-                                GridImageButtonTile(
-                                    imageResource = gameAsset.imageResource,
-                                    borderColor = correctBorderColor,
-                                    onClick = {
-                                        wrongBorderColor = Color.Red
-                                        correctBorderColor = Color.Green
-                                        //newRandomPicture()
-                                        showResultOverlay = true
-                                        answerIsCorrect = true
+                    .background(color = MaterialTheme.colorScheme.background)
+                    .border(width = 1.dp, color = Color.DarkGray),
+                content = {
+                    items(randomizedGameAssetDisplayList) { gameAsset ->
+                        if (gameAsset == currentCorrectGameAsset) {
+                            GridImageButtonTile(
+                                imageResource = gameAsset.imageResource,
+                                borderColor = correctBorderColor,
+                                onClick = {
+                                    wrongBorderColor = Color.Red
+                                    correctBorderColor = Color.Green
+                                    //newRandomPicture()
+                                    showResultOverlay = true
+                                    answerIsCorrect = true
 
-                                    }
-                                )
-                            } else {
-                                GridImageButtonTile(
-                                    imageResource = gameAsset.imageResource,
-                                    borderColor = wrongBorderColor,
-                                    onClick = {
-                                        wrongBorderColor = Color.Red
-                                        correctBorderColor = Color.Green
-                                        //newRandomPicture()
-                                        showResultOverlay = true
-                                        answerIsCorrect = false
+                                }
+                            )
+                        } else {
+                            GridImageButtonTile(
+                                imageResource = gameAsset.imageResource,
+                                borderColor = wrongBorderColor,
+                                onClick = {
+                                    wrongBorderColor = Color.Red
+                                    correctBorderColor = Color.Green
+                                    //newRandomPicture()
+                                    showResultOverlay = true
+                                    answerIsCorrect = false
 
 
-                                    }
-                                )
-                            }
+                                }
+                            )
                         }
-                    },
-                )
-                if (showResultOverlay) {
-                    val tintColor = if (answerIsCorrect) greenButtonColor else Color.Red
-                    val iconResource = if (answerIsCorrect) R.drawable.correct else R.drawable.wrong
-                    val  contentDescription = if (answerIsCorrect) "Correct" else "Wrong"
-                    val borderColor = if (answerIsCorrect) greenButtonColor else Color.Red
-                    Image(
-                        painter = painterResource(id = iconResource),
-                        contentDescription = contentDescription,
-                        colorFilter = ColorFilter.tint(tintColor), // Change color
-                        modifier = Modifier
-                            .size(TileSize.MEDIUM.dpSize)
-                            .border(width = 10.dp, color = borderColor)
-                            .background(Color.White),
-                    )
-                }
-                LaunchedEffect(showResultOverlay) {
-                    if (showResultOverlay) {
-                        delay(2000) // Wait 2 seconds
-                        showResultOverlay = false
-                        newRandomPicture()
-                        correctBorderColor = Color.DarkGray
-                        wrongBorderColor = Color.DarkGray
-                        isNewRound = !isNewRound
                     }
-                }
-
+                },
+            )
+            if (showResultOverlay) {
+                val tintColor = if (answerIsCorrect) greenButtonColor else Color.Red
+                val iconResource = if (answerIsCorrect) R.drawable.correct else R.drawable.wrong
+                val  contentDescription = if (answerIsCorrect) "Correct" else "Wrong"
+                val borderColor = if (answerIsCorrect) greenButtonColor else Color.Red
+                Image(
+                    painter = painterResource(id = iconResource),
+                    contentDescription = contentDescription,
+                    colorFilter = ColorFilter.tint(tintColor), // Change color
+                    modifier = Modifier
+                        .size(TileSize.MEDIUM.dpSize)
+                        .border(width = 10.dp, color = borderColor)
+                        .background(Color.White),
+                )
             }
+            LaunchedEffect(showResultOverlay) {
+                if (showResultOverlay) {
+                    delay(2000) // Wait 2 seconds
+                    showResultOverlay = false
+                    newRandomPicture()
+                    correctBorderColor = Color.DarkGray
+                    wrongBorderColor = Color.DarkGray
+                    isNewRound = !isNewRound
+                }
+            }
+
         }
+
     }
 }
+
+

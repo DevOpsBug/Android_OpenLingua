@@ -1,12 +1,10 @@
 package com.devopsbug.openlingua.core.ui
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.RawRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -37,10 +35,9 @@ import androidx.compose.ui.unit.sp
 import com.devopsbug.openlingua.R
 import com.devopsbug.openlingua.core.interfaces.OpenLinguaGameScreenData
 import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.getAudioResourceId
+import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.playAudio
 import com.devopsbug.openlingua.data.Languages
 import com.devopsbug.openlingua.model.Language
-import com.devopsbug.openlingua.core.util.OpenLinguaAudioUtils.playAudio
-import com.devopsbug.openlingua.model.OpenLinguaGame
 
 //Template for square button tile inside grid, size scales according to grid
 @Composable
@@ -244,89 +241,26 @@ fun GameScreenBase(
     }
 }
 
-
-//@Composable
-//fun GameScreenHeader(
-//    currentLanguage: Language,
-//    @DrawableRes gameButtonImage: Int,
-//    title: String,
-//    subtitle: String = "",
-//    ladybugImage: Boolean = true,
-//    gameScreenContent: @Composable () -> Unit
-//) {
-//    //LanguageGameRow
-//    //Title
-//    //Subtitle
-//    //Optional Ladybug
-//    //GameScreenContent
-//    Column (
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//        verticalArrangement = Arrangement.Center,
-//        modifier = Modifier
-//            .fillMaxWidth(1f)
-//            .padding(start = 24.dp, end = 24.dp)
-//    ){
-//        Spacer(modifier = Modifier.height(16.dp))
-//        Column(
-//            horizontalAlignment = Alignment.Start,
-//            modifier = Modifier
-//                .fillMaxWidth()
-//        ) {
-//            LanguageGameRow(
-//                currentLanguage = currentLanguage,
-//                currentGameButtonImage = gameButtonImage
-//            )
-//            Spacer(modifier = Modifier.height(16.dp))
-//            if (title != "") {
-//                Text(
-//                    text = title,
-//                    fontSize = 30.sp,
-//                )
-//                Spacer(modifier = Modifier.height(16.dp))
-//            }
-//            if (subtitle != "") {
-//                Text(
-//                    text = subtitle,
-//                    fontSize = 16.sp
-//                )
-//                Spacer(modifier = Modifier.height(16.dp))
-//            }
-//        }
-//        if (ladybugImage) {
-//            Row {
-//                Image(
-//                    painter = painterResource(R.drawable.devopsbug_bug_158x100),
-//                    contentDescription = "Ladybug icon",
-//                    modifier = Modifier.fillMaxWidth(fraction = 0.2f)
-//                )
-//                Spacer(modifier = Modifier.weight(1f))
-//            }
-//            Spacer(modifier = Modifier.height(16.dp))
-//        }
-//        gameScreenContent()
-//    }
-//}
-
 //function to display language selection row
 @Composable
 fun LanguageSelectionRow(
+    modifier: Modifier = Modifier,
     currentLanguage: Language = Languages.german,
     updateLanguage: (Language) -> Unit,
-    modifier: Modifier = Modifier.fillMaxWidth()
+
 ) {
+    val modifier = modifier.fillMaxWidth()
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = modifier
     ) {
-        //Text(text = "Choose Language")
         Row {
             listOf(Languages.german, Languages.italian, Languages.english).forEach { language ->
 
                 Button(
                     onClick = { updateLanguage(language) },
                     shape = RectangleShape,
-                    //border = BorderStroke(5.dp, MaterialTheme.colorScheme.primaryContainer),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = if (currentLanguage == language) Color.LightGray else Color.White,
                         contentColor = MaterialTheme.colorScheme.onSecondaryContainer
@@ -397,8 +331,6 @@ fun LanguageLevelRow(
                 text = "Level $currentLevel",
                 fontSize = 24.sp,
                 color = MaterialTheme.colorScheme.primaryContainer,
-                //modifier = Modifier.border(width = 1.dp, color = Color.DarkGray)
-
             )
         }
     }

@@ -14,7 +14,7 @@ class LetterGameViewModel : ViewModel() {
     fun updateLevel(level: Int) {
         val currentLetterSet = Datasource.lettersByLevel[level -1]
         _uiState.value = _uiState.value.copy(
-            level = level,
+            currentLevel = level,
             currentLetterSet = currentLetterSet,
             currentLetter = currentLetterSet.random()
         )

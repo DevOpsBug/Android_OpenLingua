@@ -32,8 +32,6 @@ import com.devopsbug.openlingua.games.picturematchinggame.ui.state.PictureMatchi
 import com.devopsbug.openlingua.games.picturematchinggame.ui.state.PictureMatchingGameViewModel
 import com.devopsbug.openlingua.ui.theme.greenButtonColor
 
-
-
 class ExplorePicturesScreen(
     screenName: String = "Explore Pictures",
     screenRoute: String = "explore_pictures_screen",
@@ -44,157 +42,56 @@ class ExplorePicturesScreen(
 
     @Composable
     override fun ScreenContent(screenData: OpenLinguaGameScreenData) {
-        ExplorePicturesScreenContent(screenData)
-    }
-}
-
-
-@Composable
-fun ExplorePicturesScreenContent(
-    pictureMatchingGameScreenData: OpenLinguaGameScreenData,
-){
-    val continueToNextScreen: () -> Unit = {
-        pictureMatchingGameScreenData.gameNavController.navigate(
-            pictureMatchingGameScreenData.gameScreenList[1].screenRoute) }
-    val pictureMatchingGameUiState = pictureMatchingGameScreenData.gameUiState as PictureMatchingGameUiState
-    val pictureMatchingGameViewModel = pictureMatchingGameScreenData.gameViewModel as PictureMatchingGameViewModel
-    val context = LocalContext.current
-    Column (
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier
-            .fillMaxWidth()
-    ){
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(4),
-            contentPadding = PaddingValues(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            userScrollEnabled = true,
+        val continueToNextScreen: () -> Unit = {
+            screenData.gameNavController.navigate(screenData.gameScreenList[1].screenRoute)
+        }
+        screenData.gameUiState as PictureMatchingGameUiState
+        screenData.gameViewModel as PictureMatchingGameViewModel
+        val context = LocalContext.current
+        Column (
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.8f)
-                .background(color = MaterialTheme.colorScheme.background)
-                .border(width = 1.dp, color = Color.DarkGray),
-            content = {
-                items(pictureMatchingGameUiState.currentPictureGameCategory.categoryGameAssets) { gameAsset ->
-                    GridImageButtonTile(
-                        imageResource = gameAsset.imageResource,
-                        onClick = {
-                            val resourceId = gameAsset.audioResources.getValue(pictureMatchingGameScreenData.currentLanguage.languageCode)
-                            playAudio(context, resourceId)
-                        }
-                    )
-                }
-            },
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(
-            onClick = continueToNextScreen,
-            colors = ButtonDefaults.buttonColors(
-                containerColor =  greenButtonColor
-            ),
-            border = BorderStroke(width = 2.dp, color = Color.DarkGray),
-            contentPadding = PaddingValues(16.dp),
-            modifier = Modifier.fillMaxWidth()
         ){
-            Text(
-                text = "PLAY",
-                fontSize = 24.sp
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(4),
+                contentPadding = PaddingValues(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                userScrollEnabled = true,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.8f)
+                    .background(color = MaterialTheme.colorScheme.background)
+                    .border(width = 1.dp, color = Color.DarkGray),
+                content = {
+                    items(screenData.gameUiState.currentPictureGameCategory.categoryGameAssets) { gameAsset ->
+                        GridImageButtonTile(
+                            imageResource = gameAsset.imageResource,
+                            onClick = {
+                                val resourceId = gameAsset.audioResources.getValue(screenData.currentLanguage.languageCode)
+                                playAudio(context, resourceId)
+                            }
+                        )
+                    }
+                },
             )
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(
+                onClick = continueToNextScreen,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor =  greenButtonColor
+                ),
+                border = BorderStroke(width = 2.dp, color = Color.DarkGray),
+                contentPadding = PaddingValues(16.dp),
+                modifier = Modifier.fillMaxWidth()
+            ){
+                Text(
+                    text = "PLAY",
+                    fontSize = 24.sp
+                )
+            }
         }
     }
 }
-
-//@Composable
-//fun ExplorePicturesScreen(
-//    currentLanguage: Language = Languages.german,
-//    currentPictureGameCategory: PictureMatchingGameCategory,
-//    continueToNextScreen: () -> Unit
-//    ) {
-//    val context = LocalContext.current
-//    Column (
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//        verticalArrangement = Arrangement.Center,
-//        modifier = Modifier
-//            .fillMaxWidth(1f)
-//            .padding(start = 24.dp, end = 24.dp)
-//    ){
-//        Spacer(modifier = Modifier.height(16.dp))
-//        Column(
-//            horizontalAlignment = Alignment.Start,
-//            modifier = Modifier
-//                .fillMaxWidth()
-//        ) {
-//
-//            LanguageLevelRow(
-//                currentLanguage = currentLanguage,
-//                currentLevel = -1
-//            )
-//            Spacer(modifier = Modifier.height(16.dp))
-//            Text(
-//                text = "Explore the Images:",
-//                fontSize = 30.sp,
-//            )
-//            Spacer(modifier = Modifier.height(16.dp))
-//            Text(
-//                text = "1. Click a picture to hear the word\n" +
-//                        "2. Click PLAY to start the game",
-//                fontSize = 16.sp
-//            )
-//        }
-//        Spacer(modifier = Modifier.height(16.dp))
-//        Row {
-//            Image(
-//                painter = painterResource(R.drawable.devopsbug_bug_158x100),
-//                contentDescription = "Ladybug icon",
-//                modifier = Modifier.fillMaxWidth(fraction = 0.2f)
-//            )
-//            Spacer(modifier = Modifier.weight(1f))
-//        }
-//        Spacer(modifier = Modifier.height(16.dp))
-//        LazyVerticalGrid(
-//            columns = GridCells.Fixed(4),
-//            contentPadding = PaddingValues(8.dp),
-//            horizontalArrangement = Arrangement.spacedBy(8.dp),
-//            verticalArrangement = Arrangement.spacedBy(8.dp),
-//            userScrollEnabled = true,
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .fillMaxHeight(0.8f)
-//                .background(color = MaterialTheme.colorScheme.background)
-//                .border(width = 1.dp, color = Color.DarkGray),
-//            content = {
-//                items(currentPictureGameCategory.categoryGameAssets) { gameAsset ->
-//                    GridImageButtonTile(
-//                        imageResource = gameAsset.imageResource,
-//                        onClick = {
-//                            val resourceId = gameAsset.audioResources.getValue(currentLanguage.languageCode)
-//                            playAudio(context, resourceId)
-//                        }
-//                    )
-//                }
-//            },
-//        )
-//        Spacer(modifier = Modifier.height(16.dp))
-//        Button(
-//            onClick = continueToNextScreen,
-//            colors = ButtonDefaults.buttonColors(
-//                containerColor =  greenButtonColor
-//            ),
-//            border = BorderStroke(width = 2.dp, color = Color.DarkGray),
-//            contentPadding = PaddingValues(16.dp),
-//            modifier = Modifier.fillMaxWidth()
-//        ){
-//            Text(
-//                text = "PLAY",
-//                fontSize = 24.sp
-//            )
-//        }
-//    }
-//}
-//
-
-
-
-
