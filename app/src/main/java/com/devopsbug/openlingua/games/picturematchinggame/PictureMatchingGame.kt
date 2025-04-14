@@ -10,9 +10,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.devopsbug.openlingua.core.interfaces.OpenLinguaGameEntry
+import com.devopsbug.openlingua.core.interfaces.OpenLinguaGameScreenData
 import com.devopsbug.openlingua.games.picturematchinggame.model.PictureMatchingGameCategory
 import com.devopsbug.openlingua.games.picturematchinggame.ui.screens.ExplorePicturesScreen
-import com.devopsbug.openlingua.games.picturematchinggame.ui.screens.PictureMatchingGameScreenData
 import com.devopsbug.openlingua.games.picturematchinggame.ui.screens.RandomPictureScreen
 import com.devopsbug.openlingua.games.picturematchinggame.ui.state.PictureMatchingGameViewModel
 import com.devopsbug.openlingua.model.Language
@@ -34,7 +34,7 @@ class PictureMatchingGame(
         val pictureMatchingGameUiState by pictureMatchingGameViewModel.uiState.collectAsState()
 
         // Initialize PictureMatchingGameScreenData
-        val pictureMatchingGameScreenData = PictureMatchingGameScreenData(
+        val pictureMatchingGameScreenData = OpenLinguaGameScreenData(
             gameName = "PictureMatchingGame",
             currentLanguage = currentLanguage,
             gameCoverImage = currentPictureGameCategory.categoryCoverImage,

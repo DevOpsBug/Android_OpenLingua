@@ -55,13 +55,13 @@ class RandomPictureScreen(
 
     @Composable
     override fun ScreenContent(screenData: OpenLinguaGameScreenData) {
-        RandomPictureScreenContent(screenData as PictureMatchingGameScreenData)
+        RandomPictureScreenContent(screenData)
     }
 }
 
 @Composable
 fun RandomPictureScreenContent(
-    pictureMatchingGameScreenData: PictureMatchingGameScreenData,
+    pictureMatchingGameScreenData: OpenLinguaGameScreenData,
     ) {
     pictureMatchingGameScreenData.gameUiState as PictureMatchingGameUiState
     pictureMatchingGameScreenData.gameViewModel as PictureMatchingGameViewModel
@@ -224,7 +224,7 @@ fun RandomPictureScreenContent(
 
 @Composable
 fun RandomPictureScreenContent_OLD(
-    pictureMatchingGameScreenData: PictureMatchingGameScreenData,
+    pictureMatchingGameScreenData: OpenLinguaGameScreenData,
 ) {
     pictureMatchingGameScreenData.gameUiState as PictureMatchingGameUiState
     pictureMatchingGameScreenData.gameViewModel as PictureMatchingGameViewModel

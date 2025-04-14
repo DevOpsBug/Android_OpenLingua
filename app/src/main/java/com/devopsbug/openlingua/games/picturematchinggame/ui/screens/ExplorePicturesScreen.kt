@@ -44,14 +44,14 @@ class ExplorePicturesScreen(
 
     @Composable
     override fun ScreenContent(screenData: OpenLinguaGameScreenData) {
-        ExplorePicturesScreenContent(screenData as PictureMatchingGameScreenData)
+        ExplorePicturesScreenContent(screenData)
     }
 }
 
 
 @Composable
 fun ExplorePicturesScreenContent(
-    pictureMatchingGameScreenData: PictureMatchingGameScreenData,
+    pictureMatchingGameScreenData: OpenLinguaGameScreenData,
 ){
     val continueToNextScreen: () -> Unit = {
         pictureMatchingGameScreenData.gameNavController.navigate(
